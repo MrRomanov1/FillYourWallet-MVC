@@ -5,11 +5,7 @@ namespace Core;
 use \App\Auth;
 use \App\Flash;
 
-/**
- * Base controller
- *
- * PHP version 7.0
- */
+
 abstract class Controller
 {
    
