@@ -25,7 +25,15 @@
                         <div class = "col-6 text-center ml-0 py-3" id = "loginButtonRegister" onclick = "location.href='/';">Logowanie
                         </div>
                         <div class = "col-12">
-                            <form action="" method = "post">
+                            {% if user.errors is not empty %}
+                            <p style="color:red; font-size:13">Errors:</p>
+                            <ul>
+                            {% for error in user.errors %}
+                            <li style="color:red; font-size:11">{{ error }}</li>
+                            {% endfor %}
+                            </ul>
+                            {% endif %}
+                            <form action="/signup/create" method = "post">
                                 <div  class = "form-group px-3 pt-3">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
@@ -37,7 +45,7 @@
                                                 </svg>
                                             </div>
                                         </div>
-                                        <input type="text" class="form-control form-control-lg mb-3" onfocus="this.placeholder=''" onblur="this.placeholder='imię'" placeholder="imię" name = "username">                                       
+                                        <input type="text" class="form-control form-control-lg mb-3" onfocus="this.placeholder=''" onblur="this.placeholder='imię'" placeholder="imię" name = "username">
                                     </div>                                    
                                     <div class="input-group">
                                         <div class="input-group-prepend">

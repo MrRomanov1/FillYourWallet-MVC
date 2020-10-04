@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use \Core\View;
-//use \App\Models\User;
+use \App\Models\User;
 
 class Signup extends \Core\Controller {
 
@@ -14,11 +14,13 @@ class Signup extends \Core\Controller {
     public function createAction() {
         $user = new User( $_POST );
 
-        if ( ! $user->save() ) {
+        if ( ! $user->saveUserModel() ) {
 
             View::renderTemplate( 'Signup/new.html', [
                 'user' => $user
             ] );
+        } else {
+            $this->redirect('');
         }
 
     }
