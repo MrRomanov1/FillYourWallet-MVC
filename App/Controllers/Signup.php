@@ -14,23 +14,13 @@ class Signup extends \Core\Controller {
     public function createAction() {
         $user = new User( $_POST );
 
-        if ( $user->save() ) {
-
-            $user->sendActivationEmail();
-
-            $this->redirect( '/signup/success' );
-
-        } else {
+        if ( ! $user->save() ) {
 
             View::renderTemplate( 'Signup/new.html', [
                 'user' => $user
             ] );
-
         }
-    }
 
-    public function successAction() {
-        View::renderTemplate( 'Signup/success.html' );
     }
 
 }
