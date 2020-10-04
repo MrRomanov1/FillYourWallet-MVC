@@ -51,7 +51,7 @@ abstract class Controller
             
             Auth::rememberRequestedPage();
 
-            $this->redirect('/index');
+            $this->redirect('/');
         }
     }
 }
