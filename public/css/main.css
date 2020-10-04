@@ -1,0 +1,252 @@
+body
+{	  
+    font-family: 'Lora', serif;
+    background-image: url(../img/background.jpg);
+}
+
+.main-nav{       
+    opacity: 80%;
+    background-color: #222;
+}
+
+.navbar-expand-lg{
+    margin-bottom: 150px;
+}
+
+.brand-name {
+    color: #00cfff !important;
+}
+
+.blockquote footer{
+    color: #00cfff;
+    letter-spacing: 2px;
+}
+
+.blockquote h2 {
+    color: #FFF;
+    letter-spacing: 2px;
+}
+
+#startQuote{
+    color: #000;
+    letter-spacing: 2px !important;
+}
+
+.loginPanel {
+    -webkit-box-shadow: 3px 3px 30px 5px #333;
+	-moz-box-shadow: 3px 3px 30px 5px #333;
+	box-shadow: 3px 3px 30px 5px #333;
+    display: block;
+}
+
+.registerPanel {
+    -webkit-box-shadow: 3px 3px 30px 5px #333;
+	-moz-box-shadow: 3px 3px 30px 5px #333;
+	box-shadow: 3px 3px 30px 5px #333;
+    display: block;
+}
+
+#loginButtonLogin {
+    color: #FFF;
+    cursor: pointer;        
+}
+
+#registerButtonLogin {
+    color: #FFF;
+    cursor: pointer;
+    background-color: #222;
+    opacity: 70%;
+}
+
+#registerButtonRegister {
+    color: #FFF;
+    cursor: pointer;        
+}
+
+#loginButtonRegister {
+    color: #FFF;
+    cursor: pointer;
+    background-color: #222;
+    opacity: 70%;
+}
+
+#registerButtonRegister:hover,
+#registerButtonLogin:hover {    
+    background: none!important; 
+    opacity: 100%!important; 
+}
+
+#loginButtonRegister:hover,
+#loginButtonLogin:hover {
+    background: none !important; 
+    opacity: 100%!important; 
+}
+
+.loginPanel input[type=email]:focus,
+.loginPanel input[type=password]:focus,
+.registerPanel input[type=text]:focus,
+.registerPanel input[type=email]:focus,
+.registerPanel input[type=password]:focus
+{
+	-webkit-box-shadow: 0px 0px 10px 2px #333;
+	-moz-box-shadow: 0px 0px 10px 2px #333;
+	box-shadow: 0px 0px 10px 2px #333;	
+	background-color: #ccc;
+	color: #333;     
+}
+
+.loginPanel button:hover,
+.registerPanel button:hover{
+    background-color: #aaa;
+}
+
+.icon-menu{
+    color: #00cfff;    
+}
+
+.nav-item a {
+    color: #00cfff; 
+}
+
+.active a {
+    color: #00abbb;
+    background-color: #151515;
+}
+
+.nav-item a:hover {
+    color: #00abbb;
+    background-color: #151515;
+}
+
+.dropdown-menu a{
+  background-color: #fff !important;
+}
+
+.dropdown-menu a:hover{
+  background-color: #abab94 !important;
+}
+
+.isDisabled {
+    cursor: default;
+    pointer-events: none;
+}
+
+.dropdown-item {
+    color: #000 !important;
+}
+
+.dropdown-menu{
+    border-color: #00cfff; 
+}
+
+.h2 {
+    color: #00cfff;
+    letter-spacing: 3px;
+    font-weight: 700;
+}
+
+.summary {
+    border-radius: 20px;
+    border: 2px solid #aaa;
+}
+
+.income input[type=text]:focus,
+.income input[type=date]:focus,
+.income input[type=text]:focus,
+.income select:focus,
+.income textarea:focus
+{	
+	background-color: #eee;
+	color: #000;     
+}
+
+#balanceHeader {
+    color: #00cfff;
+    background-color: #222;
+    opacity: 70%;
+    border-radius: 20px;
+    border: 1px solid #00cfff;    
+}
+
+.balanceHeaderBlock{
+    margin-top: 200px;
+}
+
+.balanceTable{
+    border-radius: 20px;
+    border: 1px solid #00cfff; 
+}
+
+.balanceInfo {
+    text-align: left;
+    font-size: 1.2em;
+}
+
+.balanceInfoAmount {
+    text-align: right;
+    font-size: 1.2em;
+}
+
+#balanceSummaryPositive{
+    border-radius: 20px;
+    border: 1px solid #01FF70;
+    color: #01FF70;
+}
+
+#balanceSummaryNegative{
+    border-radius: 20px;
+    border: 1px solid red;
+    color: red;
+}
+
+@media (max-width: 575px) {
+    .page-quote{
+        font-size: 16px;
+    }
+    .page-quote-footer{
+        font-size: 12px;
+    }
+    body {
+        background-image: url(../img/background-mobile.jpg);
+        background-size: cover;        
+    }
+    #balanceHeader {
+        font-size: 20px;        
+    }  
+    #balanceSummaryPositive,
+    balanceSummaryNegative{
+        font-size: 1em; 
+    }
+    .balanceInfo {
+        text-align: left;
+        font-size: 0.9em;
+    }
+
+    .balanceInfoAmount {
+        text-align: right;
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 991px) {
+    .navbar-expand-lg{
+        margin-bottom: 0;
+    }
+    .balanceHeaderBlock{
+    margin-top: 10px;
+    }
+}
+
+@media (min-width: 575px) {
+    .page-footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+    }    
+}
+
+@media (max-height: 740px) {
+    .page-footer {
+        position: relative;    
+    }
+}
