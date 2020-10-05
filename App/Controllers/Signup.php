@@ -20,6 +20,7 @@ class Signup extends \Core\Controller {
                 'user' => $user
             ] );
         } else {
+            $user->saveUserData();            
             $this->redirect('');
         }
 
