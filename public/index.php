@@ -12,6 +12,7 @@ set_exception_handler('Core\Error::exceptionHandler');
 $router = new Core\Router();
 
 $router->addRouteToRoutingTable('', ['controller' => 'Home', 'action' => 'index']);
+$router->addRouteToRoutingTable('login', ['controller' => 'Home', 'action' => 'create']);
 $router->addRouteToRoutingTable('signup', ['controller' => 'Signup', 'action' => 'new']);
 $router->addRouteToRoutingTable('main', ['controller' => 'Main', 'action' => 'index']);
 $router->addRouteToRoutingTable('logout', ['controller' => 'Home', 'action' => 'destroy']);

@@ -24,7 +24,7 @@
                         <div class = "col-6 text-center ml-0 py-3" id = "loginButtonLogin">Logowanie
                         </div>
                         <div class = "col-12">
-                            <form action="Home/create" method = "post">
+                            <form action="/login" method = "post">
                                 <div  class = "form-group px-3 pt-3">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
@@ -34,7 +34,7 @@
                                                 </svg>
                                             </div>
                                         </div>
-                                        <input type="email" class="form-control form-control-lg mb-3" onfocus="this.placeholder=''" onblur="this.placeholder='email'" placeholder="email" name = "email">                                                
+                                        <input type="email" class="form-control form-control-lg mb-3" onfocus="this.placeholder=''" onblur="this.placeholder='email'" placeholder="email" name = "email" value="{{ email }}">                                                
                                     </div>                                    
                                     <div class="input-group">
                                         <div class="input-group-prepend">
