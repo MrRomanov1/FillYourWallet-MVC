@@ -6,14 +6,19 @@ use \Core\View;
 use \App\Auth;
 use \App\Models\User;
 
-class Home extends \Core\Controller
-{
+class Home extends \Core\Controller {    
     
-    public function indexAction()
-    {
-        View::renderTemplate('Home/index.html');
+
+    public function indexAction() {
+        if (Auth::getUser() ) {
+            $this->redirect( '/main' );
+        }
+        else {
+            View::renderTemplate( 'Home/index.html' );
+        }
+        
     }
-    
+
     public function createAction() {
         $user = User::authenticateUser( $_POST['email'], $_POST['password'] );
 
@@ -34,6 +39,7 @@ class Home extends \Core\Controller
 
     public function destroyAction() {
         Auth::logout();
+        $this->redirect( '/' );
 
         //$this->redirect( '/login/show-logout-message' );
     }

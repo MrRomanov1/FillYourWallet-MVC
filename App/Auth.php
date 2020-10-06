@@ -47,11 +47,8 @@ class Auth {
         if ( isset( $_SESSION['userId'] ) ) {
 
             return User::findByID( $_SESSION['userId'] );
-
-        } else {
-
-            ;
         }
+
     }
 
 }
