@@ -36,53 +36,53 @@ class User extends \Core\Model {
 
         return false;
     }
-    
+
     public function saveUserData() {
         $this->saveUserIncomeCategories();
         $this->saveUserExpenseCategories();
         $this->saveUserPaymentMethods();
     }
-    
+
     public function saveUserIncomeCategories() {
-        
-            $sql = 'INSERT INTO user_expense_categories(userId, name) 
+
+        $sql = 'INSERT INTO user_expense_categories(userId, name) 
                     SELECT (SELECT userId FROM users WHERE email=:email), name 
                     FROM expenses_category_default';
 
-            $db = static::getDB();
-            $stmt = $db->prepare( $sql );
-            
-            $stmt->bindValue( ':email', $this->email, PDO::PARAM_STR );            
+        $db = static::getDB();
+        $stmt = $db->prepare( $sql );
 
-            return $stmt->execute();
+        $stmt->bindValue( ':email', $this->email, PDO::PARAM_STR );
+
+        return $stmt->execute();
     }
-    
+
     public function saveUserExpenseCategories() {
-        
-            $sql = 'INSERT INTO user_income_categories(userId, name) 
+
+        $sql = 'INSERT INTO user_income_categories(userId, name) 
                     SELECT (SELECT userId FROM users WHERE email=:email), name 
                     FROM incomes_category_default';
 
-            $db = static::getDB();
-            $stmt = $db->prepare( $sql );
-            
-            $stmt->bindValue( ':email', $this->email, PDO::PARAM_STR );            
+        $db = static::getDB();
+        $stmt = $db->prepare( $sql );
 
-            return $stmt->execute();
+        $stmt->bindValue( ':email', $this->email, PDO::PARAM_STR );
+
+        return $stmt->execute();
     }
-    
-     public function saveUserPaymentMethods() {
-        
-            $sql = 'INSERT INTO user_payment_methods(userId, name) 
+
+    public function saveUserPaymentMethods() {
+
+        $sql = 'INSERT INTO user_payment_methods(userId, name) 
                     SELECT (SELECT userId FROM users WHERE email=:email), name 
                     FROM payment_methods_default';
 
-            $db = static::getDB();
-            $stmt = $db->prepare( $sql );
-            
-            $stmt->bindValue( ':email', $this->email, PDO::PARAM_STR );            
+        $db = static::getDB();
+        $stmt = $db->prepare( $sql );
 
-            return $stmt->execute();
+        $stmt->bindValue( ':email', $this->email, PDO::PARAM_STR );
+
+        return $stmt->execute();
     }
 
     public function validateUserData() {
@@ -146,15 +146,15 @@ class User extends \Core\Model {
 
         $stmt->setFetchMode( PDO::FETCH_CLASS, get_called_class() );
 
-        $stmt->execute();
-
+        $stmt->execute();        
+        
         return $stmt->fetch();
     }
 
     public static function authenticateUser( $email, $password ) {
         $user = static::findByEmail( $email );
 
-        if ( $user ) {
+        if ( $user ) {            
             if ( password_verify( $password, $user->password ) ) {
                 return $user;
             }

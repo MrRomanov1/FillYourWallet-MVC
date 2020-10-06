@@ -4,11 +4,18 @@ namespace App\Controllers;
 
 use \Core\View;
 use \App\Models\User;
+use \App\Auth;
 
 class Signup extends \Core\Controller {
 
     public function newAction() {
-        View::renderTemplate( 'Signup/new.html' );
+        if (Auth::getUser() ) {
+            $this->redirect( '/main' );
+        }
+        else {
+            View::renderTemplate( 'Signup/new.html' );
+        }
+        
     }
 
     public function createAction() {
@@ -20,8 +27,9 @@ class Signup extends \Core\Controller {
                 'user' => $user
             ] );
         } else {
-            $user->saveUserData();            
-            $this->redirect('');
+            $user->saveUserData();
+
+            $this->redirect( '' );
         }
 
     }
