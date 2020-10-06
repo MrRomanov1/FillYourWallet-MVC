@@ -21,17 +21,16 @@ class Home extends \Core\Controller {
 
     public function createAction() {
         $user = User::authenticateUser( $_POST['email'], $_POST['password'] );
-
+        
         if ( $user ) {
 
             Auth::login( $user );
 
-            //$this->redirect( Auth::getReturnToPage() );
-            $this->redirect( '/main' );
+            $this->redirect( Auth::getReturnToPage() );            
 
         } else {
-
-            View::renderTemplate( 'Login/new.html', [
+            
+            View::renderTemplate( 'Home/index.html', [
                 'email' => $_POST['email']
             ] );
         }
@@ -39,7 +38,7 @@ class Home extends \Core\Controller {
 
     public function destroyAction() {
         Auth::logout();
-        $this->redirect( '/' );
+        $this->redirect( '' );
 
         //$this->redirect( '/login/show-logout-message' );
     }
