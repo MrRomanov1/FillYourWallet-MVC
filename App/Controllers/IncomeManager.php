@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use \Core\View;
 use \App\Auth;
+use \App\Models\Income;
 
 class IncomeManager extends Authenticated {
 
@@ -21,4 +22,17 @@ class IncomeManager extends Authenticated {
             'user' => $this->user
         ]);
     }
+    
+    public function addIncomeAction() {		
+		$income = new Income($_POST);
+		
+		if ($income->saveUserIncome($this->user->userId)) {
+            echo 'dodane';
+			;
+		} else {
+            echo 'niedodane';
+			;
+		}
+	}
+    
 }
