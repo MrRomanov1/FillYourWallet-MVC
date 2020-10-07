@@ -16,6 +16,7 @@ $router->addRouteToRoutingTable('login', ['controller' => 'Home', 'action' => 'c
 $router->addRouteToRoutingTable('signup', ['controller' => 'Signup', 'action' => 'new']);
 $router->addRouteToRoutingTable('main', ['controller' => 'Main', 'action' => 'index']);
 $router->addRouteToRoutingTable('income', ['controller' => 'IncomeManager', 'action' => 'viewPage']);
+$router->addRouteToRoutingTable('addIncome', ['controller' => 'IncomeManager', 'action' => 'addIncome']);
 $router->addRouteToRoutingTable('expense', ['controller' => 'ExpenseManager', 'action' => 'viewPage']);
 $router->addRouteToRoutingTable('currentMonthBalance', ['controller' => 'Balance', 'action' => 'currentMonthBalance']);
 $router->addRouteToRoutingTable('currentYearBalance', ['controller' => 'Balance', 'action' => 'currentYearBalance']);
