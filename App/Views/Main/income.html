@@ -36,8 +36,14 @@
                 <div class = "col-12 col-lg-4 offset-lg-4 offset-0"> 
                     <form action = "/addIncome" method = "post">
                         <div class = "form-group income">
-                            <input type="text" class="form-control mb-3" placeholder="Kwota" onfocus="this.placeholder=''" onblur="this.placeholder='Kwota'" name = "amount" required> 
-                            <input type="date" class="form-control mb-3" name = "date" required>                            
+                            <input type="text" class="form-control mb-3" placeholder="Kwota" onfocus="this.placeholder=''" onblur="this.placeholder='Kwota'" name = "amount" value = "{{incomes.amount}}" required>
+                            {% if errors.amountError is not empty%}                            
+                            <div style="color:red; font-size:13; text-align:center">{{errors.amountError|join('<br/>')|raw}}</div>                            
+                            {% endif %}
+                            <input type="date" class="form-control mb-3" name = "date" value = "{{incomes.date}}" required>
+                            {% if errors.dateError is not empty%}                            
+                            <div style="color:red; font-size:13; text-align:center">{{errors.dateError|join('<br>')|raw}}</div>                            
+                            {% endif %}
                             <select class="form-control mb-3" name = "category" required>
                                 <option value="" disabled selected hidden> Kategoria</option>
                                 <option value="Wynagrodzenie"> Wynagrodzenie </option>
@@ -45,7 +51,7 @@
                                 <option value="Sprzedaż"> Sprzedaż </option>					
                                 <option value="Inne"> Inne </option>
                             </select>
-                            <textarea class="form-control" rows="2" placeholder = "Komentarz" onfocus="this.placeholder=''" onblur="this.placeholder='Komentarz'" name = "comment"></textarea>
+                            <textarea class="form-control" rows="2" placeholder = "Komentarz" onfocus="this.placeholder=''" onblur="this.placeholder='Komentarz'" name = "comment">{{incomes.comment}}</textarea>
                         </div>
                         <div class = "input-group" role = "group">
                             <input type="reset" class="btn btn-danger btn-lg btn-block col-6 mt-2 " value="Anuluj">
@@ -57,4 +63,18 @@
         </div>                
     </article>
 </section>
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+{% if success == true %}
+<script>                            
+    Swal.fire({
+    position: 'top-end',
+    icon: 'success',
+    title: 'Dodano nowy przychód',
+    showConfirmButton: true,
+    timer: 1000                            
+    }) 
+</script>
+{% endif %}
+{% endblock %}
 {% endblock %}

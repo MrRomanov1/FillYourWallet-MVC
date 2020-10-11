@@ -15,9 +15,13 @@ class ExpenseManager extends Authenticated {
 
     }
 
-    public function viewPageAction() {
+    public function viewPageAction( $arg1 = 0, $arg2 = 0 ) {
+        $success = false;
         View::renderTemplate( 'Main/expense.html', [
-            'user' => $this->user
+            'user' => $this->user,
+            'expenses' => $arg1,
+            'errors' => $arg2,
+            'success' => $success
         ] );
     }
 
@@ -26,11 +30,22 @@ class ExpenseManager extends Authenticated {
         $expense = new Expense( $_POST );
 
         if ( $expense->saveUserExpense( $this->user->userId ) ) {
-            echo 'dodane';
-            ;
+            $success = true;
+            View::renderTemplate( 'Main/expense.html', [
+                'user' => $this->user,
+                'success' => $success
+            ] );
         } else {
-            echo 'niedodane';
-            ;
+            $expenses['amount'] = $_POST['amount'];
+            $expenses['date'] = $_POST['date'];
+
+            if ( isset( $_POST['comment'] ) ) {
+                $expenses['comment'] = $_POST['comment'];
+            }
+            $errors['dateError'] = $expense -> dateErrors;
+            $errors['amountError'] = $expense -> amountErrors;
+
+            $this -> viewPageAction( $expenses, $errors );
         }
     }
 }

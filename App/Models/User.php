@@ -7,7 +7,9 @@ use \Core\View;
 
 class User extends \Core\Model {
 
-    public $errors = [];
+    public $nameErrors = [];
+    public $emailErrors = [];
+    public $passwordErrors = [];
 
     public function __construct( $data = [] ) {
         foreach ( $data as $key => $value ) {
@@ -18,7 +20,7 @@ class User extends \Core\Model {
     public function saveUserModel() {
         $this->validateUserData();
 
-        if ( empty( $this->errors ) ) {
+        if ( ( empty( $this->nameErrors ) ) && ( empty( $this->emailErrors ) ) && ( empty( $this->passwordErrors ) ) ) {
 
             $password = password_hash( $this->password, PASSWORD_DEFAULT );
 
@@ -89,38 +91,38 @@ class User extends \Core\Model {
 
         // name validation
         if ( $this->username == '' ) {
-            $this->errors[] = 'Podaj imię!';
+            $this->nameErrors[] = 'Podaj imię!';
         }
 
         if ( mb_strlen( $this->username ) <= 2 ) {
-            $this->errors[] = 'Imię powinno posiadać co najmniej 2 znaki';
+            $this->nameErrors[] = 'Imię powinno posiadać co najmniej 2 znaki';
         }
 
         // email validation
         if ( filter_var( $this->email, FILTER_VALIDATE_EMAIL ) === false ) {
-            $this->errors[] = 'Nieprawidłowy adres email!';
+            $this->emailErrors[] = 'Nieprawidłowy adres email!';
         }
         if ( static::emailExists( $this->email, $this->id ?? null ) ) {
-            $this->errors[] = 'Adres email jest już zajęty';
+            $this->emailErrors[] = 'Adres email jest już zajęty';
         }
 
         // password validation
         if ( isset( $this->password ) ) {
 
             if ( ( strlen( $this->password ) < 6 ) || ( strlen( $this->password ) ) > 20 ) {
-                $this->errors[] = 'Hasło musi posiadać od 6 do 20 znaków!';
+                $this->passwordErrors[] = 'Hasło musi posiadać od 6 do 20 znaków!';
             }
 
             if ( preg_match( '/.*[a-z]+.*/i', $this->password ) == 0 ) {
-                $this->errors[] = 'Hasło musi posiadać co najmniej jedną literę';
+                $this->passwordErrors[] = 'Hasło musi posiadać co najmniej jedną literę';
             }
 
             if ( preg_match( '/.*\d+.*/i', $this->password ) == 0 ) {
-                $this->errors[] = 'Hasło musi posiadać co najmniej jedną cyfrę';
+                $this->passwordErrors[] = 'Hasło musi posiadać co najmniej jedną cyfrę';
             }
 
             if ( $this->password != $this->repeatedPassword ) {
-                $this->errors[] = 'Podane hasła nie są identyczne!';
+                $this->passwordErrors[] = 'Podane hasła nie są identyczne!';
             }
         }
     }
@@ -146,15 +148,16 @@ class User extends \Core\Model {
 
         $stmt->setFetchMode( PDO::FETCH_CLASS, get_called_class() );
 
-        $stmt->execute();        
-        
+        $stmt->execute();
+
         return $stmt->fetch();
     }
 
     public static function authenticateUser( $email, $password ) {
         $user = static::findByEmail( $email );
 
-        if ( $user ) {            
+        if ( $user ) {
+
             if ( password_verify( $password, $user->password ) ) {
                 return $user;
             }

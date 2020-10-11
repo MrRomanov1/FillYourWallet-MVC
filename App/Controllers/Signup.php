@@ -22,13 +22,17 @@ class Signup extends \Core\Controller {
         $user = new User( $_POST );
 
         if ( ! $user->saveUserModel() ) {
-
+            $errors['nameErrors'] = $user -> nameErrors;
+            $errors['emailErrors'] = $user -> emailErrors;
+            $errors['passwordErrors'] = $user -> passwordErrors;
+            
             View::renderTemplate( 'Signup/new.html', [
-                'user' => $user
+                'user' => $user,
+                'errors' => $errors
             ] );
         } else {
             $user->saveUserData();
-
+            $_SESSION['success'] = true;
             $this->redirect( '' );
         }
 

@@ -24,15 +24,7 @@
                         </div>
                         <div class = "col-6 text-center ml-0 py-3" id = "loginButtonRegister" onclick = "location.href='/';">Logowanie
                         </div>
-                        <div class = "col-12">
-                            {% if user.errors is not empty %}
-                            <p style="color:red; font-size:13">Errors:</p>
-                            <ul>
-                            {% for error in user.errors %}
-                            <li style="color:red; font-size:11">{{ error }}</li>
-                            {% endfor %}
-                            </ul>
-                            {% endif %}
+                        <div class = "col-12">                            
                             <form action="/signup/create" method = "post">
                                 <div  class = "form-group px-3 pt-3">
                                     <div class="input-group">
@@ -45,8 +37,11 @@
                                                 </svg>
                                             </div>
                                         </div>
-                                        <input type="text" class="form-control form-control-lg mb-3" onfocus="this.placeholder=''" onblur="this.placeholder='imię'" placeholder="imię" name = "username">
-                                    </div>                                    
+                                        <input type="text" class="form-control form-control-lg mb-3" onfocus="this.placeholder=''" onblur="this.placeholder='imię'" placeholder="imię" name = "username" value = "{{user.username}}" required>                                        
+                                    </div> 
+                                    {% if errors.nameErrors is not empty%}                            
+                                        <div style="color:red; font-size:15px; text-align:center">{{errors.nameErrors|join('<br/>')|raw}}</div>                            
+                                        {% endif %}
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <div class="input-group-text mb-3">
@@ -55,8 +50,11 @@
                                                 </svg>
                                             </div>
                                         </div>
-                                        <input type="email" class="form-control form-control-lg mb-3" onfocus="this.placeholder=''" onblur="this.placeholder='email'" placeholder="email" name="email">
-                                    </div>                                    
+                                        <input type="email" class="form-control form-control-lg mb-3" onfocus="this.placeholder=''" onblur="this.placeholder='email'" placeholder="email" name="email" value = "{{user.email}}" required>                                        
+                                    </div>    
+                                    {% if errors.emailErrors is not empty%}                            
+                                        <div style="color:red; font-size:15px; text-align:center">{{errors.emailErrors|join('<br/>')|raw}}</div>                            
+                                        {% endif %}
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <div class="input-group-text mb-3">
@@ -66,7 +64,10 @@
                                             </div>
                                         </div>
                                         <input type="password" class="form-control form-control-lg mb-3" onfocus="this.placeholder=''" onblur="this.placeholder='hasło'" placeholder="hasło" name = "password">
-                                    </div>                                    
+                                    </div>
+                                    {% if errors.passwordErrors is not empty%}                            
+                                        <div style="color:red; font-size:15px; text-align:center">{{errors.passwordErrors|join('<br/>')|raw}}</div>                            
+                                        {% endif %}
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <div class="input-group-text mb-3">

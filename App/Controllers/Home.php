@@ -14,7 +14,15 @@ class Home extends \Core\Controller {
             $this->redirect( '/main' );
         }
         else {
-            View::renderTemplate( 'Home/index.html' );
+            $success = false;
+            if (isset($_SESSION['success'])) {
+                $success = $_SESSION['success'];
+                unset ($_SESSION['success']);
+            }
+            
+            View::renderTemplate( 'Home/index.html', [
+                'success' => $success                
+            ] ); 
         }
         
     }
@@ -23,15 +31,16 @@ class Home extends \Core\Controller {
         $user = User::authenticateUser( $_POST['email'], $_POST['password'] );
         
         if ( $user ) {
-
+            $success = false;
             Auth::login( $user );
 
             $this->redirect( Auth::getReturnToPage() );            
 
         } else {
-            
+            $loginError = 'Podano niepoprawne dane logowania!';
             View::renderTemplate( 'Home/index.html', [
-                'email' => $_POST['email']
+                'email' => $_POST['email'],
+                'loginError' => $loginError
             ] );
         }
     }
@@ -39,12 +48,6 @@ class Home extends \Core\Controller {
     public function destroyAction() {
         Auth::logout();
         $this->redirect( '' );
-
-        //$this->redirect( '/login/show-logout-message' );
-    }
-
-    public function showLogoutMessageAction() {
-
-        //$this->redirect( '/' );
-    }
+        
+    }   
 }
