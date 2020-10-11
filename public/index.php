@@ -18,6 +18,7 @@ $router->addRouteToRoutingTable('main', ['controller' => 'Main', 'action' => 'in
 $router->addRouteToRoutingTable('income', ['controller' => 'IncomeManager', 'action' => 'viewPage']);
 $router->addRouteToRoutingTable('addIncome', ['controller' => 'IncomeManager', 'action' => 'addIncome']);
 $router->addRouteToRoutingTable('expense', ['controller' => 'ExpenseManager', 'action' => 'viewPage']);
+$router->addRouteToRoutingTable('addExpense', ['controller' => 'ExpenseManager', 'action' => 'addExpense']);
 $router->addRouteToRoutingTable('currentMonthBalance', ['controller' => 'Balance', 'action' => 'currentMonthBalance']);
 $router->addRouteToRoutingTable('currentYearBalance', ['controller' => 'Balance', 'action' => 'currentYearBalance']);
 $router->addRouteToRoutingTable('lastMonthBalance', ['controller' => 'Balance', 'action' => 'lastMonthBalance']);
