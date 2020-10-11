@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use PDO;
-use DateTime;
 use \Core\View;
+use \App\Validation;
 
 class Income extends \Core\Model {
 
-    public $errors = [];
+    public $amountErrors = [];
+    public $dateErrors = [];
 
     public function __construct( $data = [] ) {
         foreach ( $data as $key => $value ) {
@@ -17,10 +18,12 @@ class Income extends \Core\Model {
     }
 
     public function saveUserIncome( $userId ) {
-        $this->validateNewData();        
+        $this->amount = str_replace( [','], ['.'], $this->amount );
+        $this->amountErrors = Validation::validateAmount( $this->amount );
+        $this->dateErrors = Validation::validateDate( $this->date );
 
-        if ( empty( $this->errors ) ) { 
-            
+        if ( ( empty( $this->amountErrors ) ) && ( empty( $this->dateErrors ) ) ) {
+
             $sql = 'INSERT INTO incomes VALUES(NULL, :userId, :userIncomeCategoryId, :amount, :incomeDate, :incomeComment)';
 
             $db = static::getDB();
@@ -54,48 +57,38 @@ class Income extends \Core\Model {
 
         return $categories['id'];
 
-    }  
+    }
 
-    public function validateNewData() {
+    public static function getIncomes( $date, $userId ) {
+        $db = static::getDB();
 
-        // amount validation
-        $this->amount = str_replace( [','], ['.'], $this->amount );
+        $stmt = $db->prepare( 'SELECT amount, incomeDate, userIncomeCategoryId, incomeComment, uic.name FROM incomes, user_income_categories AS uic WHERE incomes.incomeDate BETWEEN :beginDate AND :endDate AND incomes.userId = :userId AND incomes.userIncomeCategoryId = uic.id ORDER BY incomes.incomeDate ASC' );
 
-        if ( empty( $this->amount ) ) {
-            $this->errors[] = 'Wpisz kwotę!';            
-        }
-        if ( !filter_var( $this->amount, FILTER_VALIDATE_FLOAT ) ) {
-            $this->errors[] = 'Niepoprawna kwota!';            
-        }
-        if ( ( float )$this->amount < 0 ) {
-            $this->errors[] = 'Kwota nie może być ujemna!';            
-        }
+        $stmt->bindValue( ':beginDate', $date['beginDate'], PDO::PARAM_STR );
+        $stmt->bindValue( ':endDate', $date['endDate'], PDO::PARAM_STR );
+        $stmt->bindValue( ':userId', $userId, PDO::PARAM_INT );
 
-        // date validation
-        $setDate = DateTime::createFromFormat( 'Y-m-d', $this-> date );
+        $stmt->setFetchMode( PDO::FETCH_ASSOC );
 
-        if ( empty( $this-> date ) ) {
-            $this->errors[] = 'Wybierz datę!';            
-        }
-        if ( !$setDate ) {
+        $stmt->execute();
 
-            $this->errors[] = 'Podaj datę w formacie dd.mm.rrrr!';             
+        return $stmt->fetchAll();
+    }
 
-        }
-        $currentDate = new DateTime();
+    public static function getIncomesTotal( $date, $userId ) {
+        $db = static::getDB();
 
-        $year = $currentDate -> format( 'Y' );
-        $month = $currentDate -> format( 'm' );
-        $day = $currentDate -> format( 'd' );
-        $currentMonthLength = cal_days_in_month( CAL_GREGORIAN, $month, $year );
-        $currentMonthBegin = DateTime::createFromFormat( 'Y-m-d', $year.'-01-01' );
-        $currentMonthEnd = DateTime::createFromFormat( 'Y-m-d', $year.'-'.$month.'-'.$currentMonthLength );
+        $stmt = $db->prepare( 'SELECT ROUND(SUM(incomes.amount), 2), uic.name FROM incomes, user_income_categories AS uic WHERE incomes.incomeDate BETWEEN :beginDate AND :endDate AND incomes.userId = :userId AND incomes.userIncomeCategoryId = uic.id GROUP BY incomes.userIncomeCategoryId' );
 
-        if ( !checkdate( $month, $day, $year ) || $setDate < $currentMonthBegin || $setDate > $currentMonthEnd ) {
-            $this->errors[] = 'Wprowadź datę najpóźniej do końca miesiąca!';
+        $stmt->bindValue( ':beginDate', $date['beginDate'], PDO::PARAM_STR );
+        $stmt->bindValue( ':endDate', $date['endDate'], PDO::PARAM_STR );
+        $stmt->bindValue( ':userId', $userId, PDO::PARAM_INT );
 
-        }
+        $stmt->setFetchMode( PDO::FETCH_ASSOC );
 
+        $stmt->execute();
+
+        return $stmt->fetchAll();
     }
 
 }

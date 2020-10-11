@@ -3,12 +3,11 @@
 namespace App\Models;
 
 use PDO;
-use DateTime;
 use \Core\View;
+use \App\Validation;
 
 class Expense extends \Core\Model {
 
-    public $errors = [];
 
     public function __construct( $data = [] ) {
         foreach ( $data as $key => $value ) {
@@ -17,9 +16,11 @@ class Expense extends \Core\Model {
     }
 
     public function saveUserExpense( $userId ) {
-        $this->validateNewData();
-
-        if ( empty( $this->errors ) ) {
+        $this->amount = str_replace( [','], ['.'], $this->amount );
+        $this->amountErrors = Validation::validateAmount( $this->amount );
+        $this->dateErrors = Validation::validateDate( $this->date );
+        
+        if ( ( empty( $this->amountErrors ) ) && ( empty( $this->dateErrors ) ) ) {
 
             $sql = 'INSERT INTO expenses VALUES(NULL, :userId, :userExpenseCategoryId, :userPaymentMethodId, :amount, :expenseDate, :expenseComment)';
 
@@ -72,52 +73,38 @@ class Expense extends \Core\Model {
 
         return $paymentMethods['id'];
 
+    }    
+
+    public static function getExpenses( $date, $userId ) {
+        $db = static::getDB();
+
+        $stmt = $db->prepare( 'SELECT expenses.amount, expenses.expenseDate, expenses.userExpenseCategoryId, expenses.userPaymentMethodId, expenses.expenseComment, uec.name FROM expenses, user_expense_categories AS uec WHERE expenseDate BETWEEN :beginDate AND :endDate AND expenses.userId = :userId AND uec.id = expenses.userExpenseCategoryId ORDER BY expenses.expenseDate ASC' );
+
+        $stmt->bindValue( ':beginDate', $date['beginDate'], PDO::PARAM_STR );
+        $stmt->bindValue( ':endDate', $date['endDate'], PDO::PARAM_STR );
+        $stmt->bindValue( ':userId', $userId, PDO::PARAM_INT );
+
+        $stmt->setFetchMode( PDO::FETCH_ASSOC );
+
+        $stmt->execute();
+
+        return $stmt->fetchAll();
     }
 
-    public function validateNewData() {
+    public static function getExpensesTotal( $date, $userId ) {
+        $db = static::getDB();
 
-        // amount validation
-        $this->amount = str_replace( [','], ['.'], $this->amount );
+        $stmt = $db->prepare( 'SELECT ROUND(SUM(expenses.amount), 2), expenses.userExpenseCategoryId, uec.name FROM expenses expenses, user_expense_categories AS uec WHERE expenses.expenseDate BETWEEN :beginDate AND :endDate AND expenses.userId = :userId AND uec.id = expenses.userExpenseCategoryId GROUP BY expenses.userExpenseCategoryId' );
 
-        if ( empty( $this->amount ) ) {
-            $this->errors[] = 'Wpisz kwotę!';
+        $stmt->bindValue( ':beginDate', $date['beginDate'], PDO::PARAM_STR );
+        $stmt->bindValue( ':endDate', $date['endDate'], PDO::PARAM_STR );
+        $stmt->bindValue( ':userId', $userId, PDO::PARAM_INT );
 
-        }
-        if ( !filter_var( $this->amount, FILTER_VALIDATE_FLOAT ) ) {
-            $this->errors[] = 'Niepoprawna kwota!';
+        $stmt->setFetchMode( PDO::FETCH_ASSOC );
 
-        }
-        if ( ( float )$this->amount < 0 ) {
-            $this->errors[] = 'Kwota nie może być ujemna!';
+        $stmt->execute();
 
-        }
-
-        // date validation
-        $setDate = DateTime::createFromFormat( 'Y-m-d', $this-> date );
-
-        if ( empty( $this-> date ) ) {
-            $this->errors[] = 'Wybierz datę!';
-
-        }
-        if ( !$setDate ) {
-
-            $this->errors[] = 'Podaj datę w formacie dd.mm.rrrr!';
-
-        }
-        $currentDate = new DateTime();
-
-        $year = $currentDate -> format( 'Y' );
-        $month = $currentDate -> format( 'm' );
-        $day = $currentDate -> format( 'd' );
-        $currentMonthLength = cal_days_in_month( CAL_GREGORIAN, $month, $year );
-        $currentMonthBegin = DateTime::createFromFormat( 'Y-m-d', $year.'-01-01' );
-        $currentMonthEnd = DateTime::createFromFormat( 'Y-m-d', $year.'-'.$month.'-'.$currentMonthLength );
-
-        if ( !checkdate( $month, $day, $year ) || $setDate < $currentMonthBegin || $setDate > $currentMonthEnd ) {
-            $this->errors[] = 'Wprowadź datę najpóźniej do końca miesiąca!';
-
-        }
-
+        return $stmt->fetchAll();
     }
 
 }
