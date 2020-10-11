@@ -62,4 +62,12 @@ class Validation {
         return false;
 
     }
+    
+    public static function validateDateOrder ($beginDate, $endDate) {
+        
+        if ($beginDate <= $endDate ) {
+            return true;
+        }
+        return false;
+    }
 }

@@ -6,6 +6,7 @@ use \Core\View;
 use \App\Auth;
 use \App\Models\Income;
 use \App\Models\Expense;
+use \App\Validation;
 
 class Balance extends Authenticated {
 
@@ -19,24 +20,28 @@ class Balance extends Authenticated {
     public function currentMonthBalanceAction() {
         $date = static::getCurrentMonthDate();
         $balance = static::getBalanceData($date, $this->user->userId );
+        $balance['period'] = 'z bieżącego miesiąca';
         $this->viewPage($balance);
     }
 
     public function currentYearBalanceAction() {
         $date = static::getCurrentYearDate();
         $balance = static::getBalanceData($date, $this->user->userId );
+        $balance['period'] = 'z bieżącego roku';
         $this->viewPage($balance);
     }
 
     public function lastMonthBalanceAction() {
         $date = static::getLastMonthDate();
         $balance = static::getBalanceData($date, $this->user->userId );
+        $balance['period'] = 'z poprzedniego miesiąca';
         $this->viewPage($balance);
     }
 
     public function customBalanceAction() {
         $date = static::getCustomDate();
         $balance = static::getBalanceData($date, $this->user->userId );
+        $balance['period'] = 'od '.$date['beginDate'].' do '.$date['endDate'];
         $this->viewPage($balance);
     }
 
@@ -110,7 +115,7 @@ class Balance extends Authenticated {
     }
 
     protected static function getCustomDate() {
-        if ( Validate::validateDateOrder( $_POST['beginDate'], $_POST['endDate'] ) && !Validate::validate( $_POST['endDate'] ) && !Validate::validate( $_POST['endDate'] ) ) {
+        if ( Validation::validateDateOrder( $_POST['beginDate'], $_POST['endDate'] ) && !Validation::validateDate( $_POST['endDate'] ) && !Validation::validateDate( $_POST['endDate'] ) ) {
             $date = ['beginDate' => $_POST['beginDate'],
             'endDate' => $_POST['endDate']];
 
