@@ -20,7 +20,7 @@ class Income extends \Core\Model {
     public function saveUserIncome( $userId ) {
         $this->amount = str_replace( [','], ['.'], $this->amount );
         $this->amountErrors = Validation::validateAmount( $this->amount );
-        $this->dateErrors = Validation::validateDate( $this->date );
+        $this->dateErrors = Validation::validateDate( $this->date );        
 
         if ( ( empty( $this->amountErrors ) ) && ( empty( $this->dateErrors ) ) ) {
 
