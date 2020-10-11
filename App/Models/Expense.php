@@ -78,7 +78,7 @@ class Expense extends \Core\Model {
     public static function getExpenses( $date, $userId ) {
         $db = static::getDB();
 
-        $stmt = $db->prepare( 'SELECT expenses.amount, expenses.expenseDate, expenses.userExpenseCategoryId, expenses.userPaymentMethodId, expenses.expenseComment, uec.name FROM expenses, user_expense_categories AS uec WHERE expenseDate BETWEEN :beginDate AND :endDate AND expenses.userId = :userId AND uec.id = expenses.userExpenseCategoryId ORDER BY expenses.expenseDate ASC' );
+        $stmt = $db->prepare( 'SELECT expenses.amount, expenses.expenseDate, expenses.userExpenseCategoryId, expenses.userPaymentMethodId, expenses.expenseComment, uec.name FROM expenses, user_expense_categories AS uec WHERE expenseDate BETWEEN :beginDate AND :endDate AND expenses.userId = :userId AND uec.id = expenses.userExpenseCategoryId ORDER BY expenses.expenseDate DESC' );
 
         $stmt->bindValue( ':beginDate', $date['beginDate'], PDO::PARAM_STR );
         $stmt->bindValue( ':endDate', $date['endDate'], PDO::PARAM_STR );
