@@ -22,6 +22,7 @@ $router->addRouteToRoutingTable('addExpense', ['controller' => 'ExpenseManager',
 $router->addRouteToRoutingTable('currentMonthBalance', ['controller' => 'Balance', 'action' => 'currentMonthBalance']);
 $router->addRouteToRoutingTable('currentYearBalance', ['controller' => 'Balance', 'action' => 'currentYearBalance']);
 $router->addRouteToRoutingTable('lastMonthBalance', ['controller' => 'Balance', 'action' => 'lastMonthBalance']);
+$router->addRouteToRoutingTable('customBalance', ['controller' => 'Balance', 'action' => 'customBalance']);
 $router->addRouteToRoutingTable('logout', ['controller' => 'Home', 'action' => 'destroy']);
 $router->addRouteToRoutingTable('{controller}/{action}');
 

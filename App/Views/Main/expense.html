@@ -21,9 +21,9 @@
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
                         <div class="modal-body">
-                            <form action = "" method = "post">
-                                <label for="startDate">Od:</label>
-                                <input type="date" class="form-control mb-3" name = "beginDate" id = "startDate" required>                                    
+                            <form action = "/customBalance" method = "post">
+                                <label for="beginDate">Od:</label>
+                                <input type="date" class="form-control mb-3" name = "beginDate" id = "beginDate" required>                                    
                                 <label for="endDate">Do: </label>
                                 <input type="date" class="form-control mb-3" name = "endDate" id = "endDate" required>
                                 <button type="submit" class="btn btn-default btn-success btn-block">Pokaż bilans</button>
@@ -40,28 +40,28 @@
                             <input type="date" class="form-control mb-3" name = "date" required>
                             <select class="form-control mb-3" name = "paymentMethod" required>
                                 <option value="" disabled selected hidden> Sposób płatności</option>
-                                <option value="Cash"> Gotówka </option>
-                                <option value="Debit Card"> Karta debetowa </option>
-                                <option value="Credit Card"> Karta kredytowa </option>
+                                <option value="Gotówka"> Gotówka </option>
+                                <option value="Karta debetowa"> Karta debetowa </option>
+                                <option value="Karta kredytowa"> Karta kredytowa </option>
                             </select>
                             <select class="form-control mb-3" name = "category" required>
                                 <option value="" disabled selected hidden> Kategoria</option>
                                 <option value="Transport">Transport</option>
-                                <option value="Books">Książki</option>
-                                <option value="Food">Jedzenie</option>					
-                                <option value="Apartments">Mieszkanie</option>					
-                                <option value="Telecommunication">Telekomunikacja</option>					
-                                <option value="Health">Opieka zdrowotna</option>					
-                                <option value="Clothes">Ubrania</option>					
+                                <option value="Książki">Książki</option>
+                                <option value="Jedzenie">Jedzenie</option>					
+                                <option value="Mieszkanie">Mieszkanie</option>					
+                                <option value="Telekomunikacja">Telekomunikacja</option>					
+                                <option value="Opieka zdrowotna">Opieka zdrowotna</option>					
+                                <option value="Ubrania">Ubrania</option>					
                                 <option value="Hygiene">Higiena</option>					
-                                <option value="Kids">Dzieci</option>					
-                                <option value="Recreation">Rozrywka</option>					
-                                <option value="Trip">Wycieczka</option>					
-                                <option value="Savings">Oszczędności</option>					
-                                <option value="For Retirement">Na złotą jesień, czyli emeryturę</option>					
-                                <option value="Debt Repayment">Spłata długów</option>
-                                <option value="Gift">Darowizna</option>					
-                                <option value="Other">Inne</option>                                        
+                                <option value="Dzieci">Dzieci</option>					
+                                <option value="Rozrywka">Rozrywka</option>					
+                                <option value="Wycieczka">Wycieczka</option>					
+                                <option value="Oszczędności">Oszczędności</option>					
+                                <option value="Na emeryturę">Na emeryturę</option>					
+                                <option value="Spłata długów">Spłata długów</option>
+                                <option value="Darowizna">Darowizna</option>					
+                                <option value="Inne">Inne</option>                                        
                             </select>
                             <textarea class="form-control" rows="2" placeholder = "Komentarz" onfocus="this.placeholder=''" onblur="this.placeholder='Komentarz'" name = "comment"></textarea>
                         </div>
