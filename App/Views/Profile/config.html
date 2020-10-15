@@ -1,0 +1,102 @@
+{% extends 'logged.html' %}
+
+{% block title %}FillYourWallet - Edit Profile{% endblock %}
+
+{% block content %} 
+<section>
+    <header>
+        <h2 class = "h2 text-center mt-lg-5 mt-3 pt-lg-5 pt-0">
+           Config
+        </h2>
+    </header>            
+    <article>                
+        <div class = "container">
+            <div class="modal fade" id="modalDatePicker" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header text-center">
+                            <h4>Wprowadź zakres dat dla bilansu</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <form action = "/customBalance" method = "post">
+                                <label for="beginDate">Od:</label>
+                                <input type="date" class="form-control mb-3" name = "beginDate" id = "beginDate" required>                                            
+                                <label for="endDate">Do: </label>
+                                <input type="date" class="form-control mb-3" name = "endDate" id = "endDate" required>
+                                <button type="submit" class="btn btn-default btn-success btn-block">Pokaż bilans</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class = "row no-gutters">
+                <div class = "col-4">
+                    <h4 class="mb-2 col-12 ">
+                        <button class="btn btn-block btn-secondary dropdown-toggle" data-toggle="collapse" data-target="#collapseIncomes" aria-expanded="false" aria-controls="collapseIncomes">
+                        Kategorie przychodów
+                        </button>
+                    </h4>            
+                    <div id="collapseIncomes" class="collapse col-12 mb-2" aria-labelledby="Toggle collapse" data-parent="#accordion">
+                    <ul class="list-group">
+                        <li class="list-group-item">Cras justo odio</li>
+                        <li class="list-group-item">Dapibus ac facilisis in</li>
+                        <li class="list-group-item">Morbi leo risus</li>
+                        <li class="list-group-item">Porta ac consectetur ac</li>
+                        <li class="list-group-item">Vestibulum at eros</li>
+                    </ul>
+                    </div>
+                </div>
+                <div class = "col-4">
+                    <h4 class="mb-2 col-12">
+                        <button class="btn btn-block btn-secondary dropdown-toggle" data-toggle="collapse" data-target="#collapseExpenses" aria-expanded="false" aria-controls="collapseExpenses">
+                        Kategorie wydatków
+                        </button>
+                    </h4>            
+                    <div id="collapseExpenses" class="collapse col-12" aria-labelledby="Toggle collapse" data-parent="#accordion">
+                    <ul class="list-group">
+                        <li class="list-group-item">Cras justo odio</li>
+                        <li class="list-group-item">Dapibus ac facilisis in</li>
+                        <li class="list-group-item">Morbi leo risus</li>
+                        <li class="list-group-item">Porta ac consectetur ac</li>
+                        <li class="list-group-item">Vestibulum at eros</li>
+                    </ul>
+                    </div>
+                </div>
+                <div class = "col-4">
+                    <h4 class="mb-2 col-12">
+                        <button class="btn btn-block btn-secondary dropdown-toggle" data-toggle="collapse" data-target="#collapsePaymentMethods" aria-expanded="false" aria-controls="collapsePaymentMethods">
+                        Metody płatności
+                        </button>
+                    </h4>            
+                    <div id="collapsePaymentMethods" class="collapse col-12" aria-labelledby="Toggle collapse" data-parent="#accordion">
+                    <ul class="list-group">
+                        <li class="list-group-item">Cras justo odio</li>
+                        <li class="list-group-item">Dapibus ac facilisis in</li>
+                        <li class="list-group-item">Morbi leo risus</li>
+                        <li class="list-group-item">Porta ac consectetur ac</li>
+                        <li class="list-group-item">Vestibulum at eros</li>
+                    </ul>
+                    </div>
+                </div>
+                <div class = "col-12">
+                    <h4 class="mb-2 col-12">
+                        <button class="btn btn-block btn-secondary dropdown-toggle" data-toggle="collapse" data-target="#collapseProfileSettings" aria-expanded="false" aria-controls="collapseProfileSettings">
+                        Ustawienia profilu
+                        </button>
+                    </h4>            
+                    <div id="collapseProfileSettings" class="collapse col-12" aria-labelledby="Toggle collapse" data-parent="#accordion">
+                    <ul class="list-group">
+                        <li class="list-group-item">Cras justo odio</li>
+                        <li class="list-group-item">Dapibus ac facilisis in</li>
+                        <li class="list-group-item">Morbi leo risus</li>
+                        <li class="list-group-item">Porta ac consectetur ac</li>
+                        <li class="list-group-item">Vestibulum at eros</li>
+                    </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+</section>
+{% endblock %}
