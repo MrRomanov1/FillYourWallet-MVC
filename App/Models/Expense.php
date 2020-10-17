@@ -119,4 +119,46 @@ class Expense extends \Core\Model {
         return $stmt->fetchAll();
     }
 
+    public static function editUserExpenseCategory ( $userId, $currentExpenseCategoryName, $newExpenseCategoryName ) {        
+        
+        $categoryId = static::getUserExpenseCategoryId($userId, $currentExpenseCategoryName);
+        
+        $db = static::getDB();
+        
+        $stmt = $db->prepare( 'UPDATE user_expense_categories SET name = :name WHERE id = :id ' );
+
+        $stmt->bindValue( ':id', $categoryId, PDO::PARAM_INT );
+        $stmt->bindValue( ':name', $newExpenseCategoryName, PDO::PARAM_STR );
+        $stmt->setFetchMode( PDO::FETCH_ASSOC );
+        
+        return $stmt->execute();
+         
+    }
+    
+    public static function getUserExpenseCategoryId ( $userId, $currentExpenseCategoryName ) {
+        $db = static::getDB();
+        
+        $stmt = $db->prepare( 'SELECT id FROM user_expense_categories WHERE name =:name AND userId =:userId ' );
+
+        $stmt->bindValue( ':userId', $userId, PDO::PARAM_INT );
+        $stmt->bindValue( ':name', $currentExpenseCategoryName, PDO::PARAM_STR );
+        
+        $stmt->execute();
+
+        return $stmt->fetchColumn();
+    }
+    
+    public static function checkIfUserExpenseCategoryExists($userId, $newExpenseCategoryName) {
+        
+        $db = static::getDB();
+
+        $stmt = $db->prepare( 'SELECT * FROM user_expense_categories WHERE userId = :userId AND name =:name' );
+
+        $stmt->bindValue( ':userId', $userId, PDO::PARAM_INT );
+        $stmt->bindValue( ':name', $newExpenseCategoryName, PDO::PARAM_STR );
+        $stmt->setFetchMode( PDO::FETCH_ASSOC );
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+    }
 }

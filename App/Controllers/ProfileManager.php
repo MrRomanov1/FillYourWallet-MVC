@@ -36,8 +36,23 @@ class ProfileManager extends Authenticated {
         $currentIncomeCategoryName = $_POST['categoryHiddenName'];
         $newIncomeCategoryName = ucfirst ($_POST['categoryName']);
         
-        if (Income::checkIfUserIncomeCategoryExists($this->user->userId, $currentIncomeCategoryName )){
+        if (!Income::checkIfUserIncomeCategoryExists($this->user->userId, $newIncomeCategoryName )){
             Income::editUserIncomeCategory($this->user->userId, $currentIncomeCategoryName, $newIncomeCategoryName);
+            
+            $this->redirect('/config');
+        }
+        else {
+            echo "blad";
+        }
+    }
+    
+    public function editUserExpenseCategoryAction () {
+        
+        $currentExpenseCategoryName = $_POST['categoryHiddenName'];
+        $newExpenseCategoryName = ucfirst ($_POST['categoryName']);
+        
+        if (!Expense::checkIfUserExpenseCategoryExists($this->user->userId, $newExpenseCategoryName )){
+            Expense::editUserExpenseCategory($this->user->userId, $currentExpenseCategoryName, $newExpenseCategoryName);
             
             $this->redirect('/config');
         }
