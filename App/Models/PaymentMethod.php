@@ -68,4 +68,17 @@ class PaymentMethod extends \Core\Model {
 
         return $stmt->fetchAll();
     }
+    
+    public static function addNewUserPaymentMethod($userId, $newPaymentMethodName) {
+       
+        $db = static::getDB();
+        
+        $stmt = $db->prepare('INSERT INTO user_payment_methods VALUES (NULL, :userId, :name)');
+        
+        $stmt->bindValue( ':userId', $userId, PDO::PARAM_INT );
+        $stmt->bindValue( ':name', $newPaymentMethodName, PDO::PARAM_STR );        
+        
+        return $stmt->execute();
+    }
 }
+

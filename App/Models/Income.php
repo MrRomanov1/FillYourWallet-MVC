@@ -112,8 +112,7 @@ class Income extends \Core\Model {
         $stmt = $db->prepare( 'UPDATE user_income_categories SET name = :name WHERE id = :id ' );
 
         $stmt->bindValue( ':id', $categoryId, PDO::PARAM_INT );
-        $stmt->bindValue( ':name', $newIncomeCategoryName, PDO::PARAM_STR );
-        $stmt->setFetchMode( PDO::FETCH_ASSOC );
+        $stmt->bindValue( ':name', $newIncomeCategoryName, PDO::PARAM_STR );        
         
         return $stmt->execute();
          
@@ -144,5 +143,17 @@ class Income extends \Core\Model {
         $stmt->execute();
 
         return $stmt->fetchAll();
+    }
+    
+    public static function addNewUserIncomeCategory($userId, $newIncomeCategoryName) {
+       
+        $db = static::getDB();
+        
+        $stmt = $db->prepare('INSERT INTO user_income_categories VALUES (NULL, :userId, :name)');
+        
+        $stmt->bindValue( ':userId', $userId, PDO::PARAM_INT );
+        $stmt->bindValue( ':name', $newIncomeCategoryName, PDO::PARAM_STR );        
+        
+        return $stmt->execute();
     }
 }

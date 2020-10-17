@@ -161,4 +161,16 @@ class Expense extends \Core\Model {
 
         return $stmt->fetchAll();
     }
+    
+     public static function addNewUserExpenseCategory($userId, $newExpenseCategoryName) {
+       
+        $db = static::getDB();
+        
+        $stmt = $db->prepare('INSERT INTO user_expense_categories VALUES (NULL, :userId, :name)');
+        
+        $stmt->bindValue( ':userId', $userId, PDO::PARAM_INT );
+        $stmt->bindValue( ':name', $newExpenseCategoryName, PDO::PARAM_STR );        
+        
+        return $stmt->execute();
+    }
 }

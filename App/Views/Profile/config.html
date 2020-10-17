@@ -6,7 +6,7 @@
 <section>
     <header>
         <h2 class = "h2 text-center mt-lg-5 mt-3 pt-lg-5 pt-0">
-           Config
+           Ustawienia
         </h2>
     </header>            
     <article>                
@@ -54,6 +54,13 @@
                             </button>                            
                         </li>
                         {% endfor %}
+                        <li class="list-group-item align-middle">Dodaj nową kategorię
+                            <button type = "button" class = "btn btn-sm float-right btn-success btnAdd" data-toggle="modal" data-target="#addNewIncomeCategory">
+                                <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                </svg>
+                            </button>
+                        </li>
                     </ul>
                     </div>
                 </div>
@@ -80,6 +87,13 @@
                             </button>                            
                         </li>
                         {% endfor %}
+                        <li class="list-group-item align-middle">Dodaj nową kategorię
+                            <button type = "button" class = "btn btn-sm float-right btn-success btnAdd" data-toggle="modal" data-target="#addNewExpenseCategory">
+                                <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                </svg>
+                            </button>
+                        </li>
                     </ul>
                     </div>
                 </div>
@@ -106,6 +120,13 @@
                             </button>                            
                         </li>
                         {% endfor %}
+                        <li class="list-group-item align-middle">Dodaj nową metodę płatności
+                            <button type = "button" class = "btn btn-sm float-right btn-success btnAdd" data-toggle="modal" data-target="#addNewPaymentMethod">
+                                <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                </svg>
+                            </button>
+                        </li>
                     </ul>
                     </div>
                 </div>
@@ -139,7 +160,7 @@
                                 <input type="text" class="form-control mb-3" name = "categoryName" id = "categoryName">
                                 <input type="hidden" name = "categoryHiddenName" id = "categoryHiddenName">
                                 <button type="submit" class="btn btn-default btn-success btn-block">Zatwierdź</button>
-                                <button type="reset" class="btn btn-default btn-danger btn-block">Anuluj</button>
+                                <button type="reset" class="btn btn-default btn-danger btn-block" data-dismiss="modal">Anuluj</button>
                             </form>
                         </div> 
                     </div>
@@ -158,7 +179,7 @@
                                 <input type="text" class="form-control mb-3" name = "categoryName" id = "categoryName">
                                 <input type="hidden" name = "categoryHiddenName" id = "categoryHiddenName">
                                 <button type="submit" class="btn btn-default btn-success btn-block">Zatwierdź</button>
-                                <button type="reset" class="btn btn-default btn-danger btn-block">Anuluj</button>
+                                <button type="reset" class="btn btn-default btn-danger btn-block" data-dismiss="modal">Anuluj</button>
                             </form>
                         </div> 
                     </div>
@@ -177,7 +198,7 @@
                                 <input type="text" class="form-control mb-3" name = "categoryName" id = "categoryName">
                                 <input type="hidden" name = "categoryHiddenName" id = "categoryHiddenName">
                                 <button type="submit" class="btn btn-default btn-success btn-block">Zatwierdź</button>
-                                <button type="reset" class="btn btn-default btn-danger btn-block">Anuluj</button>
+                                <button type="reset" class="btn btn-default btn-danger btn-block" data-dismiss="modal">Anuluj</button>
                             </form>
                         </div> 
                     </div>
@@ -194,7 +215,7 @@
                             <form action = "" method = "post">
                                 <p>Czy na pewno chcesz usunąć tę kategorię?</p>                                
                                 <button type="submit" class="btn btn-default btn-success btn-block">Zatwierdź</button>
-                                <button type="reset" class="btn btn-default btn-danger btn-block">Anuluj</button>
+                                <button type="reset" class="btn btn-default btn-danger btn-block" data-dismiss="modal">Anuluj</button>
                             </form>
                         </div> 
                     </div>
@@ -211,7 +232,7 @@
                             <form action = "" method = "post">
                                 <p>Czy na pewno chcesz usunąć tę kategorię?</p>                                
                                 <button type="submit" class="btn btn-default btn-success btn-block">Zatwierdź</button>
-                                <button type="reset" class="btn btn-default btn-danger btn-block">Anuluj</button>
+                                <button type="reset" class="btn btn-default btn-danger btn-block" data-dismiss="modal">Anuluj</button>
                             </form>
                         </div> 
                     </div>
@@ -228,7 +249,61 @@
                             <form action = "" method = "post">
                                 <p>Czy na pewno chcesz usunąć tę metodę?</p>                                
                                 <button type="submit" class="btn btn-default btn-success btn-block">Zatwierdź</button>
-                                <button type="reset" class="btn btn-default btn-danger btn-block">Anuluj</button>
+                                <button type="reset" class="btn btn-default btn-danger btn-block" data-dismiss="modal">Anuluj</button>
+                            </form>
+                        </div> 
+                    </div>
+                </div> 
+            </div>
+            <div class = "modal fade" id = "addNewIncomeCategory" tabindex="-1" aria-labelledby="addNewIncomeCategory" role = "dialog" aria-hidden="true">
+                <div class = "modal-dialog" role = "document">
+                    <div class = "modal-content">
+                        <div class="modal-header text-center">
+                            <h4>Dodaj nową kategorię przychodu <span class = "deleteCategory"></span></h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action = "/add-income-category" method = "post">
+                                <label for="categoryName">Nazwa kategorii</label>
+                                <input type="text" class="form-control mb-3" name = "categoryName" id = "categoryName">                                
+                                <button type="submit" class="btn btn-default btn-success btn-block">Zatwierdź</button>
+                                <button type="reset" class="btn btn-default btn-danger btn-block" data-dismiss="modal">Anuluj</button>
+                            </form>
+                        </div> 
+                    </div>
+                </div> 
+            </div>
+            <div class = "modal fade" id = "addNewExpenseCategory" tabindex="-1" aria-labelledby="addNewExpenseCategory" role = "dialog" aria-hidden="true">
+                <div class = "modal-dialog" role = "document">
+                    <div class = "modal-content">
+                        <div class="modal-header text-center">
+                            <h4>Dodaj nową kategorię wydatku <span class = "deleteCategory"></span></h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action = "/add-expense-category" method = "post">
+                                <label for="categoryName">Nazwa kategorii</label>
+                                <input type="text" class="form-control mb-3" name = "categoryName" id = "categoryName">                                
+                                <button type="submit" class="btn btn-default btn-success btn-block">Zatwierdź</button>
+                                <button type="reset" class="btn btn-default btn-danger btn-block" data-dismiss="modal">Anuluj</button>
+                            </form>
+                        </div> 
+                    </div>
+                </div> 
+            </div>
+            <div class = "modal fade" id = "addNewPaymentMethod" tabindex="-1" aria-labelledby="addNewPaymentMethod" role = "dialog" aria-hidden="true">
+                <div class = "modal-dialog" role = "document">
+                    <div class = "modal-content">
+                        <div class="modal-header text-center">
+                            <h4>Dodaj nową metodę płatności <span class = "deleteCategory"></span></h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action = "/add-payment-method" method = "post">
+                                <label for="categoryName">Nazwa metody płatności</label>
+                                <input type="text" class="form-control mb-3" name = "categoryName" id = "categoryName">                                
+                                <button type="submit" class="btn btn-default btn-success btn-block">Zatwierdź</button>
+                                <button type="reset" class="btn btn-default btn-danger btn-block" data-dismiss="modal">Anuluj</button>
                             </form>
                         </div> 
                     </div>

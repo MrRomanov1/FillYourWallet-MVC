@@ -30,49 +30,85 @@ class ProfileManager extends Authenticated {
             'paymentMethods' => $paymentMethods
         ] );
     }
-    
-    public function editUserIncomeCategoryAction () {
-        
+
+    public function editUserIncomeCategoryAction () { 
+
         $currentIncomeCategoryName = $_POST['categoryHiddenName'];
-        $newIncomeCategoryName = ucfirst ($_POST['categoryName']);
-        
-        if (!Income::checkIfUserIncomeCategoryExists($this->user->userId, $newIncomeCategoryName )){
-            Income::editUserIncomeCategory($this->user->userId, $currentIncomeCategoryName, $newIncomeCategoryName);
-            
-            $this->redirect('/config');
-        }
-        else {
-            echo "blad";
+        $newIncomeCategoryName = ucfirst ( $_POST['categoryName'] );
+
+        if ( !Income::checkIfUserIncomeCategoryExists( $this->user->userId, $newIncomeCategoryName ) ) {
+            Income::editUserIncomeCategory( $this->user->userId, $currentIncomeCategoryName, $newIncomeCategoryName );
+
+            $this->redirect( '/config' );
+        } else {
+            echo 'blad';
         }
     }
-    
+
     public function editUserExpenseCategoryAction () {
-        
+
         $currentExpenseCategoryName = $_POST['categoryHiddenName'];
-        $newExpenseCategoryName = ucfirst ($_POST['categoryName']);
-        
-        if (!Expense::checkIfUserExpenseCategoryExists($this->user->userId, $newExpenseCategoryName )){
-            Expense::editUserExpenseCategory($this->user->userId, $currentExpenseCategoryName, $newExpenseCategoryName);
-            
-            $this->redirect('/config');
+        $newExpenseCategoryName = ucfirst ( $_POST['categoryName'] );
+
+        if ( !Expense::checkIfUserExpenseCategoryExists( $this->user->userId, $newExpenseCategoryName ) ) {
+            Expense::editUserExpenseCategory( $this->user->userId, $currentExpenseCategoryName, $newExpenseCategoryName );
+
+            $this->redirect( '/config' );
+        } else {
+            echo 'blad';
         }
-        else {
-            echo "blad";
+    }
+
+    public function editUserPaymentMethodAction () {
+
+        $currentPaymentMethodName = $_POST['categoryHiddenName'];
+        $newPaymentMethodName = ucfirst ( $_POST['categoryName'] );
+
+        if ( !PaymentMethod::checkIfUserPaymentMethodExists( $this->user->userId, $newPaymentMethodName ) ) {
+            PaymentMethod::editUserPaymentMethod( $this->user->userId, $currentPaymentMethodName, $newPaymentMethodName );
+
+            $this->redirect( '/config' );
+        } else {
+            echo 'blad';
+        }
+    }
+
+    public function addNewUserIncomeCategoryAction() { 
+        
+        $newIncomeCategoryName = ucfirst ( $_POST['categoryName'] );
+
+         if ( !Income::checkIfUserIncomeCategoryExists( $this->user->userId, $newIncomeCategoryName ) ) {
+            Income::addNewUserIncomeCategory( $this->user->userId, $newIncomeCategoryName );
+
+            $this->redirect( '/config' );
+        } else {
+            echo 'Istnieje';
         }
     }
     
-    public function editUserPaymentMethodAction () {
+     public function addNewUserExpenseCategoryAction() { 
         
-        $currentPaymentMethodName = $_POST['categoryHiddenName'];
-        $newPaymentMethodName = ucfirst ($_POST['categoryName']);
-        
-        if (!PaymentMethod::checkIfUserPaymentMethodExists($this->user->userId, $newPaymentMethodName )){
-            PaymentMethod::editUserPaymentMethod($this->user->userId, $currentPaymentMethodName, $newPaymentMethodName);
-            
-            $this->redirect('/config');
+        $newExpenseCategoryName = ucfirst ( $_POST['categoryName'] );
+
+         if ( !Expense::checkIfUserExpenseCategoryExists( $this->user->userId, $newExpenseCategoryName ) ) {
+            Expense::addNewUserExpenseCategory( $this->user->userId, $newExpenseCategoryName );
+
+            $this->redirect( '/config' );
+        } else {
+            echo 'Istnieje';
         }
-        else {
-            echo "blad";
+    }
+    
+    public function addNewUserPaymentMethodAction() { 
+        
+        $newPaymentMethodName = ucfirst ( $_POST['categoryName'] );
+
+         if ( !PaymentMethod::checkIfUserPaymentMethodExists( $this->user->userId, $newPaymentMethodName ) ) {
+            PaymentMethod::addNewUserPaymentMethod( $this->user->userId, $newPaymentMethodName );
+
+            $this->redirect( '/config' );
+        } else {
+            echo 'Istnieje';
         }
     }
 
