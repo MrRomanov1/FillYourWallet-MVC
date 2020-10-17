@@ -20,7 +20,7 @@ class Income extends \Core\Model {
     public function saveUserIncome( $userId ) {
         $this->amount = str_replace( [','], ['.'], $this->amount );
         $this->amountErrors = Validation::validateAmount( $this->amount );
-        $this->dateErrors = Validation::validateDate( $this->date );        
+        $this->dateErrors = Validation::validateDate( $this->date );
 
         if ( ( empty( $this->amountErrors ) ) && ( empty( $this->dateErrors ) ) ) {
 
@@ -86,6 +86,18 @@ class Income extends \Core\Model {
 
         $stmt->setFetchMode( PDO::FETCH_ASSOC );
 
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+    }
+
+    public static function getUserIncomeCategories( $userId ) {
+        $db = static::getDB();
+
+        $stmt = $db->prepare( 'SELECT name FROM user_income_categories WHERE userId = :userId' );
+
+        $stmt->bindValue( ':userId', $userId, PDO::PARAM_INT );
+        $stmt->setFetchMode( PDO::FETCH_ASSOC );
         $stmt->execute();
 
         return $stmt->fetchAll();
