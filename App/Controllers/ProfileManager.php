@@ -60,5 +60,20 @@ class ProfileManager extends Authenticated {
             echo "blad";
         }
     }
+    
+    public function editUserPaymentMethodAction () {
+        
+        $currentPaymentMethodName = $_POST['categoryHiddenName'];
+        $newPaymentMethodName = ucfirst ($_POST['categoryName']);
+        
+        if (!PaymentMethod::checkIfUserPaymentMethodExists($this->user->userId, $newPaymentMethodName )){
+            PaymentMethod::editUserPaymentMethod($this->user->userId, $currentPaymentMethodName, $newPaymentMethodName);
+            
+            $this->redirect('/config');
+        }
+        else {
+            echo "blad";
+        }
+    }
 
 }

@@ -26,6 +26,7 @@ $router->addRouteToRoutingTable('customBalance', ['controller' => 'Balance', 'ac
 $router->addRouteToRoutingTable('config', ['controller' => 'ProfileManager', 'action' => 'config']);
 $router->addRouteToRoutingTable('edit-income', ['controller' => 'ProfileManager', 'action' => 'editUserIncomeCategory']);
 $router->addRouteToRoutingTable('edit-expense', ['controller' => 'ProfileManager', 'action' => 'editUserExpenseCategory']);
+$router->addRouteToRoutingTable('edit-payment-method', ['controller' => 'ProfileManager', 'action' => 'editUserPaymentMethod']);
 $router->addRouteToRoutingTable('logout', ['controller' => 'Home', 'action' => 'destroy']);
 $router->addRouteToRoutingTable('{controller}/{action}');
 
