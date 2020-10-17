@@ -102,5 +102,47 @@ class Income extends \Core\Model {
 
         return $stmt->fetchAll();
     }
+    
+    public static function editUserIncomeCategory ( $userId, $currentIncomeCategoryName, $newIncomeCategoryName ) {        
+        
+        $categoryId = static::getUserIncomeCategoryId($userId, $currentIncomeCategoryName);
+        
+        $db = static::getDB();
+        
+        $stmt = $db->prepare( 'UPDATE user_income_categories SET name = :name WHERE id = :id ' );
 
+        $stmt->bindValue( ':id', $categoryId, PDO::PARAM_INT );
+        $stmt->bindValue( ':name', $newIncomeCategoryName, PDO::PARAM_STR );
+        $stmt->setFetchMode( PDO::FETCH_ASSOC );
+        
+        return $stmt->execute();
+         
+    }
+    
+    public static function getUserIncomeCategoryId ( $userId, $currentIncomeCategoryName ) {
+        $db = static::getDB();
+        
+        $stmt = $db->prepare( 'SELECT id FROM user_income_categories WHERE name =:name AND userId =:userId ' );
+
+        $stmt->bindValue( ':userId', $userId, PDO::PARAM_INT );
+        $stmt->bindValue( ':name', $currentIncomeCategoryName, PDO::PARAM_STR );
+        
+        $stmt->execute();
+
+        return $stmt->fetchColumn();
+    }
+    
+    public static function checkIfUserIncomeCategoryExists($userId, $currentIncomeCategoryName) {
+        
+        $db = static::getDB();
+
+        $stmt = $db->prepare( 'SELECT * FROM user_income_categories WHERE userId = :userId AND name =:name' );
+
+        $stmt->bindValue( ':userId', $userId, PDO::PARAM_INT );
+        $stmt->bindValue( ':name', $currentIncomeCategoryName, PDO::PARAM_STR );
+        $stmt->setFetchMode( PDO::FETCH_ASSOC );
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+    }
 }

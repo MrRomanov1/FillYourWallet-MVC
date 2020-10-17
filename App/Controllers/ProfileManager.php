@@ -30,5 +30,20 @@ class ProfileManager extends Authenticated {
             'paymentMethods' => $paymentMethods
         ] );
     }
+    
+    public function editUserIncomeCategoryAction () {
+        
+        $currentIncomeCategoryName = $_POST['categoryHiddenName'];
+        $newIncomeCategoryName = ucfirst ($_POST['categoryName']);
+        
+        if (Income::checkIfUserIncomeCategoryExists($this->user->userId, $currentIncomeCategoryName )){
+            Income::editUserIncomeCategory($this->user->userId, $currentIncomeCategoryName, $newIncomeCategoryName);
+            
+            $this->redirect('/config');
+        }
+        else {
+            echo "blad";
+        }
+    }
 
 }
