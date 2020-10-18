@@ -46,28 +46,15 @@
                             {% endif %}
                             <select class="form-control mb-3" name = "paymentMethod" required>
                                 <option value="" disabled selected hidden> Sposób płatności</option>
-                                <option value="Gotówka"> Gotówka </option>
-                                <option value="Karta debetowa"> Karta debetowa </option>
-                                <option value="Karta kredytowa"> Karta kredytowa </option>
+                                {% for value in userPaymentMethods %}
+                                <option value="{{value.name}}"> {{value.name}} </option>                                
+                                {% endfor %}                                
                             </select>
                             <select class="form-control mb-3" name = "category" required>
                                 <option value="" disabled selected hidden> Kategoria</option>
-                                <option value="Transport">Transport</option>
-                                <option value="Książki">Książki</option>
-                                <option value="Jedzenie">Jedzenie</option>					
-                                <option value="Mieszkanie">Mieszkanie</option>					
-                                <option value="Telekomunikacja">Telekomunikacja</option>					
-                                <option value="Opieka zdrowotna">Opieka zdrowotna</option>					
-                                <option value="Ubrania">Ubrania</option>					
-                                <option value="Hygiene">Higiena</option>					
-                                <option value="Dzieci">Dzieci</option>					
-                                <option value="Rozrywka">Rozrywka</option>					
-                                <option value="Wycieczka">Wycieczka</option>					
-                                <option value="Oszczędności">Oszczędności</option>					
-                                <option value="Na emeryturę">Na emeryturę</option>					
-                                <option value="Spłata długów">Spłata długów</option>
-                                <option value="Darowizna">Darowizna</option>					
-                                <option value="Inne">Inne</option>                                        
+                                {% for value in userExpenseCategories %}
+                                <option value="{{value.name}}"> {{value.name}} </option>                                
+                                {% endfor %}                                                                       
                             </select>
                             <textarea class="form-control" rows="2" placeholder = "Komentarz" onfocus="this.placeholder=''" onblur="this.placeholder='Komentarz'" name = "comment">{{expenses.comment}}</textarea>
                         </div>

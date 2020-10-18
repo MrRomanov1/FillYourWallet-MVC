@@ -46,10 +46,9 @@
                             {% endif %}
                             <select class="form-control mb-3" name = "category" required>
                                 <option value="" disabled selected hidden> Kategoria</option>
-                                <option value="Wynagrodzenie"> Wynagrodzenie </option>
-                                <option value="Odsetki bankowe"> Odsetki bankowe </option>
-                                <option value="Sprzedaż"> Sprzedaż </option>					
-                                <option value="Inne"> Inne </option>
+                                {% for value in userIncomeCategories %}
+                                <option value="{{value.name}}"> {{value.name}} </option>                                
+                                {% endfor %}
                             </select>
                             <textarea class="form-control" rows="2" placeholder = "Komentarz" onfocus="this.placeholder=''" onblur="this.placeholder='Komentarz'" name = "comment">{{incomes.comment}}</textarea>
                         </div>

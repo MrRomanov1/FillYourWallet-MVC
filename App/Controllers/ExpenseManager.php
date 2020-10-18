@@ -5,6 +5,7 @@ namespace App\Controllers;
 use \Core\View;
 use \App\Auth;
 use \App\Models\Expense;
+use \App\Models\PaymentMethod;
 
 class ExpenseManager extends Authenticated {
 
@@ -17,11 +18,16 @@ class ExpenseManager extends Authenticated {
 
     public function viewPageAction( $arg1 = 0, $arg2 = 0 ) {
         $success = false;
+
+        $userExpenseCategories = Expense::getUserExpenseCategories( $this->user->userId );
+        $userPaymentMethods = PaymentMethod::getUserPaymentMethods( $this->user->userId );
         View::renderTemplate( 'Main/expense.html', [
             'user' => $this->user,
             'expenses' => $arg1,
             'errors' => $arg2,
-            'success' => $success
+            'success' => $success,
+            'userExpenseCategories' => $userExpenseCategories,
+            'userPaymentMethods' => $userPaymentMethods
         ] );
     }
 
