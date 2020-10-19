@@ -18,11 +18,15 @@ class IncomeManager extends Authenticated {
 
     public function viewPageAction( $arg1 = 0, $arg2 = 0 ) {
         $success = false;
+
+        $userIncomeCategories = Income::getUserIncomeCategories( $this->user->userId );
+
         View::renderTemplate( 'Main/income.html', [
             'user' => $this->user,
             'incomes' => $arg1,
             'errors' => $arg2,
-            'success' => $success
+            'success' => $success,
+            'userIncomeCategories' => $userIncomeCategories
         ] );
     }
 
@@ -32,9 +36,11 @@ class IncomeManager extends Authenticated {
 
         if ( $income->saveUserIncome( $this->user->userId ) ) {
             $success = true;
+            $userIncomeCategories = Income::getUserIncomeCategories( $this->user->userId );
             View::renderTemplate( 'Main/income.html', [
                 'user' => $this->user,
-                'success' => $success
+                'success' => $success,
+                'userIncomeCategories' => $userIncomeCategories
             ] );
 
         } else {
@@ -45,9 +51,10 @@ class IncomeManager extends Authenticated {
                 $incomes['comment'] = $_POST['comment'];
             }
             $errors['dateError'] = $income -> dateErrors;
-            $errors['amountError'] = $income -> amountErrors;            
-            $this -> viewPageAction( $incomes, $errors  );
-            
+            $errors['amountError'] = $income -> amountErrors;
+
+            $this -> viewPageAction( $incomes, $errors );
+
         }
     }
 

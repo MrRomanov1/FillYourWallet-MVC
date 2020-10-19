@@ -24,6 +24,15 @@ $router->addRouteToRoutingTable('currentYearBalance', ['controller' => 'Balance'
 $router->addRouteToRoutingTable('lastMonthBalance', ['controller' => 'Balance', 'action' => 'lastMonthBalance']);
 $router->addRouteToRoutingTable('customBalance', ['controller' => 'Balance', 'action' => 'customBalance']);
 $router->addRouteToRoutingTable('config', ['controller' => 'ProfileManager', 'action' => 'config']);
+$router->addRouteToRoutingTable('edit-income', ['controller' => 'ProfileManager', 'action' => 'editUserIncomeCategory']);
+$router->addRouteToRoutingTable('edit-expense', ['controller' => 'ProfileManager', 'action' => 'editUserExpenseCategory']);
+$router->addRouteToRoutingTable('edit-payment-method', ['controller' => 'ProfileManager', 'action' => 'editUserPaymentMethod']);
+$router->addRouteToRoutingTable('add-income-category', ['controller' => 'ProfileManager', 'action' => 'addNewUserIncomeCategory']);
+$router->addRouteToRoutingTable('add-expense-category', ['controller' => 'ProfileManager', 'action' => 'addNewUserExpenseCategory']);
+$router->addRouteToRoutingTable('add-payment-method', ['controller' => 'ProfileManager', 'action' => 'addNewUserPaymentMethod']);
+$router->addRouteToRoutingTable('delete-income-category', ['controller' => 'ProfileManager', 'action' => 'deleteUserIncomeCategory']);
+$router->addRouteToRoutingTable('delete-expense-category', ['controller' => 'ProfileManager', 'action' => 'deleteUserExpenseCategory']);
+$router->addRouteToRoutingTable('delete-payment-method', ['controller' => 'ProfileManager', 'action' => 'deleteUserPaymentMethod']);
 $router->addRouteToRoutingTable('logout', ['controller' => 'Home', 'action' => 'destroy']);
 $router->addRouteToRoutingTable('{controller}/{action}');
 
