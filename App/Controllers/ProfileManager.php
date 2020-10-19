@@ -122,9 +122,9 @@ class ProfileManager extends Authenticated {
 
         $incomeCategoryName = $_POST['categoryHiddenName'];
         $option = $_POST['option'];
-        if (isset ($_POST['categorySelect'])) {
+        if ( isset ( $_POST['categorySelect'] ) ) {
             $selectedCategoryToMoveIncomes = $_POST['categorySelect'];
-        }        
+        }
 
         if ( $option == 'delete' ) {
             if ( Income::deleteIncomesFromUserIncomeCategory( $this->user->userId, $incomeCategoryName ) ) {
@@ -143,7 +143,7 @@ class ProfileManager extends Authenticated {
             if ( Income::moveIncomesToOtherCategory ( $this->user->userId, $incomeCategoryName, $selectedCategoryToMoveIncomes ) ) {
                 if ( Income::deleteIncomesFromUserIncomeCategory( $this->user->userId, $incomeCategoryName ) ) {
                     Income::deleteUserIncomeCategory( $this->user->userId, $incomeCategoryName );
-                    
+
                     $this->redirect( '/config' );
 
                 } else {
@@ -156,14 +156,14 @@ class ProfileManager extends Authenticated {
             }
         }
     }
-    
+
     public function deleteUserExpenseCategoryAction() {
 
         $expenseCategoryName = $_POST['categoryHiddenName'];
         $option = $_POST['option'];
-        if (isset ($_POST['categorySelect'])) {
+        if ( isset ( $_POST['categorySelect'] ) ) {
             $selectedCategoryToMoveExpense = $_POST['categorySelect'];
-        }        
+        }
 
         if ( $option == 'delete' ) {
             if ( Expense::deleteExpensesFromUserExpenseCategory( $this->user->userId, $expenseCategoryName ) ) {
@@ -182,7 +182,7 @@ class ProfileManager extends Authenticated {
             if ( Expense::moveExpensesToOtherCategory ( $this->user->userId, $expenseCategoryName, $selectedCategoryToMoveExpense ) ) {
                 if ( Expense::deleteExpensesFromUserExpenseCategory( $this->user->userId, $expenseCategoryName ) ) {
                     Expense::deleteUserExpensesCategory( $this->user->userId, $expenseCategoryName );
-                    
+
                     $this->redirect( '/config' );
 
                 } else {
@@ -193,6 +193,17 @@ class ProfileManager extends Authenticated {
                 echo 'Blad';
                 //work in progress
             }
+        }
+    }
+
+    public function deleteUserPaymentMethodAction() {
+
+        $paymentMethodToDelete = $_POST['categoryHiddenName'];
+        if ( PaymentMethod::deleteUserPaymentMethod ( $this->user->userId, $paymentMethodToDelete ) ) {
+            $this->redirect( '/config' );
+        } else {
+            echo 'Blad';
+            //work in progress
         }
     }
 }

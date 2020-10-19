@@ -80,5 +80,16 @@ class PaymentMethod extends \Core\Model {
         
         return $stmt->execute();
     }
+    
+    public static function deleteUserPaymentMethod ($userId, $paymentMethodToDelete) {
+        $db = static::getDB();
+        
+        $stmt = $db->prepare('DELETE FROM user_payment_methods WHERE userId = :userId AND name =:name');
+        
+        $stmt->bindValue( ':userId', $userId, PDO::PARAM_INT );
+        $stmt->bindValue( ':name', $paymentMethodToDelete, PDO::PARAM_STR );        
+        
+        return $stmt->execute();
+    }
 }
 

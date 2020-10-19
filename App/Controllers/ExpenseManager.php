@@ -37,9 +37,13 @@ class ExpenseManager extends Authenticated {
 
         if ( $expense->saveUserExpense( $this->user->userId ) ) {
             $success = true;
+            $userExpenseCategories = Expense::getUserExpenseCategories( $this->user->userId );
+            $userPaymentMethods = PaymentMethod::getUserPaymentMethods( $this->user->userId );
             View::renderTemplate( 'Main/expense.html', [
                 'user' => $this->user,
-                'success' => $success
+                'success' => $success,
+                'userExpenseCategories' => $userExpenseCategories,
+                'userPaymentMethods' => $userPaymentMethods                
             ] );
         } else {
             $expenses['amount'] = $_POST['amount'];
