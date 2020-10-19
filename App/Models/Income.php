@@ -118,13 +118,13 @@ class Income extends \Core\Model {
          
     }
     
-    public static function getUserIncomeCategoryId ( $userId, $currentIncomeCategoryName ) {
+    public static function getUserIncomeCategoryId ( $userId, $incomeCategoryName ) {
         $db = static::getDB();
         
         $stmt = $db->prepare( 'SELECT id FROM user_income_categories WHERE name =:name AND userId =:userId ' );
 
         $stmt->bindValue( ':userId', $userId, PDO::PARAM_INT );
-        $stmt->bindValue( ':name', $currentIncomeCategoryName, PDO::PARAM_STR );
+        $stmt->bindValue( ':name', $incomeCategoryName, PDO::PARAM_STR );
         
         $stmt->execute();
 
@@ -155,5 +155,71 @@ class Income extends \Core\Model {
         $stmt->bindValue( ':name', $newIncomeCategoryName, PDO::PARAM_STR );        
         
         return $stmt->execute();
+    }
+    
+     public static function deleteUserIncomeCategory($userId, $categoryName) {
+                    
+        $db = static::getDB();
+        
+        $stmt = $db->prepare('DELETE FROM user_income_categories WHERE userId = :userId AND name =:name');
+        
+        $stmt->bindValue( ':userId', $userId, PDO::PARAM_INT );
+        $stmt->bindValue( ':name', $categoryName, PDO::PARAM_STR );        
+        
+        return $stmt->execute();
+    }
+    
+    public static function deleteIncomesFromUserIncomeCategory($userId, $categoryName) {
+       
+        $categoryId = static::getUserIncomeCategoryId($userId, $categoryName); 
+        
+        $db = static::getDB();
+        
+        $stmt = $db->prepare('DELETE FROM incomes WHERE userId = :userId AND userIncomeCategoryId =:userIncomeCategoryId');
+        
+        $stmt->bindValue( ':userId', $userId, PDO::PARAM_INT );
+        $stmt->bindValue( ':userIncomeCategoryId', $categoryId, PDO::PARAM_INT );        
+        
+        return $stmt->execute();
+    }
+    
+    public static function moveIncomesToOtherCategory($userId, $categoryName, $selectedCategoryToMoveIncomes ) {
+        
+        $categoryId = static::getUserIncomeCategoryId($userId, $categoryName);
+        $categoryIdToMoveIncomes = static::getUserIncomeCategoryId($userId, $selectedCategoryToMoveIncomes);
+        $userIncomes = static::getUserIncomesFromCategory($userId, $categoryId);
+        
+        //print_r( array_values( $userIncomes ));
+        //exit;
+        
+        $db = static::getDB();
+        
+        foreach ($userIncomes as $income) {
+            
+            $stmt = $db->prepare('INSERT INTO incomes VALUES(NULL, :userId, :userIncomeCategoryId, :amount, :incomeDate, :incomeComment)');
+            
+            $stmt->bindValue( ':userId', $userId, PDO::PARAM_INT );
+            $stmt->bindValue( ':userIncomeCategoryId', $categoryIdToMoveIncomes, PDO::PARAM_INT );            
+            $stmt->bindValue( ':amount', $income['amount'], PDO::PARAM_STR );
+            $stmt->bindValue( ':incomeDate', $income['incomeDate'], PDO::PARAM_STR );
+            $stmt->bindValue( ':incomeComment', $income['incomeComment'], PDO::PARAM_STR );
+            
+            $stmt->execute();
+        }
+        return true;
+    }
+    
+    public static function getUserIncomesFromCategory ($userId, $categoryId) {
+        $db = static::getDB();
+        
+        $stmt = $db->prepare( 'SELECT * FROM incomes WHERE userId = :userId AND userIncomeCategoryId =:userIncomeCategoryId' );
+        
+        $stmt->bindValue( ':userId', $userId, PDO::PARAM_INT );
+        $stmt->bindValue( ':userIncomeCategoryId', $categoryId, PDO::PARAM_INT ); 
+        
+        $stmt->setFetchMode( PDO::FETCH_ASSOC );
+        $stmt->execute();
+        
+        return $stmt->fetchAll();
     }
 }

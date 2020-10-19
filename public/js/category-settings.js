@@ -9,7 +9,7 @@ $(document).ready(function(){
             {        
                 $(this).removeAttr("value");
             }); 
-    });
+    }); 
 }); 
 
 function setInputValues(me){

@@ -36,9 +36,11 @@ class IncomeManager extends Authenticated {
 
         if ( $income->saveUserIncome( $this->user->userId ) ) {
             $success = true;
+            $userIncomeCategories = Income::getUserIncomeCategories( $this->user->userId );
             View::renderTemplate( 'Main/income.html', [
                 'user' => $this->user,
-                'success' => $success
+                'success' => $success,
+                'userIncomeCategories' => $userIncomeCategories
             ] );
 
         } else {

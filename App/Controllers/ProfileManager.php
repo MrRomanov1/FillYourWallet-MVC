@@ -31,7 +31,7 @@ class ProfileManager extends Authenticated {
         ] );
     }
 
-    public function editUserIncomeCategoryAction () { 
+    public function editUserIncomeCategoryAction () {
 
         $currentIncomeCategoryName = $_POST['categoryHiddenName'];
         $newIncomeCategoryName = ucfirst ( $_POST['categoryName'] );
@@ -42,6 +42,7 @@ class ProfileManager extends Authenticated {
             $this->redirect( '/config' );
         } else {
             echo 'blad';
+            //work in progress
         }
     }
 
@@ -56,6 +57,7 @@ class ProfileManager extends Authenticated {
             $this->redirect( '/config' );
         } else {
             echo 'blad';
+            //work in progress
         }
     }
 
@@ -70,46 +72,127 @@ class ProfileManager extends Authenticated {
             $this->redirect( '/config' );
         } else {
             echo 'blad';
+            //work in progress
         }
     }
 
-    public function addNewUserIncomeCategoryAction() { 
-        
+    public function addNewUserIncomeCategoryAction() {
+
         $newIncomeCategoryName = ucfirst ( $_POST['categoryName'] );
 
-         if ( !Income::checkIfUserIncomeCategoryExists( $this->user->userId, $newIncomeCategoryName ) ) {
+        if ( !Income::checkIfUserIncomeCategoryExists( $this->user->userId, $newIncomeCategoryName ) ) {
             Income::addNewUserIncomeCategory( $this->user->userId, $newIncomeCategoryName );
 
             $this->redirect( '/config' );
         } else {
             echo 'Istnieje';
+            //work in progress
         }
     }
-    
-     public function addNewUserExpenseCategoryAction() { 
-        
+
+    public function addNewUserExpenseCategoryAction() {
+
         $newExpenseCategoryName = ucfirst ( $_POST['categoryName'] );
 
-         if ( !Expense::checkIfUserExpenseCategoryExists( $this->user->userId, $newExpenseCategoryName ) ) {
+        if ( !Expense::checkIfUserExpenseCategoryExists( $this->user->userId, $newExpenseCategoryName ) ) {
             Expense::addNewUserExpenseCategory( $this->user->userId, $newExpenseCategoryName );
 
             $this->redirect( '/config' );
         } else {
             echo 'Istnieje';
+            //work in progress
         }
     }
-    
-    public function addNewUserPaymentMethodAction() { 
-        
+
+    public function addNewUserPaymentMethodAction() {
+
         $newPaymentMethodName = ucfirst ( $_POST['categoryName'] );
 
-         if ( !PaymentMethod::checkIfUserPaymentMethodExists( $this->user->userId, $newPaymentMethodName ) ) {
+        if ( !PaymentMethod::checkIfUserPaymentMethodExists( $this->user->userId, $newPaymentMethodName ) ) {
             PaymentMethod::addNewUserPaymentMethod( $this->user->userId, $newPaymentMethodName );
 
             $this->redirect( '/config' );
         } else {
             echo 'Istnieje';
+            //work in progress
         }
     }
 
+    public function deleteUserIncomeCategoryAction() {
+
+        $incomeCategoryName = $_POST['categoryHiddenName'];
+        $option = $_POST['option'];
+        if (isset ($_POST['categorySelect'])) {
+            $selectedCategoryToMoveIncomes = $_POST['categorySelect'];
+        }        
+
+        if ( $option == 'delete' ) {
+            if ( Income::deleteIncomesFromUserIncomeCategory( $this->user->userId, $incomeCategoryName ) ) {
+                if ( Income::deleteUserIncomeCategory( $this->user->userId, $incomeCategoryName ) ) {
+                    $this->redirect( '/config' );
+                } else {
+                    echo 'Blad';
+                    //work in progress
+                }
+            } else {
+                echo 'Blad';
+                //work in progress
+            }
+
+        } else {
+            if ( Income::moveIncomesToOtherCategory ( $this->user->userId, $incomeCategoryName, $selectedCategoryToMoveIncomes ) ) {
+                if ( Income::deleteIncomesFromUserIncomeCategory( $this->user->userId, $incomeCategoryName ) ) {
+                    Income::deleteUserIncomeCategory( $this->user->userId, $incomeCategoryName );
+                    
+                    $this->redirect( '/config' );
+
+                } else {
+                    echo 'Blad';
+                    //work in progress
+                }
+            } else {
+                echo 'Blad';
+                //work in progress
+            }
+        }
+    }
+    
+    public function deleteUserExpenseCategoryAction() {
+
+        $expenseCategoryName = $_POST['categoryHiddenName'];
+        $option = $_POST['option'];
+        if (isset ($_POST['categorySelect'])) {
+            $selectedCategoryToMoveExpense = $_POST['categorySelect'];
+        }        
+
+        if ( $option == 'delete' ) {
+            if ( Expense::deleteExpensesFromUserIncomeCategory( $this->user->userId, $incomeCategoryName ) ) {
+                if ( Expense::deleteUserExpensesCategory( $this->user->userId, $incomeCategoryName ) ) {
+                    $this->redirect( '/config' );
+                } else {
+                    echo 'Blad';
+                    //work in progress
+                }
+            } else {
+                echo 'Blad';
+                //work in progress
+            }
+
+        } else {
+            if ( Expense::moveExpensesToOtherCategory ( $this->user->userId, $incomeCategoryName, $selectedCategoryToMoveIncomes ) ) {
+                if ( Expense::deleteExpensesFromUserIncomeCategory( $this->user->userId, $incomeCategoryName ) ) {
+                    Expense::deleteUserExpensesCategory( $this->user->userId, $incomeCategoryName );
+                    
+                    $this->redirect( '/config' );
+
+                } else {
+                    echo 'Blad';
+                    //work in progress
+                }
+            } else {
+                echo 'Blad';
+                //work in progress
+            }
+        }
+    }
 }
