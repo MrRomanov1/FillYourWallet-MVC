@@ -188,10 +188,7 @@ class Income extends \Core\Model {
         $categoryId = static::getUserIncomeCategoryId($userId, $categoryName);
         $categoryIdToMoveIncomes = static::getUserIncomeCategoryId($userId, $selectedCategoryToMoveIncomes);
         $userIncomes = static::getUserIncomesFromCategory($userId, $categoryId);
-        
-        //print_r( array_values( $userIncomes ));
-        //exit;
-        
+                
         $db = static::getDB();
         
         foreach ($userIncomes as $income) {

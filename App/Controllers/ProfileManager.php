@@ -166,8 +166,8 @@ class ProfileManager extends Authenticated {
         }        
 
         if ( $option == 'delete' ) {
-            if ( Expense::deleteExpensesFromUserIncomeCategory( $this->user->userId, $incomeCategoryName ) ) {
-                if ( Expense::deleteUserExpensesCategory( $this->user->userId, $incomeCategoryName ) ) {
+            if ( Expense::deleteExpensesFromUserExpenseCategory( $this->user->userId, $expenseCategoryName ) ) {
+                if ( Expense::deleteUserExpensesCategory( $this->user->userId, $expenseCategoryName ) ) {
                     $this->redirect( '/config' );
                 } else {
                     echo 'Blad';
@@ -179,9 +179,9 @@ class ProfileManager extends Authenticated {
             }
 
         } else {
-            if ( Expense::moveExpensesToOtherCategory ( $this->user->userId, $incomeCategoryName, $selectedCategoryToMoveIncomes ) ) {
-                if ( Expense::deleteExpensesFromUserIncomeCategory( $this->user->userId, $incomeCategoryName ) ) {
-                    Expense::deleteUserExpensesCategory( $this->user->userId, $incomeCategoryName );
+            if ( Expense::moveExpensesToOtherCategory ( $this->user->userId, $expenseCategoryName, $selectedCategoryToMoveExpense ) ) {
+                if ( Expense::deleteExpensesFromUserExpenseCategory( $this->user->userId, $expenseCategoryName ) ) {
+                    Expense::deleteUserExpensesCategory( $this->user->userId, $expenseCategoryName );
                     
                     $this->redirect( '/config' );
 
