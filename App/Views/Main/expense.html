@@ -40,7 +40,7 @@
                             {% if errors.amountError is not empty%}                            
                             <div style="color:red; font-size:13; text-align:center">{{errors.amountError|join('<br/>')|raw}}</div>                            
                             {% endif %}
-                            <input type="date" class="form-control mb-3" name = "date"  value = "{{expenses.date}}" required>
+                            <input type="date" class="form-control mb-3" name = "date"  value = "{% if expenses.date is defined %}{{expenses.date}}{% else %}{{currentDate}}{% endif %}" required>
                             {% if errors.dateError is not empty%}                            
                             <div style="color:red; font-size:13; text-align:center">{{errors.dateError|join('<br>')|raw}}</div>                            
                             {% endif %}
