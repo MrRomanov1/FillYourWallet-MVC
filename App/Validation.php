@@ -70,4 +70,10 @@ class Validation {
         }
         return false;
     }
+
+    public static function getCurrentDate() {
+        $currentDate = new DateTime();         
+
+        return $currentDate -> format('Y-m-d');
+    }
 }

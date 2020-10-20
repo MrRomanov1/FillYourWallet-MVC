@@ -6,6 +6,7 @@ use \Core\View;
 use \App\Auth;
 use \App\Models\Expense;
 use \App\Models\PaymentMethod;
+use \App\Validation;
 
 class ExpenseManager extends Authenticated {
 
@@ -18,6 +19,7 @@ class ExpenseManager extends Authenticated {
 
     public function viewPageAction( $arg1 = 0, $arg2 = 0 ) {
         $success = false;
+        $currentDate = Validation::getCurrentDate();
 
         $userExpenseCategories = Expense::getUserExpenseCategories( $this->user->userId );
         $userPaymentMethods = PaymentMethod::getUserPaymentMethods( $this->user->userId );
@@ -27,7 +29,8 @@ class ExpenseManager extends Authenticated {
             'errors' => $arg2,
             'success' => $success,
             'userExpenseCategories' => $userExpenseCategories,
-            'userPaymentMethods' => $userPaymentMethods
+            'userPaymentMethods' => $userPaymentMethods,
+            'currentDate' => $currentDate
         ] );
     }
 

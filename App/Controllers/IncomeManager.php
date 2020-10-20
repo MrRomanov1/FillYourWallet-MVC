@@ -17,7 +17,8 @@ class IncomeManager extends Authenticated {
     }
 
     public function viewPageAction( $arg1 = 0, $arg2 = 0 ) {
-        $success = false;
+        $success = false;        
+        $currentDate = Validation::getCurrentDate();
 
         $userIncomeCategories = Income::getUserIncomeCategories( $this->user->userId );
 
@@ -26,7 +27,8 @@ class IncomeManager extends Authenticated {
             'incomes' => $arg1,
             'errors' => $arg2,
             'success' => $success,
-            'userIncomeCategories' => $userIncomeCategories
+            'userIncomeCategories' => $userIncomeCategories,
+            'currentDate' => $currentDate
         ] );
     }
 
