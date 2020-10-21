@@ -110,7 +110,7 @@ class Expense extends \Core\Model {
     public static function getUserExpenseCategories( $userId ) {
         $db = static::getDB();
 
-        $stmt = $db->prepare( 'SELECT name FROM user_expense_categories WHERE userId = :userId' );
+        $stmt = $db->prepare( 'SELECT name, expenseLimit FROM user_expense_categories WHERE userId = :userId' );
 
         $stmt->bindValue( ':userId', $userId, PDO::PARAM_INT );
         $stmt->setFetchMode( PDO::FETCH_ASSOC );
