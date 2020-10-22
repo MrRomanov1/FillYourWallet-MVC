@@ -237,4 +237,30 @@ class Expense extends \Core\Model {
         
         return $stmt->fetchAll();
     }
+
+    public static function getUserCategoryLimit ($userId, $categoryName) {
+        $db = static::getDB();
+
+        $stmt = $db->prepare( 'SELECT expenseLimit FROM user_expense_categories WHERE userId = :userId AND name =:name' );
+
+        $stmt->bindValue( ':userId', $userId, PDO::PARAM_INT );
+        $stmt->bindValue( ':name', $categoryName, PDO::PARAM_STR );
+        
+        $stmt->execute();
+
+        return $stmt->fetchColumn();
+    }
+
+    public static function updateUserCategoryLimit ($userId, $categoryName, $newCategoryLimit) {
+        $db = static::getDB();
+        
+        $stmt = $db->prepare( 'UPDATE user_expense_categories SET expenseLimit = :expenseLimit WHERE name = :name AND userId =:userId' );
+
+        $stmt->bindValue( ':userId', $userId, PDO::PARAM_INT );
+        $stmt->bindValue( ':name', $categoryName, PDO::PARAM_STR );
+        $stmt->bindValue( ':expenseLimit', $newCategoryLimit, PDO::PARAM_INT );
+        $stmt->setFetchMode( PDO::FETCH_ASSOC );
+        
+        return $stmt->execute();
+    }
 }
