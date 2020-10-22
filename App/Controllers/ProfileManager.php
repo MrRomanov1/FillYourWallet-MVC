@@ -118,9 +118,14 @@ class ProfileManager extends Authenticated {
         $newExpenseCategoryName = ucfirst ( $_POST['categoryName'] );
 
         if ( !Expense::checkIfUserExpenseCategoryExists( $this->user->userId, $newExpenseCategoryName ) ) {
-            Expense::addNewUserExpenseCategory( $this->user->userId, $newExpenseCategoryName );
-
-            $this->redirect( '/config' );
+            if (isset ($_POST['expenseLimit'])) {
+                $expenseLimitAmount = $_POST['newExpenseLimits'];
+                Expense::addNewUserExpenseCategory( $this->user->userId, $newExpenseCategoryName, $expenseLimitAmount );
+                $this->redirect( '/config' );
+            } else {
+                Expense::addNewUserExpenseCategory( $this->user->userId, $newExpenseCategoryName, 0 );
+                $this->redirect( '/config' );
+            }
         } else {
             echo 'Istnieje';
             //work in progress

@@ -162,14 +162,15 @@ class Expense extends \Core\Model {
         return $stmt->fetchAll();
     }
     
-     public static function addNewUserExpenseCategory($userId, $newExpenseCategoryName) {
+     public static function addNewUserExpenseCategory($userId, $newExpenseCategoryName, $expenseLimit) {
        
         $db = static::getDB();
         
-        $stmt = $db->prepare('INSERT INTO user_expense_categories VALUES (NULL, :userId, :name)');
+        $stmt = $db->prepare('INSERT INTO user_expense_categories VALUES (NULL, :userId, :name, :expenseLimit)');
         
         $stmt->bindValue( ':userId', $userId, PDO::PARAM_INT );
-        $stmt->bindValue( ':name', $newExpenseCategoryName, PDO::PARAM_STR );        
+        $stmt->bindValue( ':name', $newExpenseCategoryName, PDO::PARAM_STR );
+        $stmt->bindValue( ':expenseLimit', $expenseLimit, PDO::PARAM_INT );        
         
         return $stmt->execute();
     }
@@ -253,7 +254,7 @@ class Expense extends \Core\Model {
 
     public static function updateUserCategoryLimit ($userId, $categoryName, $newCategoryLimit) {
         $db = static::getDB();
-        
+
         $stmt = $db->prepare( 'UPDATE user_expense_categories SET expenseLimit = :expenseLimit WHERE name = :name AND userId =:userId' );
 
         $stmt->bindValue( ':userId', $userId, PDO::PARAM_INT );
