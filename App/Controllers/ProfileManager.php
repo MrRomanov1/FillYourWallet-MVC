@@ -34,7 +34,7 @@ class ProfileManager extends Authenticated {
     public function editUserIncomeCategoryAction () {
 
         $currentIncomeCategoryName = $_POST['categoryHiddenName'];
-        $newIncomeCategoryName = ucfirst ( $_POST['categoryName'] );
+        $newIncomeCategoryName = ucfirst ( $_POST['categoryName'] );        
 
         if ( !Income::checkIfUserIncomeCategoryExists( $this->user->userId, $newIncomeCategoryName ) ) {
             Income::editUserIncomeCategory( $this->user->userId, $currentIncomeCategoryName, $newIncomeCategoryName );
@@ -51,13 +51,36 @@ class ProfileManager extends Authenticated {
         $currentExpenseCategoryName = $_POST['categoryHiddenName'];
         $newExpenseCategoryName = ucfirst ( $_POST['categoryName'] );
 
-        if ( !Expense::checkIfUserExpenseCategoryExists( $this->user->userId, $newExpenseCategoryName ) ) {
-            Expense::editUserExpenseCategory( $this->user->userId, $currentExpenseCategoryName, $newExpenseCategoryName );
-
-            $this->redirect( '/config' );
-        } else {
-            echo 'blad';
-            //work in progress
+        if (isset ($_POST['expenseLimit'])) {
+            $expenseLimitAmount = $_POST['limitAmount'];
+            $currentExpenseCategoryName = $_POST['categoryHiddenName'];
+            if ($expenseLimitAmount != Expense::getUserCategoryLimit($this->user->userId, $currentExpenseCategoryName)) {
+                Expense::updateUserCategoryLimit($this->user->userId, $currentExpenseCategoryName, $expenseLimitAmount);
+            }
+            if ($currentExpenseCategoryName != $newExpenseCategoryName) {
+                if ( !Expense::checkIfUserExpenseCategoryExists( $this->user->userId, $newExpenseCategoryName ) ) {
+                    Expense::editUserExpenseCategory( $this->user->userId, $currentExpenseCategoryName, $newExpenseCategoryName );
+        
+                    $this->redirect( '/config' );
+                }
+            }
+            else {
+                $this->redirect( '/config' );
+            }
+        }
+        else {
+            if ( Expense::getUserCategoryLimit($this->user->userId, $currentExpenseCategoryName) != 0) {
+                Expense::updateUserCategoryLimit($this->user->userId, $currentExpenseCategoryName, 0);
+            }
+            if ($currentExpenseCategoryName != $newExpenseCategoryName) {
+                if ( !Expense::checkIfUserExpenseCategoryExists( $this->user->userId, $newExpenseCategoryName ) ) {
+                    Expense::editUserExpenseCategory( $this->user->userId, $currentExpenseCategoryName, $newExpenseCategoryName );        
+                    $this->redirect( '/config' );
+                }
+            }
+            else {
+                $this->redirect( '/config' );
+            }
         }
     }
 
@@ -95,9 +118,14 @@ class ProfileManager extends Authenticated {
         $newExpenseCategoryName = ucfirst ( $_POST['categoryName'] );
 
         if ( !Expense::checkIfUserExpenseCategoryExists( $this->user->userId, $newExpenseCategoryName ) ) {
-            Expense::addNewUserExpenseCategory( $this->user->userId, $newExpenseCategoryName );
-
-            $this->redirect( '/config' );
+            if (isset ($_POST['expenseLimit'])) {
+                $expenseLimitAmount = $_POST['newExpenseLimits'];
+                Expense::addNewUserExpenseCategory( $this->user->userId, $newExpenseCategoryName, $expenseLimitAmount );
+                $this->redirect( '/config' );
+            } else {
+                Expense::addNewUserExpenseCategory( $this->user->userId, $newExpenseCategoryName, 0 );
+                $this->redirect( '/config' );
+            }
         } else {
             echo 'Istnieje';
             //work in progress

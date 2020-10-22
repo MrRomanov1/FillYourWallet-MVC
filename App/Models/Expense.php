@@ -110,7 +110,7 @@ class Expense extends \Core\Model {
     public static function getUserExpenseCategories( $userId ) {
         $db = static::getDB();
 
-        $stmt = $db->prepare( 'SELECT name FROM user_expense_categories WHERE userId = :userId' );
+        $stmt = $db->prepare( 'SELECT name, expenseLimit FROM user_expense_categories WHERE userId = :userId' );
 
         $stmt->bindValue( ':userId', $userId, PDO::PARAM_INT );
         $stmt->setFetchMode( PDO::FETCH_ASSOC );
@@ -162,14 +162,15 @@ class Expense extends \Core\Model {
         return $stmt->fetchAll();
     }
     
-     public static function addNewUserExpenseCategory($userId, $newExpenseCategoryName) {
+     public static function addNewUserExpenseCategory($userId, $newExpenseCategoryName, $expenseLimit) {
        
         $db = static::getDB();
         
-        $stmt = $db->prepare('INSERT INTO user_expense_categories VALUES (NULL, :userId, :name)');
+        $stmt = $db->prepare('INSERT INTO user_expense_categories VALUES (NULL, :userId, :name, :expenseLimit)');
         
         $stmt->bindValue( ':userId', $userId, PDO::PARAM_INT );
-        $stmt->bindValue( ':name', $newExpenseCategoryName, PDO::PARAM_STR );        
+        $stmt->bindValue( ':name', $newExpenseCategoryName, PDO::PARAM_STR );
+        $stmt->bindValue( ':expenseLimit', $expenseLimit, PDO::PARAM_INT );        
         
         return $stmt->execute();
     }
@@ -236,5 +237,31 @@ class Expense extends \Core\Model {
         $stmt->execute();
         
         return $stmt->fetchAll();
+    }
+
+    public static function getUserCategoryLimit ($userId, $categoryName) {
+        $db = static::getDB();
+
+        $stmt = $db->prepare( 'SELECT expenseLimit FROM user_expense_categories WHERE userId = :userId AND name =:name' );
+
+        $stmt->bindValue( ':userId', $userId, PDO::PARAM_INT );
+        $stmt->bindValue( ':name', $categoryName, PDO::PARAM_STR );
+        
+        $stmt->execute();
+
+        return $stmt->fetchColumn();
+    }
+
+    public static function updateUserCategoryLimit ($userId, $categoryName, $newCategoryLimit) {
+        $db = static::getDB();
+
+        $stmt = $db->prepare( 'UPDATE user_expense_categories SET expenseLimit = :expenseLimit WHERE name = :name AND userId =:userId' );
+
+        $stmt->bindValue( ':userId', $userId, PDO::PARAM_INT );
+        $stmt->bindValue( ':name', $categoryName, PDO::PARAM_STR );
+        $stmt->bindValue( ':expenseLimit', $newCategoryLimit, PDO::PARAM_INT );
+        $stmt->setFetchMode( PDO::FETCH_ASSOC );
+        
+        return $stmt->execute();
     }
 }

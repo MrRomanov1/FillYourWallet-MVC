@@ -44,16 +44,16 @@
                             {% if errors.dateError is not empty%}                            
                             <div style="color:red; font-size:13; text-align:center">{{errors.dateError|join('<br>')|raw}}</div>                            
                             {% endif %}
-                            <select class="form-control mb-3" name = "paymentMethod" required>
-                                <option value="" disabled selected hidden> Sposób płatności</option>
+                            <select class="form-control mb-3 selectpicker" name = "paymentMethod" required>
+                                <option title = "Sposób płatności" value="" disabled selected hidden> Sposób płatności</option>
                                 {% for value in userPaymentMethods %}
                                 <option value="{{value.name}}"> {{value.name}} </option>                                
                                 {% endfor %}                                
                             </select>
-                            <select class="form-control mb-3" name = "category" required>
-                                <option value="" disabled selected hidden> Kategoria</option>
+                            <select class="form-control mb-3 selectpicker" name = "category" required>
+                                <option title = "Kategoria" value="" selected disabled hidden> Kategoria</option>
                                 {% for value in userExpenseCategories %}
-                                <option value="{{value.name}}"> {{value.name}} </option>                                
+                                <option {% if value.expenseLimit != 0 %}data-subtext = "Limit: {{value.expenseLimit}}"{% endif %} = "Jeden" value="{{value.name}}"> {{value.name}} </option>
                                 {% endfor %}                                                                       
                             </select>
                             <textarea class="form-control" rows="2" placeholder = "Komentarz" onfocus="this.placeholder=''" onblur="this.placeholder='Komentarz'" name = "comment">{{expenses.comment}}</textarea>
