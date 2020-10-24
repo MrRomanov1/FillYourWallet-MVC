@@ -1,14 +1,20 @@
 $(document).ready(function() {
 
     $('#ajaxForm').validate({
-        rules: {            
-            password: {                
-                remote: '/profilemanager/check-user-password'
+        rules: {  
+            username: 'required',
+            email: 'required',          
+            password: { 
+                             
+                remote: '/validate-password'
             }            
         },
         messages: {
+            username: 'Podaj imię' ,               
+            email : 'Podaj adres email', 
             password: {
-                remote: 'email already taken'
+                required: 'Wpisz hasło aby zatwierdzić zmiany',
+                remote: 'Podaj poprawne hasło'
             }
         }
     });
