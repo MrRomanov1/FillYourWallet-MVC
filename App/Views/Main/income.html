@@ -9,7 +9,7 @@
     <article>
         <header>
             <h2 class = "h2 text-center mt-lg-5 mt-3 pt-lg-5 pt-0">
-                Wprowadź przychód
+                WPROWADŹ PRZYCHÓD
             </h2>                
         </header>
         <div class = "container">
@@ -51,11 +51,9 @@
                                 {% endfor %}
                             </select>
                             <textarea class="form-control" rows="2" placeholder = "Komentarz" onfocus="this.placeholder=''" onblur="this.placeholder='Komentarz'" name = "comment">{{incomes.comment}}</textarea>
-                        </div>
-                        <div class = "input-group" role = "group">
-                            <input type="reset" class="btn btn-danger btn-lg btn-block col-6 mt-2 " value="Anuluj">
-                            <input type="submit" class="btn btn-success btn-lg btn-block col-6 mt-2 " value="Dodaj">
-                        </div>
+                        </div>      
+                        <button type="submit" class="btn btn-block btn-success mt-2">Dodaj</button>                   
+                        <button type="reset" class="btn btn-block btn-danger mt-2">Anuluj</button>                                          
                     </form>
                 </div>
             </div>

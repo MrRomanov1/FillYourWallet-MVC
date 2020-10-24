@@ -33,6 +33,7 @@ $router->addRouteToRoutingTable('add-payment-method', ['controller' => 'ProfileM
 $router->addRouteToRoutingTable('delete-income-category', ['controller' => 'ProfileManager', 'action' => 'deleteUserIncomeCategory']);
 $router->addRouteToRoutingTable('delete-expense-category', ['controller' => 'ProfileManager', 'action' => 'deleteUserExpenseCategory']);
 $router->addRouteToRoutingTable('delete-payment-method', ['controller' => 'ProfileManager', 'action' => 'deleteUserPaymentMethod']);
+$router->addRouteToRoutingTable('validate-password', ['controller' => 'ProfileManager', 'action' => 'checkUserPassword']);
 $router->addRouteToRoutingTable('logout', ['controller' => 'Home', 'action' => 'destroy']);
 $router->addRouteToRoutingTable('{controller}/{action}');
 

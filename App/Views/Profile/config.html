@@ -6,7 +6,7 @@
 <section>
     <header>
         <h2 class = "h2 text-center mt-lg-5 mt-3 pt-lg-5 pt-0">
-           Ustawienia
+           USTAWIENIA
         </h2>
     </header>            
     <article>                
@@ -33,28 +33,26 @@
             <div class = "row no-gutters">
                 <div class = "col-12 col-lg-4">
                     <h4 class="mb-2 col-12 ">
-                        <button class="btn btn-block btn-secondary dropdown-toggle" data-toggle="collapse" data-target="#collapseIncomes" aria-expanded="false" aria-controls="collapseIncomes">
-                        Kategorie przychodów
-                        </button>
+                        <button class="btn btn-mdb-color btn-block dropdown-toggle" type="button" data-toggle="collapse" data-target="#collapseIncomes" aria-expanded="false" aria-controls="collapseIncomes">Kategorie przychodów</button>
                     </h4>            
-                    <div id="collapseIncomes" class="collapse col-12 mb-2" aria-labelledby="Toggle collapse" data-parent="#accordion">
+                    <div id="collapseIncomes" class="collapse multi-collapse col-12 mb-2" aria-labelledby="Toggle collapse">
                     <ul class="list-group">
                         {% for value in incomeCategories %}
                         <li class="list-group-item">{{value.name}}
-                            <button type ="button" class = "btn btn-danger float-right btnDelete" value="{{ value.name }}" data-toggle="modal" data-target="#deleteIncomeCategory">
+                            <button type ="button" class = "btn btn-danger float-right btnDelete btn-sm" value="{{ value.name }}" data-toggle="modal" data-target="#deleteIncomeCategory">
                                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
                                     <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
                                 </svg>
                             </button>
-                            <button type = "button" class = "btn btn-success float-right btnEdit" value="{{ value.name }}" data-toggle="modal" data-target="#editIncomeCategory">
+                            <button type = "button" class = "btn btn-success float-right btnEdit btn-sm" value="{{ value.name }}" data-toggle="modal" data-target="#editIncomeCategory">
                                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
                                 </svg>
                             </button>                            
                         </li>
                         {% endfor %}
-                        <li class="list-group-item align-middle">Dodaj nową kategorię
+                        <li class="list-group-item align-middle">Dodaj kategorię
                             <button type = "button" class = "btn btn-sm float-right btn-success btnAdd" data-toggle="modal" data-target="#addNewIncomeCategory">
                                 <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
@@ -66,31 +64,31 @@
                 </div>
                 <div class = "col-12 col-lg-4">
                     <h4 class="mb-2 col-12">
-                        <button class="btn btn-block btn-secondary dropdown-toggle" data-toggle="collapse" data-target="#collapseExpenses" aria-expanded="false" aria-controls="collapseExpenses">
+                        <button class="btn btn-mdb-color btn-block dropdown-toggle" type="button" data-toggle="collapse" data-target="#collapseExpenses" aria-expanded="false" aria-controls="collapseExpenses">
                         Kategorie wydatków
                         </button>
                     </h4>            
-                    <div id="collapseExpenses" class="collapse col-12 mb-2" aria-labelledby="Toggle collapse" data-parent="#accordion">
+                    <div id="collapseExpenses" class="collapse col-12 mb-2" aria-labelledby="Toggle collapse">
                     <ul class="list-group">                        
                         {% for value in expenseCategories %}
                         <li class="list-group-item">{{value.name}}                            
-                            <button type ="button" class = "btn btn-danger float-right btnDelete" value="{{ value.name }}|{{value.expenseLimit}}" data-toggle="modal" data-target="#deleteExpenseCategory">
+                            <button type ="button" class = "btn btn-danger float-right btnDelete btn-sm" value="{{ value.name }}|{{value.expenseLimit}}" data-toggle="modal" data-target="#deleteExpenseCategory">
                                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
                                     <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
                                 </svg>
                             </button>                            
-                            <button class = "btn btn-success float-right btnEdit" value="{{ value.name }}|{{value.expenseLimit}}" data-toggle="modal" data-target="#editExpenseCategory">
+                            <button class = "btn btn-success float-right btnEdit btn-sm" value="{{ value.name }}|{{value.expenseLimit}}" data-toggle="modal" data-target="#editExpenseCategory">
                                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
                                 </svg>
                             </button>
                             {% if value.expenseLimit != 0 %} 
-                            <div class = "text-secondary h6">Limit: {{value.expenseLimit}}</div>  
+                            <div class = "text-muted">Limit: {{value.expenseLimit}}</div>  
                             {% endif %}                         
                         </li>
                         {% endfor %}
-                        <li class="list-group-item align-middle">Dodaj nową kategorię
+                        <li class="list-group-item align-middle">Dodaj kategorię
                             <button type = "button" class = "btn btn-sm float-right btn-success btnAdd" data-toggle="modal" data-target="#addNewExpenseCategory">
                                 <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
@@ -102,28 +100,28 @@
                 </div>
                 <div class = "col-12 col-lg-4">
                     <h4 class="mb-2 col-12">
-                        <button class="btn btn-block btn-secondary dropdown-toggle" data-toggle="collapse" data-target="#collapsePaymentMethods" aria-expanded="false" aria-controls="collapsePaymentMethods">
+                        <button class="btn btn-mdb-color btn-block dropdown-toggle" type="button" data-toggle="collapse" data-target="#collapsePaymentMethods" aria-expanded="false" aria-controls="collapsePaymentMethods">
                         Metody płatności
                         </button>
                     </h4>            
-                    <div id="collapsePaymentMethods" class="collapse col-12 mb-2" aria-labelledby="Toggle collapse" data-parent="#accordion">
+                    <div id="collapsePaymentMethods" class="collapse col-12 mb-2" aria-labelledby="Toggle collapse">
                     <ul class="list-group">
                         {% for value in paymentMethods %}
                         <li class="list-group-item">{{value.name}} 
-                            <button type ="button" class = "btn btn-danger float-right btnDelete" value="{{ value.name }}" data-toggle="modal" data-target="#deletePaymentMethod">
+                            <button type ="button" class = "btn btn-danger float-right btnDelete btn-sm" value="{{ value.name }}" data-toggle="modal" data-target="#deletePaymentMethod">
                                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
                                     <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
                                 </svg>
                             </button>
-                            <button class = "btn btn-success float-right btnEdit" value="{{ value.name }}" data-toggle="modal" data-target="#editPaymentMethod">
+                            <button class = "btn btn-success float-right btnEdit btn-sm" value="{{ value.name }}" data-toggle="modal" data-target="#editPaymentMethod">
                                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
                                 </svg>
                             </button>                            
                         </li>
                         {% endfor %}
-                        <li class="list-group-item align-middle">Dodaj nową metodę płatności
+                        <li class="list-group-item align-middle">Dodaj metodę płatności
                             <button type = "button" class = "btn btn-sm float-right btn-success btnAdd" data-toggle="modal" data-target="#addNewPaymentMethod">
                                 <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
@@ -135,18 +133,31 @@
                 </div>
                 <div class = "col-12">
                     <h4 class="mb-2 col-12">
-                        <button class="btn btn-block btn-secondary dropdown-toggle" data-toggle="collapse" data-target="#collapseProfileSettings" aria-expanded="false" aria-controls="collapseProfileSettings">
+                        <button class="btn btn-block btn-mdb-color dropdown-toggle" data-toggle="collapse" data-target="#collapseProfileSettings" aria-expanded="false" aria-controls="collapseProfileSettings">
                         Ustawienia profilu
                         </button>
                     </h4>            
-                    <div id="collapseProfileSettings" class="collapse col-12" aria-labelledby="Toggle collapse" data-parent="#accordion">
-                    <ul class="list-group">
-                        <li class="list-group-item">{{user.username}}</li>
-                        <li class="list-group-item">Dapibus ac facilisis in</li>
-                        <li class="list-group-item">Morbi leo risus</li>
-                        <li class="list-group-item">Porta ac consectetur ac</li>
-                        <li class="list-group-item">Vestibulum at eros</li>
-                    </ul>
+                    <div id="collapseProfileSettings" class="collapse col-12" aria-labelledby="Toggle collapse">                    
+                        <div class="card card-fluid">
+                            <div class="card-body">                              
+                              <form id = "ajaxForm" method="post">                                
+                                <div class="form-group">
+                                    <label for="inputName">Imię</label>
+                                    <input type="text" class="form-control" id="inputName" value="{{user.username}}" name = "username" required>                                                                
+                                </div>                               
+                                <div class="form-group">
+                                  <label for="inputEmail">Email</label>
+                                  <input type="email" class="form-control" id="inputEmail" value="{{user.email}}" name = "email" required> </div>                                
+                                <div class="form-group">
+                                  <label for="inputNewPass">Nowe hasło</label>
+                                  <input type="password" class="form-control" id="inputNewPass" value=""></div>                                
+                                <div class="form-actions">                                                                   
+                                  <input type="password" name = "password" class="form-control ml-auto mr-3" placeholder="Wpisz obecne hasło aby zapisać zmiany" required>
+                                  <button type="submit" class="btn btn-mdb-color">Zatwierdź zmiany</button>
+                                </div>                                
+                              </form>
+                            </div>                            
+                          </div>                    
                     </div>
                 </div>
             </div>
@@ -363,6 +374,7 @@
 {% endblock %}
 {% block scripts %}
 <script src = "/js/category-settings.js"></script>
+<script src = "/js/user-settings.js"></script>
 <script>
 $('.showCategories').click(function() {
        $('.selectCategories').css('display', 'inline'); 

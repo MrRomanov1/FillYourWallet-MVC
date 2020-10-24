@@ -5,8 +5,7 @@ body
 }
 
 .main-nav{       
-    opacity: 80%;
-    background-color: #222;
+    background-color: #59698D;
 }
 
 .navbar-expand-lg{
@@ -14,7 +13,7 @@ body
 }
 
 .brand-name {
-    color: #00cfff !important;
+    color: #fff  !important;
 }
 
 .blockquote footer{
@@ -101,11 +100,11 @@ body
 }
 
 .icon-menu{
-    color: #00cfff;    
+    color: #fff;    
 }
 
 .nav-item a {
-    color: #00cfff; 
+    color: #fff ; 
 }
 
 .active a {
@@ -140,7 +139,7 @@ body
 }
 
 .h2 {
-    color: #00cfff;
+    color: #59698D;
     letter-spacing: 3px;
     font-weight: 700;
 }
@@ -197,6 +196,10 @@ body
     border-radius: 20px;
     border: 1px solid red;
     color: red;
+}
+
+.text-muted {
+    font-size: 13px;
 }
 
 @media (max-width: 575px) {
