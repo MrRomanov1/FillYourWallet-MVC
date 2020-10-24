@@ -180,4 +180,15 @@ class User extends \Core\Model {
         return $stmt->fetch();
     }
 
+    public static function validateUserPassword ($userId, $password) {
+
+        $user = static::findByID( $userId );
+               
+        if ($user) {
+            if ( password_verify( $password, $user->password ) ) {
+                return true;
+            }
+        }
+        return false;
+    }    
 }

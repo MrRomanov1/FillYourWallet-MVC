@@ -3,8 +3,6 @@
 namespace Core;
 
 use \App\Auth;
-use \App\Flash;
-
 
 abstract class Controller
 {

@@ -7,6 +7,7 @@ use \App\Auth;
 use \App\Models\Income;
 use \App\Models\Expense;
 use \App\Models\PaymentMethod;
+use \App\Models\User;
 
 class ProfileManager extends Authenticated {
 
@@ -233,5 +234,13 @@ class ProfileManager extends Authenticated {
             echo 'Blad';
             //work in progress
         }
+    }
+
+    public function checkUserPasswordAction() {
+            
+                $checked = User::validateUserPassword($this->user->userId, $_GET['password']);
+                
+                header('Content-Type: application/json');
+                echo json_encode($checked);
     }
 }
