@@ -190,5 +190,32 @@ class User extends \Core\Model {
             }
         }
         return false;
-    }    
+    }
+
+    public static function changeUserData ($userId, $userName, $userEmail) {
+
+        $db = static::getDB();
+
+        $sql = ('UPDATE users SET username =:username, email =:email WHERE userId =:userId');
+        $stmt = $db->prepare( $sql );
+        $stmt->bindValue( ':userId', $userId, PDO::PARAM_INT );
+        $stmt->bindValue( ':username', $userName, PDO::PARAM_STR );
+        $stmt->bindValue( ':email', $userEmail, PDO::PARAM_STR ); 
+        
+        return $stmt->execute();
+    }
+
+    public static function changeUserPassword ($userId, $newPassword) {
+
+        $password = password_hash( $newPassword, PASSWORD_DEFAULT );
+
+        $db = static::getDB();
+
+        $sql = ('UPDATE users SET password =:password WHERE userId =:userId');
+        $stmt = $db->prepare( $sql );
+        $stmt->bindValue( ':userId', $userId, PDO::PARAM_INT );
+        $stmt->bindValue( ':password', $password, PDO::PARAM_STR );        
+        
+        return $stmt->execute();
+    }
 }

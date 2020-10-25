@@ -238,9 +238,46 @@ class ProfileManager extends Authenticated {
 
     public function checkUserPasswordAction() {
             
-                $checked = User::validateUserPassword($this->user->userId, $_GET['password']);
-                
-                header('Content-Type: application/json');
-                echo json_encode($checked);
+        $checked = User::validateUserPassword($this->user->userId, $_GET['password']);
+        
+        header('Content-Type: application/json');
+        echo json_encode($checked);
+    }
+
+    public function changeUserDataAction () {
+       
+        if ((isset($_POST['newPassword'])) && (!empty($_POST['newPassword']))) {
+            $newPassword = $_POST['newPassword'];
+        }
+        if ($_POST['username'] != $this->user->username) {
+            $userName = $_POST['username'];
+        }
+        else {
+            $userName = $this->user->username;
+        }
+        if ($_POST['email'] != $this->user->email) {
+            $userEmail = $_POST['email'];
+        }
+        else {
+            $email = $this->user->email;
+        }
+
+        if (!User::changeUserData ($this->user->userId, $userName, $email)) {
+            echo 'Blad';
+            exit;
+            //work in progress
+        } else {
+            if (isset($newPassword)) {
+                if (!User::changeUserPassword ($this->user->userId, $newPassword)) {
+                    echo 'Blad';
+                    exit;
+                }
+                else {
+                    $this->redirect( '/config' );
+                }
+            } else {
+                $this->redirect( '/config' );
+            }
+        }
     }
 }
