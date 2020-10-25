@@ -4,8 +4,7 @@ $(document).ready(function() {
         rules: {  
             username: 'required',
             email: 'required',          
-            password: { 
-                             
+            password: {                              
                 remote: '/validate-password'
             }            
         },

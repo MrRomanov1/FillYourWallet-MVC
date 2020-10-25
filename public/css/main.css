@@ -152,7 +152,6 @@ body
 .income input[type=text]:focus,
 .income input[type=date]:focus,
 .income input[type=text]:focus,
-.income select:focus,
 .income textarea:focus
 {	
 	background-color: #eee;
@@ -200,6 +199,10 @@ body
 
 .text-muted {
     font-size: 13px;
+}
+
+.btn-light.dropdown-toggle {
+    background-color: #fff !important;
 }
 
 @media (max-width: 575px) {

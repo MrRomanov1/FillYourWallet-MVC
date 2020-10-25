@@ -44,7 +44,7 @@
                             {% if errors.dateError is not empty%}                            
                             <div style="color:red; font-size:13; text-align:center">{{errors.dateError|join('<br>')|raw}}</div>                            
                             {% endif %}
-                            <select class="form-control mb-3 selectpicker" name = "category" required>
+                            <select class="mb-3 selectpicker w-100 pr-2" name = "category" required>
                                 <option title = "Kategoria" value="" disabled selected hidden> Kategoria</option>
                                 {% for value in userIncomeCategories %}
                                 <option value="{{value.name}}"> {{value.name}} </option>                                

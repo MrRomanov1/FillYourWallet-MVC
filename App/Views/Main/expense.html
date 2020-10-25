@@ -36,30 +36,28 @@
                 <div class = "col-12 col-lg-4 offset-lg-4 offset-0"> 
                     <form action = "/addExpense" method = "post">
                         <div class = "form-group income">
-                            <input type="text" class="form-control mb-3" placeholder="Kwota" onfocus="this.placeholder=''" onblur="this.placeholder='Kwota'" name = "amount" value = "{{expenses.amount}}" required>
+                            <input type="text" class="form-control mb-3 ml-1" placeholder="Kwota" onfocus="this.placeholder=''" onblur="this.placeholder='Kwota'" name = "amount" value = "{{expenses.amount}}" required>
                             {% if errors.amountError is not empty%}                            
                             <div style="color:red; font-size:13; text-align:center">{{errors.amountError|join('<br/>')|raw}}</div>                            
                             {% endif %}
-                            <input type="date" class="form-control mb-3" name = "date"  value = "{% if expenses.date is defined %}{{expenses.date}}{% else %}{{currentDate}}{% endif %}" required>
+                            <input type="date" class="form-control mb-3 ml-1" name = "date"  value = "{% if expenses.date is defined %}{{expenses.date}}{% else %}{{currentDate}}{% endif %}" required>
                             {% if errors.dateError is not empty%}                            
                             <div style="color:red; font-size:13; text-align:center">{{errors.dateError|join('<br>')|raw}}</div>                            
                             {% endif %}
-                            <select class="form-control mb-3 selectpicker" name = "paymentMethod" required>
-                                <option title = "Sposób płatności" value="" disabled selected hidden> Sposób płatności</option>
+                            <select class="mb-3 w-100 selectpicker pr-1" name = "paymentMethod" title = "Sposób płatności" required>                                
                                 {% for value in userPaymentMethods %}
                                 <option value="{{value.name}}"> {{value.name}} </option>                                
                                 {% endfor %}                                
                             </select>
-                            <select class="form-control mb-3 selectpicker" name = "category" required>
-                                <option title = "Kategoria" value="" selected disabled hidden> Kategoria</option>
+                            <select class="mb-3 w-100 selectpicker pr-1" name = "category" data-live-search = "true" title = "Kategoria" required>                                
                                 {% for value in userExpenseCategories %}
-                                <option {% if value.expenseLimit != 0 %}data-subtext = "Limit: {{value.expenseLimit}}"{% endif %} = "Jeden" value="{{value.name}}"> {{value.name}} </option>
+                                <option {% if value.expenseLimit != 0 %}data-subtext = "Limit: {{value.expenseLimit}}"{% endif %} value="{{value.name}}"> {{value.name}} </option>
                                 {% endfor %}                                                                       
                             </select>
-                            <textarea class="form-control" rows="2" placeholder = "Komentarz" onfocus="this.placeholder=''" onblur="this.placeholder='Komentarz'" name = "comment">{{expenses.comment}}</textarea>
+                            <textarea class="form-control ml-1" rows="2" placeholder = "Komentarz" onfocus="this.placeholder=''" onblur="this.placeholder='Komentarz'" name = "comment">{{expenses.comment}}</textarea>
                         </div>
-                            <button type="submit" class="btn btn-success btn-block mt-2">Dodaj</button>
-                            <button type="reset" class="btn btn-danger btn-block mt-2">Anuluj</button> 
+                            <button type="submit" class="btn btn-success btn-block mt-2 ml-1">Dodaj</button>
+                            <button type="reset" class="btn btn-danger btn-block mt-2 ml-1">Anuluj</button> 
                     </form>
                 </div>
             </div>
