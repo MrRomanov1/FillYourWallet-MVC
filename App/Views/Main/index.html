@@ -27,7 +27,7 @@
                                 <label for="endDate">Do: </label>
                                 <input type="date" class="form-control mb-3" name = "endDate" id = "endDate" required>
 
-                                <button type="submit" class="btn btn-default btn-success btn-block">Pokaż bilans</button>
+                                <button type="submit" class="btn btn-default btn-dark-green btn-block">Pokaż bilans</button>
                             </form>
                         </div>
                     </div>
@@ -49,7 +49,8 @@
                     <table class = "table table-white table-hover mr-0 mr-md-5">
                         {% if balance.expenses is not empty%}{% for value in balance.expenses|slice(0,5) %}
                             <tr><td class = "text-left">{{ value['name'] }}</td>
-                            <td class = "text-center">{{ value['amount'] }}</td>
+                            <td class = "text-center">{{ value['amount'] }}</td>                            
+                            <td class = "text-right">{{ value['expenseComment'] }}</td>                            
                             <td class = "text-right">{{ value['expenseDate'] }}</td></tr>
                         {% endfor %}{% else %}
                         <tr><td class = "text-center">Nie masz żadnych zapisanych wydatków. <br>Dodaj je w sekcji "Dodaj wydatek". </td></tr>

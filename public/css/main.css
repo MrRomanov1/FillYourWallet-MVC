@@ -8,12 +8,20 @@ body
     background-color: #59698D;
 }
 
+.login-nav {
+    background-color: #010101;
+}
+
 .navbar-expand-lg{
     margin-bottom: 150px;
 }
 
 .brand-name {
     color: #fff  !important;
+}
+
+.brand-name-login {
+    color: #00cfff  !important;
 }
 
 .blockquote footer{
@@ -90,7 +98,7 @@ body
 	-webkit-box-shadow: 0px 0px 10px 2px #333;
 	-moz-box-shadow: 0px 0px 10px 2px #333;
 	box-shadow: 0px 0px 10px 2px #333;	
-	background-color: #ccc;
+	background-color: #eee;
 	color: #333;     
 }
 
@@ -108,13 +116,13 @@ body
 }
 
 .active a {
-    color: #00abbb;
-    background-color: #151515;
+    color: #fff;
+    background-color: #69799E;
 }
 
 .nav-item a:hover {
-    color: #00abbb;
-    background-color: #151515;
+    color: #fff;
+    background-color: #69799E;
 }
 
 .dropdown-menu a{
@@ -122,7 +130,7 @@ body
 }
 
 .dropdown-menu a:hover{
-  background-color: #abab94 !important;
+  background-color: #ddd !important;
 }
 
 .isDisabled {
@@ -132,10 +140,11 @@ body
 
 .dropdown-item {
     color: #000 !important;
+
 }
 
 .dropdown-menu{
-    border-color: #00cfff; 
+    border-color: #2E2E2E; 
 }
 
 .h2 {
@@ -158,17 +167,19 @@ body
 	color: #000;     
 }
 
-#balanceHeader {
-    color: #00cfff;
-    background-color: #222;
-    opacity: 70%;
-    border-radius: 20px;
-    border: 1px solid #00cfff;    
+.balanceHeaderBlock{
+    margin-top: 150px;
+    text-transform: uppercase;
 }
 
-.balanceHeaderBlock{
-    margin-top: 200px;
+.navbar .dropdown-menu a {
+    padding: 5px 10px;    
 }
+
+.btn-light:not([disabled]):not(.disabled):active, .btn-light:not([disabled]):not(.disabled).active, .show>.btn-light.dropdown-toggle {
+    background-color: #fff !important;
+}
+
 
 .balanceTable{
     border-radius: 20px;
@@ -187,14 +198,14 @@ body
 
 #balanceSummaryPositive{
     border-radius: 20px;
-    border: 1px solid #01FF70;
-    color: #01FF70;
+    border: 1px solid #00897b;
+    color: #00897b;
 }
 
 #balanceSummaryNegative{
     border-radius: 20px;
-    border: 1px solid red;
-    color: red;
+    border: 1px solid #d32f2f;
+    color: #d32f2f;
 }
 
 .text-muted {
@@ -203,6 +214,18 @@ body
 
 .btn-light.dropdown-toggle {
     background-color: #fff !important;
+}
+
+.form-control {
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+    padding: .84rem 2.14rem;
+}
+
+.form-control::placeholder{
+    font-family: 'Lora', serif !important;
+    text-transform: uppercase !important;
+    font-weight: 400;
+    font-size: .81rem;    
 }
 
 @media (max-width: 575px) {

@@ -26,7 +26,7 @@
                                 <input type="date" class="form-control mb-3" name = "beginDate" id = "beginDate" required>                                    
                                 <label for="endDate">Do: </label>
                                 <input type="date" class="form-control mb-3" name = "endDate" id = "endDate" required>                                
-                                <button type="submit" class="btn btn-default btn-success btn-block">Pokaż bilans</button>
+                                <button type="submit" class="btn btn-default btn-dark-green btn-block">Pokaż bilans</button>
                             </form>
                         </div>
                     </div>
@@ -36,24 +36,24 @@
                 <div class = "col-12 col-lg-4 offset-lg-4 offset-0"> 
                     <form action = "/addIncome" method = "post">
                         <div class = "form-group income">
-                            <input type="text" class="form-control mb-3" placeholder="Kwota" onfocus="this.placeholder=''" onblur="this.placeholder='Kwota'" name = "amount" value = "{{incomes.amount}}" required>
+                            <input type="text" class="form-control mb-3 ml-1" placeholder="Kwota" onfocus="this.placeholder=''" onblur="this.placeholder='Kwota'" name = "amount" value = "{{incomes.amount}}" required>
                             {% if errors.amountError is not empty%}                            
                             <div style="color:red; font-size:13; text-align:center">{{errors.amountError|join('<br/>')|raw}}</div>                            
                             {% endif %}
-                            <input type="date" class="form-control mb-3" name = "date" value = "{% if incomes.date is defined %}{{incomes.date}}{% else %}{{currentDate}}{% endif %}" required>
+                            <input type="date" class="form-control mb-3 ml-1" name = "date" value = "{% if incomes.date is defined %}{{incomes.date}}{% else %}{{currentDate}}{% endif %}" required>
                             {% if errors.dateError is not empty%}                            
                             <div style="color:red; font-size:13; text-align:center">{{errors.dateError|join('<br>')|raw}}</div>                            
                             {% endif %}
-                            <select class="mb-3 selectpicker w-100 pr-2" name = "category" required>
+                            <select class="mb-3 selectpicker w-100 pr-1" name = "category" required>
                                 <option title = "Kategoria" value="" disabled selected hidden> Kategoria</option>
                                 {% for value in userIncomeCategories %}
                                 <option value="{{value.name}}"> {{value.name}} </option>                                
                                 {% endfor %}
                             </select>
-                            <textarea class="form-control" rows="2" placeholder = "Komentarz" onfocus="this.placeholder=''" onblur="this.placeholder='Komentarz'" name = "comment">{{incomes.comment}}</textarea>
+                            <textarea class="form-control ml-1" rows="2" placeholder = "Komentarz" onfocus="this.placeholder=''" onblur="this.placeholder='Komentarz'" name = "comment">{{incomes.comment}}</textarea>
                         </div>      
-                        <button type="submit" class="btn btn-block btn-success mt-2">Dodaj</button>                   
-                        <button type="reset" class="btn btn-block btn-danger mt-2">Anuluj</button>                                          
+                        <button type="submit" class="btn btn-block btn-dark-green mt-2">Dodaj</button>                   
+                        <button type="reset" class="btn btn-block btn-unique mt-2">Anuluj</button>                                          
                     </form>
                 </div>
             </div>
@@ -63,11 +63,11 @@
 <footer class = "page-footer text-center text-black">2020 &copy; Piotr Romańczak</footer>
 {% block scripts %}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-{% if success == true %}
+{% if dark-green == true %}
 <script>                            
     Swal.fire({
     position: 'top-end',
-    icon: 'success',
+    icon: 'dark-green',
     title: 'Dodano nowy przychód',
     showConfirmButton: true,
     timer: 1000                            
