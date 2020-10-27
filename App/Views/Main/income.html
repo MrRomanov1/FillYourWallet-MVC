@@ -63,11 +63,12 @@
 <footer class = "page-footer text-center text-black">2020 &copy; Piotr Romańczak</footer>
 {% block scripts %}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-{% if dark-green == true %}
+
+{% if success == true %}
 <script>                            
     Swal.fire({
     position: 'top-end',
-    icon: 'dark-green',
+    icon: 'success',
     title: 'Dodano nowy przychód',
     showConfirmButton: true,
     timer: 1000                            

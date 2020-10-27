@@ -7,16 +7,19 @@ $(document).ready(function(){
             checkLimitBox(result);
         });
     $('.modal').on('hidden.bs.modal', function () {
-        $('form').find("input[type=text]").each(function(ev)
+        $('form').find("input[name=categoryName]").each(function(ev)
             {        
                 $(this).removeAttr("value");
-            }); 
+            });
+            $("input:radio").prop("checked", false);
+            $('.showCategories, .hideCategories').removeClass('focus active');
+            $('.selectCategories').css('display', 'none'); 
     });
 });
 
 function setInputValues(result){
     
-    $('form').find("input[type=text], input[type=hidden]").each(function(ev)
+    $('form').find("input[name=categoryName], input[type=hidden]").each(function(ev)
     {        
         $(this).attr("value", result[0]);
     });
