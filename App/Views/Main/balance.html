@@ -29,37 +29,66 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>            
             <div class = "row">                        
-                <div class = "col-12 col-md-6 balanceTable text-center mt-2 mt-md-3">
-                    <h4>Przychody</h4> 
-                    {% if balance.incomeTotal is not empty%}                    
-                        {% for value in balance.incomeTotal %}	
-                        <span class = "balanceInfo col-6 float-left">{{ value['name'] }}</span>
-                        <span class = "balanceInfoAmount col-6 float-right">{{ value['ROUND(SUM(incomes.amount), 2)']|number_format(2, ',', ' ') }} PLN</span>                         
-                        {% endfor %}
-                    {% else %}
-                        <span class = "balanceInfo col-6">Brak wprowadzonych przychodów w wybranym okresie</span>
-                    {% endif %}
+                <div class = "col-12 col-md-6 text-center mt-2 mt-md-3">
+                    <h4 class = "mb-3">Przychody</h4>
+                    <table class = "table table-white table-hover mr-0 mr-md-5">
+                        {% if balance.incomeTotal is not empty%} {% for value in balance.incomeTotal %}
+                            <tr><td class = "text-left py-2 h6 font-weight-light">{{ value['name'] }}</td>
+                            <td class = "text-right py-2 h6 font-weight-light">{{ value['ROUND(SUM(incomes.amount), 2)']|number_format(2, ',', ' ') }} PLN</td>
+                            <td class = "text-right py-2"> 
+                                <button class = "show-single-data btn-blue-grey" value = "{{ value['name'] }}" title = "Pokaż więcej">                          
+                                    <svg width="1.3em" height="1.3em" viewBox="0 0 16 16" class="bi bi-arrow-down-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                                        <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
+                                    </svg>
+                                </button>
+                            </td>  
+                        {% endfor %}{% else %}
+                        <tr><td class = "text-center">Nie masz żadnych zapisanych przychodów. <br>Dodaj je w sekcji "Dodaj przychód". </td></tr>
+                        {% endif %}
+                    </table>                    
                 </div>                    
-                <div class = "col-12 col-md-6 balanceTable text-center mt-2 mt-md-3">
-                    <h4>Wydatki</h4>                            
-                    {% if balance.expenseTotal is not empty%}                    
-                        {% for value in balance.expenseTotal %}
-                        <span class = "balanceInfo col-6 float-left">{{ value['name'] }}</span>
-                        <span class = "balanceInfoAmount col-6 float-right">{{ value['ROUND(SUM(expenses.amount), 2)']|number_format(2, ',', ' ') }} PLN</span>                          
-                        {% endfor %}
-                    {% else %}
-                    <span class = "balanceInfo col-6">Brak wprowadzonych wydatków w wybranym okresie</span>
-                    {% endif %}                    
+                <div class = "col-12 col-md-6 text-center mt-2 mt-md-3">                    
+                    <h4 class = "mb-3">Wydatki</h4>                    
+                    <table class = "table table-white table-hover mr-0 mr-md-5">
+                        {% if balance.expenseTotal is not empty%} {% for value in balance.expenseTotal %}
+                            <tr><td class = "text-left py-2 h6 font-weight-light">{{ value['name'] }}</td>                                
+                            <td class = "text-right py-2 h6 font-weight-light">{{ value['ROUND(SUM(expenses.amount), 2)']|number_format(2, ',', ' ') }} PLN</td>
+                            <td class = "text-right py-2">
+                                <button type = "button" class = "btn show-single-data btn-blue-grey" value = "{{ value['name'] }}" title = "Pokaż więcej" role = "button" data-toggle="modal" data-target="#showSingleExpenseOptions">                                 
+                                    <svg width="1.3em" height="1.3em" viewBox="0 0 16 16" class="bi bi-arrow-down-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                                        <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
+                                    </svg>
+                                </button>                                
+                            </td>                            
+                        {% endfor %}{% else %}
+                        <tr><td class = "text-center">Nie masz żadnych zapisanych wydatków. <br>Dodaj je w sekcji "Dodaj wydatek". </td></tr>
+                        {% endif %}
+                    </table>         
                 </div>  
                 {% if balance.expenseTotal is not empty%}
                 <canvas class = "mt-3 col-12 col-md-8 offset-0 offset-md-2" id="pieChartBalance"></canvas>
-                {% endif %}    
+                {% endif %} 
                 <div class = "col-12 col-md-8 offset-0 offset-md-2">                                               
                     <h3 class = "text-center mt-2 mb-3 mt-md-5" id = "{{balance.summaryId}}"> {{balance.balance}} PLN<br>{{balance.summaryText}}</h3>
                 </div>
             </div>                    
+        </div>
+        <div class="modal fade" id="showSingleExpenseOptions" tabindex="-1" aria-labelledby="showSingleExpenseOptions" role="dialog" aria-hidden="true">                
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header text-center">
+                        <h4>Kategoria</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        asdf
+                    </div>
+                </div>
+            </div>
         </div>                
     </article>
 </section>

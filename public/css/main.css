@@ -180,22 +180,6 @@ body
     background-color: #fff !important;
 }
 
-
-.balanceTable{
-    border-radius: 20px;
-    border: 1px solid #00cfff; 
-}
-
-.balanceInfo {
-    text-align: left;
-    font-size: 1.2em;
-}
-
-.balanceInfoAmount {
-    text-align: right;
-    font-size: 1.2em;
-}
-
 #balanceSummaryPositive{
     border-radius: 20px;
     border: 1px solid #00897b;
@@ -227,6 +211,12 @@ body
     font-weight: 400;
     font-size: .81rem;    
 }
+
+.show-single-data {     
+    all: unset; 
+    display: flex;   
+}
+
 
 @media (max-width: 575px) {
     .page-quote{
