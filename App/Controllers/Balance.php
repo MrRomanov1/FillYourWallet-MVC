@@ -125,4 +125,13 @@ class Balance extends Authenticated {
         }
     }
 
+    protected static function getSingleExpensesAction() {
+        $date = static::getCurrentMonthDate(); //date will be added later
+
+        $categoryId = Expense::getUserExpenseCategoryId($_SESSION['userId'], $_GET['categoryName']);
+        $singleExpenses = Expense::getSingleCategoryExpenses( $date, $_SESSION['userId'], $categoryId);
+
+        header('Content-type: application/json');
+        echo json_encode($singleExpenses);
+    }
 }

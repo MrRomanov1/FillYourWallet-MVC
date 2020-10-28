@@ -94,7 +94,7 @@ class Expense extends \Core\Model {
     public static function getExpensesTotal( $date, $userId ) {
         $db = static::getDB();
 
-        $stmt = $db->prepare( 'SELECT ROUND(SUM(expenses.amount), 2), expenses.userExpenseCategoryId, uec.name FROM expenses expenses, user_expense_categories AS uec WHERE expenses.expenseDate BETWEEN :beginDate AND :endDate AND expenses.userId = :userId AND uec.id = expenses.userExpenseCategoryId GROUP BY expenses.userExpenseCategoryId' );
+        $stmt = $db->prepare( 'SELECT ROUND(SUM(expenses.amount), 2), expenses.userExpenseCategoryId, uec.name FROM expenses, user_expense_categories AS uec WHERE expenses.expenseDate BETWEEN :beginDate AND :endDate AND expenses.userId = :userId AND uec.id = expenses.userExpenseCategoryId GROUP BY expenses.userExpenseCategoryId' );
 
         $stmt->bindValue( ':beginDate', $date['beginDate'], PDO::PARAM_STR );
         $stmt->bindValue( ':endDate', $date['endDate'], PDO::PARAM_STR );
@@ -263,5 +263,21 @@ class Expense extends \Core\Model {
         $stmt->setFetchMode( PDO::FETCH_ASSOC );
         
         return $stmt->execute();
+    }
+
+    public static function getSingleCategoryExpenses ($date, $userId, $categoryId) {
+        $db = static::getDB();
+
+        $stmt = $db->prepare( 'SELECT * FROM expenses WHERE userId = :userId AND userExpenseCategoryId =:userExpenseCategoryId AND expenseDate BETWEEN :beginDate AND :endDate' );
+        
+        $stmt->bindValue( ':userId', $userId, PDO::PARAM_INT );
+        $stmt->bindValue( ':beginDate', $date['beginDate'], PDO::PARAM_STR );
+        $stmt->bindValue( ':endDate', $date['endDate'], PDO::PARAM_STR );
+        $stmt->bindValue( ':userExpenseCategoryId', $categoryId, PDO::PARAM_INT ); 
+        
+        $stmt->setFetchMode( PDO::FETCH_ASSOC );
+        $stmt->execute();
+        
+        return $stmt->fetchAll();
     }
 }
