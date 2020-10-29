@@ -268,7 +268,7 @@ class Expense extends \Core\Model {
     public static function getSingleCategoryExpenses ($date, $userId, $categoryId) {
         $db = static::getDB();
 
-        $stmt = $db->prepare( 'SELECT * FROM expenses WHERE userId = :userId AND userExpenseCategoryId =:userExpenseCategoryId AND expenseDate BETWEEN :beginDate AND :endDate' );
+        $stmt = $db->prepare( 'SELECT * FROM expenses WHERE userId = :userId AND userExpenseCategoryId =:userExpenseCategoryId AND expenseDate BETWEEN :beginDate AND :endDate ORDER BY expenseDate DESC' );
         
         $stmt->bindValue( ':userId', $userId, PDO::PARAM_INT );
         $stmt->bindValue( ':beginDate', $date['beginDate'], PDO::PARAM_STR );

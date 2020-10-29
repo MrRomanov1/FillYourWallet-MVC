@@ -2,6 +2,8 @@ $(document).ready(function(){
     $('.show-single-data').click(function() {
         var me = $(this);
         var categoryName = me.val();
+        var balanceBeginDate = $("#balanceBeginDate").val();
+        var balanceEndDate = $("#balanceEndDate").val();
 
         $('#categoryName').text(categoryName);
 
@@ -9,7 +11,9 @@ $(document).ready(function(){
             method: "GET",
             url: "/get-single-expenses",
             dataType: 'json',
-            data: {categoryName: categoryName},
+            data: {categoryName: categoryName,
+                balanceBeginDate: balanceBeginDate,
+                balanceEndDate: balanceEndDate},
             success: function(data) {
                 var resultString = "";                                             
                 $.each(data, function(key, value) {

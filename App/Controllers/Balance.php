@@ -20,6 +20,8 @@ class Balance extends Authenticated {
     public function currentMonthBalanceAction() {
         $date = static::getCurrentMonthDate();
         $balance = static::getBalanceData($date, $this->user->userId );
+        $balance['beginDate'] = $date['beginDate'];
+        $balance['endDate'] = $date['endDate'];
         $balance['period'] = 'z bieżącego miesiąca';
         $this->viewPage($balance);
     }
@@ -27,6 +29,8 @@ class Balance extends Authenticated {
     public function currentYearBalanceAction() {
         $date = static::getCurrentYearDate();
         $balance = static::getBalanceData($date, $this->user->userId );
+        $balance['beginDate'] = $date['beginDate'];
+        $balance['endDate'] = $date['endDate'];
         $balance['period'] = 'z bieżącego roku';
         $this->viewPage($balance);
     }
@@ -34,6 +38,8 @@ class Balance extends Authenticated {
     public function lastMonthBalanceAction() {
         $date = static::getLastMonthDate();
         $balance = static::getBalanceData($date, $this->user->userId );
+        $balance['beginDate'] = $date['beginDate'];
+        $balance['endDate'] = $date['endDate'];
         $balance['period'] = 'z poprzedniego miesiąca';
         $this->viewPage($balance);
     }
@@ -41,6 +47,8 @@ class Balance extends Authenticated {
     public function customBalanceAction() {
         $date = static::getCustomDate();
         $balance = static::getBalanceData($date, $this->user->userId );
+        $balance['beginDate'] = $date['beginDate'];
+        $balance['endDate'] = $date['endDate'];
         $balance['period'] = 'od '.$date['beginDate'].' do '.$date['endDate'];
         $this->viewPage($balance);
     }
@@ -126,7 +134,8 @@ class Balance extends Authenticated {
     }
 
     protected static function getSingleExpensesAction() {
-        $date = static::getCurrentMonthDate(); //date will be added later
+        $date = ['beginDate' => $_GET['balanceBeginDate'],
+        'endDate' => $_GET['balanceEndDate']];
 
         $categoryId = Expense::getUserExpenseCategoryId($_SESSION['userId'], $_GET['categoryName']);
         $singleExpenses = Expense::getSingleCategoryExpenses( $date, $_SESSION['userId'], $categoryId);

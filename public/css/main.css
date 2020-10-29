@@ -217,6 +217,13 @@ body
     display: flex;   
 }
 
+.modal-dialog.modal-notify.modal-info .modal-header {
+    background-color: #59698D;
+    text-transform: uppercase;
+    color: #fff;
+    letter-spacing: 1.5px;
+}
+
 
 @media (max-width: 575px) {
     .page-quote{
