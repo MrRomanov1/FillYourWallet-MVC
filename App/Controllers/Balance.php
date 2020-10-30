@@ -143,4 +143,13 @@ class Balance extends Authenticated {
         header('Content-type: application/json');
         echo json_encode($singleExpenses);
     }
+
+    protected static function getSingleExpenseDataAction() {
+        $expenseId = $_GET['expenseId'];
+
+        $singleExpenseData = Expense::getSingleExpenseData($expenseId);
+
+        header('Content-type: application/json');
+        echo json_encode($singleExpenseData);
+    }
 }

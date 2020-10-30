@@ -280,4 +280,17 @@ class Expense extends \Core\Model {
         
         return $stmt->fetchAll();
     }
+
+    public static function getSingleExpenseData ($expenseId) {
+        $db = static::getDB();
+
+        $stmt = $db->prepare( 'SELECT * FROM expenses WHERE id = :id');
+
+        $stmt->bindValue( ':id', $expenseId, PDO::PARAM_INT );
+
+        $stmt->setFetchMode( PDO::FETCH_ASSOC );
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+    }
 }

@@ -91,8 +91,54 @@
                             <tbody id = "expenseData">
                                 <th class = "text-left py-2 h6 font-weight-light">Komentarz</th>                            
                                 <th class = "text-center py-2 h6 font-weight-light">Kwota</th>                            
-                                <th class = "text-right py-2 h6 font-weight-light">Data</th>
+                                <th class = "text-center py-2 h6 font-weight-light">Data</th>
+                                <th class = "text-right py-2 h6 font-weight-light pr-4">Edytuj</th>                                                                                        
                             </tbody>                                                        
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="editExpense" tabindex="-1" aria-labelledby="editExpense" role="dialog" aria-hidden="true">                
+            <div class="modal-dialog modal-lg modal-dialog-centered modal-notify modal-info">
+                <div class="modal-content">
+                    <div class="modal-header text-center">
+                        <h4 id = "categoryName">Edycja wydatku</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <table class = "table table-white table-hover mr-0 mr-md-5" >
+                            <form action = "" method = "post">
+                                <p>Wybierz, co chcesz zrobić</p>
+                                <div class = "input-group mb-2">
+                                    <div class="input-group-btn" data-toggle="buttons">
+                                    <label class = "btn btn-block d-inline-block btn-light text-left editExpense">
+                                        <input type = "radio" name = "option" autocomplete="off" value = "edit"> Edytuj wydatek
+                                    </label>
+                                    <label class="btn btn-block d-inline-block btn-light text-left moveExpense">
+                                        <input type="radio" name = "option" autocomplete="off" value = "move"> Przenieś wydatek do innej kategorii
+                                    </label>
+                                    <label class="btn btn-block d-inline-block btn-light text-left deleteExpense">
+                                        <input type="radio" name = "option" autocomplete="off" value = "delete"> Usuń wydatek
+                                    </label>
+                                    <select class="form-control mb-3 mt-3 selectCategories p-0 pl-2"  name = "categorySelect" style= "display: none;">
+                                        <option value="" disabled selected hidden> Kategoria</option>
+                                        {% for value in incomeCategories %}
+                                        <option value="{{value.name}}"> {{value.name}} </option>                                
+                                        {% endfor %}
+                                    </select>
+                                    </div>
+                                </div>
+                                <label id = "expenseCommentLabel" for="expenseComment" style= "display: none;">Komentarz</label>
+                                <input type="text" class="form-control mb-3" name = "expenseComment" id = "expenseComment" style= "display: none;">
+                                <input type="hidden" name = "hiddenExpenseId" id = "hiddenExpenseId"> 
+                                <label id = "amountLabel" for="amount" style= "display: none;">Kwota</label>                               
+                                <input type="number" class="form-control mb-3" name = "amount" step="0.01" id = "amount" style= "display: none;">
+                                <label id = "dateLabel" for="expenseDate " style= "display: none;">Data</label>
+                                <input type = "date" class = "form-control mb-3" name = "expenseDate" id = "expenseDate" style= "display: none;">                                
+                                <button type="submit" class="btn btn-default btn-dark-green btn-block">Zatwierdź</button>
+                                <button type="reset" class="btn btn-default btn-unique btn-block" data-dismiss="modal">Anuluj</button>
+                            </form>                                                       
                         </table>
                     </div>
                 </div>
