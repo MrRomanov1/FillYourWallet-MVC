@@ -152,4 +152,28 @@ class Balance extends Authenticated {
         header('Content-type: application/json');
         echo json_encode($singleExpenseData);
     }
+
+    protected static function editSingleExpenseAction() {
+        $functionPicker = $_POST['option'];
+        $expenseId = $_POST['hiddenExpenseId'];
+
+        switch($functionPicker) {
+            case "edit":
+                $expenseComment = $_POST['expenseComment'];
+                $amount = $_POST['amount'];
+                $expenseDate = $_POST['expenseDate'];
+                
+                Expense::editSingleExpense($expenseId, $expenseComment, $amount, $expenseDate);
+
+            break;
+            case "move":
+                echo "Przeniesienie";
+            break;
+            case "delete":
+                echo "Usuwanie";
+            break;
+        }
+
+    
+    }
 }

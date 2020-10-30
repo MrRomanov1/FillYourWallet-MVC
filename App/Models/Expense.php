@@ -293,4 +293,19 @@ class Expense extends \Core\Model {
 
         return $stmt->fetchAll();
     }
+
+    public static function editSingleExpense($expenseId, $expenseComment, $amount, $expenseDate) {
+        $db = static::getDB();
+
+        $amount = str_replace( [','], ['.'], $amount );
+
+        $stmt = $db->prepare( 'UPDATE expenses SET amount = :amount, expenseDate =:expenseDate, expenseComment =:expenseComment WHERE id = :id' );
+
+        $stmt->bindValue( ':id', $expenseId, PDO::PARAM_INT );
+        $stmt->bindValue( ':expenseDate', $expenseDate, PDO::PARAM_STR );
+        $stmt->bindValue( ':amount', $amount, PDO::PARAM_STR );
+        $stmt->bindValue( ':expenseComment', $expenseComment, PDO::PARAM_STR); 
+
+        return $stmt->execute();
+    }
 }

@@ -54,6 +54,7 @@ $(document).ready(function(){
                     $('input[name=expenseComment]').val(value['expenseComment']);
                     $('input[name=amount]').val(value['amount']);
                     $('input[name=expenseDate]').val(value['expenseDate']);
+                    $('input[name=hiddenExpenseId]').val(value['id']);
                 });
             }
         });
