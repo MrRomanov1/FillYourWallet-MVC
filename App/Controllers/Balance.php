@@ -67,6 +67,7 @@ class Balance extends Authenticated {
         $balance['incomeTotal'] = Income::getIncomesTotal( $date, $userId );
         $balance['expenses'] = Expense::getExpenses( $date, $userId );
         $balance['expenseTotal'] = Expense::getExpensesTotal( $date, $userId );
+        $balance['expenseCategories'] = Expense::getUserExpenseCategories( $userId );
         $balance['date'] = $date;
 
         $balance['incomeSum'] = 0;
@@ -133,7 +134,7 @@ class Balance extends Authenticated {
         }
     }
 
-    protected static function getSingleExpensesAction() {
+    protected function getSingleExpensesAction() {
         $date = ['beginDate' => $_GET['balanceBeginDate'],
         'endDate' => $_GET['balanceEndDate']];
 
@@ -144,7 +145,7 @@ class Balance extends Authenticated {
         echo json_encode($singleExpenses);
     }
 
-    protected static function getSingleExpenseDataAction() {
+    protected function getSingleExpenseDataAction() {
         $expenseId = $_GET['expenseId'];
 
         $singleExpenseData = Expense::getSingleExpenseData($expenseId);
@@ -153,9 +154,14 @@ class Balance extends Authenticated {
         echo json_encode($singleExpenseData);
     }
 
-    protected static function editSingleExpenseAction() {
+    protected function editSingleExpenseAction() {
         $functionPicker = $_POST['option'];
         $expenseId = $_POST['hiddenExpenseId'];
+        $date = ['beginDate' => $_POST['balanceBeginDate'],
+        'endDate' => $_POST['balanceEndDate']];
+        $currentMonthDate = static::getCurrentMonthDate();
+        $currentYearDate = static::getCurrentYearDate();
+        $lastMonthdate = static::getLastMonthDate();
 
         switch($functionPicker) {
             case "edit":
@@ -163,14 +169,54 @@ class Balance extends Authenticated {
                 $amount = $_POST['amount'];
                 $expenseDate = $_POST['expenseDate'];
                 
-                Expense::editSingleExpense($expenseId, $expenseComment, $amount, $expenseDate);
+                if (Expense::editSingleExpense($expenseId, $expenseComment, $amount, $expenseDate)) {
+                    if ($date === $currentMonthDate) {
+                        $this->redirect( '/currentMonthBalance' );
+                    }
+                    else if ($date === $currentYearDate) {
+                        $this->redirect( '/currentYearBalance' );
+                    }
+                    else if ($date === $lastMonthdate) {
+                        $this->redirect( '/lastMonthBalance' );
+                    }
+                }
+                else {
+                    echo 'blad'; //todo
+                }
 
             break;
             case "move":
-                echo "Przeniesienie";
+                $categoryToMove = $_POST['categorySelect'];
+                if(Expense::moveSingleExpenseToOtherCategory($this->user->userId, $expenseId, $categoryToMove)) {
+                    if ($date === $currentMonthDate) {
+                        $this->redirect( '/currentMonthBalance' );
+                    }
+                    else if ($date === $currentYearDate) {
+                        $this->redirect( '/currentYearBalance' );
+                    }
+                    else if ($date === $lastMonthdate) {
+                        $this->redirect( '/lastMonthBalance' );
+                    }
+                }
+                else {
+                    echo 'blad'; //todo
+                }
             break;
             case "delete":
-                echo "Usuwanie";
+                if (Expense::deleteSingleExpense($expenseId)) {
+                    if ($date === $currentMonthDate) {
+                        $this->redirect( '/currentMonthBalance' );
+                    }
+                    else if ($date === $currentYearDate) {
+                        $this->redirect( '/currentYearBalance' );
+                    }
+                    else if ($date === $lastMonthdate) {
+                        $this->redirect( '/lastMonthBalance' );
+                    }
+                }
+                else {
+                    echo 'blad'; //todo
+                }
             break;
         }
 

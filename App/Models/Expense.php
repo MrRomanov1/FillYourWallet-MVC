@@ -308,4 +308,29 @@ class Expense extends \Core\Model {
 
         return $stmt->execute();
     }
+
+    public static function moveSingleExpenseToOtherCategory ($userId, $expenseId, $categoryToMove) {
+        $categoryId = static::getUserExpenseCategoryId($userId, $categoryToMove);                     
+        
+        $db = static::getDB();        
+        
+            
+        $stmt = $db->prepare('UPDATE expenses SET userExpenseCategoryId =:userExpenseCategoryId WHERE id = :id');
+        
+        $stmt->bindValue( ':id', $expenseId, PDO::PARAM_INT );
+        $stmt->bindValue( ':userExpenseCategoryId', $categoryId, PDO::PARAM_INT );             
+        
+    
+        return $stmt->execute();
+    }
+
+    public static function deleteSingleExpense ($expenseId) {
+        $db = static::getDB(); 
+        
+        $stmt = $db->prepare('DELETE FROM expenses WHERE id = :id');
+
+        $stmt->bindValue( ':id', $expenseId, PDO::PARAM_INT );
+
+        return $stmt->execute();
+    }
 }

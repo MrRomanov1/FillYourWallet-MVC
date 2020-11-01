@@ -123,7 +123,7 @@
                                     </label>
                                     <select class="form-control mb-3 mt-3 selectCategories p-0 pl-2"  name = "categorySelect" style= "display: none;">
                                         <option value="" disabled selected hidden> Kategoria</option>
-                                        {% for value in incomeCategories %}
+                                        {% for value in balance.expenseCategories %}
                                         <option value="{{value.name}}"> {{value.name}} </option>                                
                                         {% endfor %}
                                     </select>
@@ -132,12 +132,15 @@
                                 <label id = "expenseCommentLabel" for="expenseComment" style= "display: none;">Komentarz</label>
                                 <input type="text" class="form-control mb-3" name = "expenseComment" id = "expenseComment" style= "display: none;">
                                 <input type="hidden" name = "hiddenExpenseId" id = "hiddenExpenseId"> 
+                                <input type = "hidden" name = "balanceBeginDate" id = "balanceBeginDate" value = "{{balance.beginDate}}">
+                                <input type = "hidden" name = "balanceEndDate" id = "balanceEndDate" value = "{{balance.endDate}}">    
                                 <label id = "amountLabel" for="amount" style= "display: none;">Kwota</label>                               
                                 <input type="number" class="form-control mb-3" name = "amount" step="0.01" id = "amount" style= "display: none;">
                                 <label id = "dateLabel" for="expenseDate " style= "display: none;">Data</label>
-                                <input type = "date" class = "form-control mb-3" name = "expenseDate" id = "expenseDate" style= "display: none;">                                
+                                <input type = "date" class = "form-control mb-3" name = "expenseDate" id = "expenseDate" style= "display: none;">                                                            
                                 <button type="submit" class="btn btn-default btn-dark-green btn-block">Zatwierdź</button>
                                 <button type="reset" class="btn btn-default btn-unique btn-block" data-dismiss="modal">Anuluj</button>
+                                
                             </form>                                                       
                         </table>
                     </div>

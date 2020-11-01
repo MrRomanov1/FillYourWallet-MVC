@@ -21,7 +21,7 @@ $(document).ready(function(){
                     $("#expenseData").append(resultString);                    
                 });                
             }          
-        });        
+        });
     });
     $('#showSingleExpenseOptions').on('hidden.bs.modal', function () {
         $("#expenseData").empty();
@@ -42,13 +42,12 @@ $(document).ready(function(){
     });
     $(document).on('click','#editSingleExpense',function(){
         var def = $(this);
-        var expenseId = def.val();        
+        var expenseId = def.val();             
         $.ajax({
             method: "GET",
             url: "/get-single-expense-data",
-            dataType: 'json',
+            dataType: 'json',            
             data: {expenseId: expenseId},
-
             success: function(data) {
                 $.each(data, function(key, value) { 
                     $('input[name=expenseComment]').val(value['expenseComment']);
