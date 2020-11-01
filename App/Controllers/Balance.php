@@ -20,6 +20,8 @@ class Balance extends Authenticated {
     public function currentMonthBalanceAction() {
         $date = static::getCurrentMonthDate();
         $balance = static::getBalanceData($date, $this->user->userId );
+        $balance['beginDate'] = $date['beginDate'];
+        $balance['endDate'] = $date['endDate'];
         $balance['period'] = 'z bieżącego miesiąca';
         $this->viewPage($balance);
     }
@@ -27,6 +29,8 @@ class Balance extends Authenticated {
     public function currentYearBalanceAction() {
         $date = static::getCurrentYearDate();
         $balance = static::getBalanceData($date, $this->user->userId );
+        $balance['beginDate'] = $date['beginDate'];
+        $balance['endDate'] = $date['endDate'];
         $balance['period'] = 'z bieżącego roku';
         $this->viewPage($balance);
     }
@@ -34,6 +38,8 @@ class Balance extends Authenticated {
     public function lastMonthBalanceAction() {
         $date = static::getLastMonthDate();
         $balance = static::getBalanceData($date, $this->user->userId );
+        $balance['beginDate'] = $date['beginDate'];
+        $balance['endDate'] = $date['endDate'];
         $balance['period'] = 'z poprzedniego miesiąca';
         $this->viewPage($balance);
     }
@@ -41,6 +47,8 @@ class Balance extends Authenticated {
     public function customBalanceAction() {
         $date = static::getCustomDate();
         $balance = static::getBalanceData($date, $this->user->userId );
+        $balance['beginDate'] = $date['beginDate'];
+        $balance['endDate'] = $date['endDate'];
         $balance['period'] = 'od '.$date['beginDate'].' do '.$date['endDate'];
         $this->viewPage($balance);
     }
@@ -59,6 +67,7 @@ class Balance extends Authenticated {
         $balance['incomeTotal'] = Income::getIncomesTotal( $date, $userId );
         $balance['expenses'] = Expense::getExpenses( $date, $userId );
         $balance['expenseTotal'] = Expense::getExpensesTotal( $date, $userId );
+        $balance['expenseCategories'] = Expense::getUserExpenseCategories( $userId );
         $balance['date'] = $date;
 
         $balance['incomeSum'] = 0;
@@ -125,4 +134,92 @@ class Balance extends Authenticated {
         }
     }
 
+    protected function getSingleExpensesAction() {
+        $date = ['beginDate' => $_GET['balanceBeginDate'],
+        'endDate' => $_GET['balanceEndDate']];
+
+        $categoryId = Expense::getUserExpenseCategoryId($_SESSION['userId'], $_GET['categoryName']);
+        $singleExpenses = Expense::getSingleCategoryExpenses( $date, $_SESSION['userId'], $categoryId);
+
+        header('Content-type: application/json');
+        echo json_encode($singleExpenses);
+    }
+
+    protected function getSingleExpenseDataAction() {
+        $expenseId = $_GET['expenseId'];
+
+        $singleExpenseData = Expense::getSingleExpenseData($expenseId);
+
+        header('Content-type: application/json');
+        echo json_encode($singleExpenseData);
+    }
+
+    protected function editSingleExpenseAction() {
+        $functionPicker = $_POST['option'];
+        $expenseId = $_POST['hiddenExpenseId'];
+        $date = ['beginDate' => $_POST['balanceBeginDate'],
+        'endDate' => $_POST['balanceEndDate']];
+        $currentMonthDate = static::getCurrentMonthDate();
+        $currentYearDate = static::getCurrentYearDate();
+        $lastMonthdate = static::getLastMonthDate();
+
+        switch($functionPicker) {
+            case "edit":
+                $expenseComment = $_POST['expenseComment'];
+                $amount = $_POST['amount'];
+                $expenseDate = $_POST['expenseDate'];
+                
+                if (Expense::editSingleExpense($expenseId, $expenseComment, $amount, $expenseDate)) {
+                    if ($date === $currentMonthDate) {
+                        $this->redirect( '/currentMonthBalance' );
+                    }
+                    else if ($date === $currentYearDate) {
+                        $this->redirect( '/currentYearBalance' );
+                    }
+                    else if ($date === $lastMonthdate) {
+                        $this->redirect( '/lastMonthBalance' );
+                    }
+                }
+                else {
+                    echo 'blad'; //todo
+                }
+
+            break;
+            case "move":
+                $categoryToMove = $_POST['categorySelect'];
+                if(Expense::moveSingleExpenseToOtherCategory($this->user->userId, $expenseId, $categoryToMove)) {
+                    if ($date === $currentMonthDate) {
+                        $this->redirect( '/currentMonthBalance' );
+                    }
+                    else if ($date === $currentYearDate) {
+                        $this->redirect( '/currentYearBalance' );
+                    }
+                    else if ($date === $lastMonthdate) {
+                        $this->redirect( '/lastMonthBalance' );
+                    }
+                }
+                else {
+                    echo 'blad'; //todo
+                }
+            break;
+            case "delete":
+                if (Expense::deleteSingleExpense($expenseId)) {
+                    if ($date === $currentMonthDate) {
+                        $this->redirect( '/currentMonthBalance' );
+                    }
+                    else if ($date === $currentYearDate) {
+                        $this->redirect( '/currentYearBalance' );
+                    }
+                    else if ($date === $lastMonthdate) {
+                        $this->redirect( '/lastMonthBalance' );
+                    }
+                }
+                else {
+                    echo 'blad'; //todo
+                }
+            break;
+        }
+
+    
+    }
 }

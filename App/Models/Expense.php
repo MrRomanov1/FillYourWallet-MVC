@@ -94,7 +94,7 @@ class Expense extends \Core\Model {
     public static function getExpensesTotal( $date, $userId ) {
         $db = static::getDB();
 
-        $stmt = $db->prepare( 'SELECT ROUND(SUM(expenses.amount), 2), expenses.userExpenseCategoryId, uec.name FROM expenses expenses, user_expense_categories AS uec WHERE expenses.expenseDate BETWEEN :beginDate AND :endDate AND expenses.userId = :userId AND uec.id = expenses.userExpenseCategoryId GROUP BY expenses.userExpenseCategoryId' );
+        $stmt = $db->prepare( 'SELECT ROUND(SUM(expenses.amount), 2), expenses.userExpenseCategoryId, uec.name FROM expenses, user_expense_categories AS uec WHERE expenses.expenseDate BETWEEN :beginDate AND :endDate AND expenses.userId = :userId AND uec.id = expenses.userExpenseCategoryId GROUP BY expenses.userExpenseCategoryId' );
 
         $stmt->bindValue( ':beginDate', $date['beginDate'], PDO::PARAM_STR );
         $stmt->bindValue( ':endDate', $date['endDate'], PDO::PARAM_STR );
@@ -262,6 +262,75 @@ class Expense extends \Core\Model {
         $stmt->bindValue( ':expenseLimit', $newCategoryLimit, PDO::PARAM_INT );
         $stmt->setFetchMode( PDO::FETCH_ASSOC );
         
+        return $stmt->execute();
+    }
+
+    public static function getSingleCategoryExpenses ($date, $userId, $categoryId) {
+        $db = static::getDB();
+
+        $stmt = $db->prepare( 'SELECT * FROM expenses WHERE userId = :userId AND userExpenseCategoryId =:userExpenseCategoryId AND expenseDate BETWEEN :beginDate AND :endDate ORDER BY expenseDate DESC' );
+        
+        $stmt->bindValue( ':userId', $userId, PDO::PARAM_INT );
+        $stmt->bindValue( ':beginDate', $date['beginDate'], PDO::PARAM_STR );
+        $stmt->bindValue( ':endDate', $date['endDate'], PDO::PARAM_STR );
+        $stmt->bindValue( ':userExpenseCategoryId', $categoryId, PDO::PARAM_INT ); 
+        
+        $stmt->setFetchMode( PDO::FETCH_ASSOC );
+        $stmt->execute();
+        
+        return $stmt->fetchAll();
+    }
+
+    public static function getSingleExpenseData ($expenseId) {
+        $db = static::getDB();
+
+        $stmt = $db->prepare( 'SELECT * FROM expenses WHERE id = :id');
+
+        $stmt->bindValue( ':id', $expenseId, PDO::PARAM_INT );
+
+        $stmt->setFetchMode( PDO::FETCH_ASSOC );
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+    }
+
+    public static function editSingleExpense($expenseId, $expenseComment, $amount, $expenseDate) {
+        $db = static::getDB();
+
+        $amount = str_replace( [','], ['.'], $amount );
+
+        $stmt = $db->prepare( 'UPDATE expenses SET amount = :amount, expenseDate =:expenseDate, expenseComment =:expenseComment WHERE id = :id' );
+
+        $stmt->bindValue( ':id', $expenseId, PDO::PARAM_INT );
+        $stmt->bindValue( ':expenseDate', $expenseDate, PDO::PARAM_STR );
+        $stmt->bindValue( ':amount', $amount, PDO::PARAM_STR );
+        $stmt->bindValue( ':expenseComment', $expenseComment, PDO::PARAM_STR); 
+
+        return $stmt->execute();
+    }
+
+    public static function moveSingleExpenseToOtherCategory ($userId, $expenseId, $categoryToMove) {
+        $categoryId = static::getUserExpenseCategoryId($userId, $categoryToMove);                     
+        
+        $db = static::getDB();        
+        
+            
+        $stmt = $db->prepare('UPDATE expenses SET userExpenseCategoryId =:userExpenseCategoryId WHERE id = :id');
+        
+        $stmt->bindValue( ':id', $expenseId, PDO::PARAM_INT );
+        $stmt->bindValue( ':userExpenseCategoryId', $categoryId, PDO::PARAM_INT );             
+        
+    
+        return $stmt->execute();
+    }
+
+    public static function deleteSingleExpense ($expenseId) {
+        $db = static::getDB(); 
+        
+        $stmt = $db->prepare('DELETE FROM expenses WHERE id = :id');
+
+        $stmt->bindValue( ':id', $expenseId, PDO::PARAM_INT );
+
         return $stmt->execute();
     }
 }
