@@ -24,8 +24,11 @@ $router->addRouteToRoutingTable('currentYearBalance', ['controller' => 'Balance'
 $router->addRouteToRoutingTable('lastMonthBalance', ['controller' => 'Balance', 'action' => 'lastMonthBalance']);
 $router->addRouteToRoutingTable('customBalance', ['controller' => 'Balance', 'action' => 'customBalance']);
 $router->addRouteToRoutingTable('get-single-expenses', ['controller' => 'Balance', 'action' => 'getSingleExpenses']);
+$router->addRouteToRoutingTable('get-single-incomes', ['controller' => 'Balance', 'action' => 'getSingleIncomes']);
 $router->addRouteToRoutingTable('get-single-expense-data', ['controller' => 'Balance', 'action' => 'getSingleExpenseData']);
+$router->addRouteToRoutingTable('get-single-income-data', ['controller' => 'Balance', 'action' => 'getSingleIncomeData']);
 $router->addRouteToRoutingTable('edit-single-expense', ['controller' => 'Balance', 'action' => 'editSingleExpense']);
+$router->addRouteToRoutingTable('edit-single-income', ['controller' => 'Balance', 'action' => 'editSingleIncome']);
 $router->addRouteToRoutingTable('config', ['controller' => 'ProfileManager', 'action' => 'config']);
 $router->addRouteToRoutingTable('edit-income', ['controller' => 'ProfileManager', 'action' => 'editUserIncomeCategory']);
 $router->addRouteToRoutingTable('edit-expense', ['controller' => 'ProfileManager', 'action' => 'editUserExpenseCategory']);

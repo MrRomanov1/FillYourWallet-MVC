@@ -38,7 +38,7 @@
                             <tr><td class = "text-left py-2 h6 font-weight-light">{{ value['name'] }}</td>
                             <td class = "text-right py-2 h6 font-weight-light">{{ value['ROUND(SUM(incomes.amount), 2)']|number_format(2, ',', ' ') }} PLN</td>
                             <td class = "text-right py-2"> 
-                                <button class = "show-single-data btn-blue-grey" value = "{{ value['name'] }}" title = "Pokaż więcej">                          
+                                <button class = "show-single-income-data btn-blue-grey" value = "{{ value['name'] }}" title = "Pokaż więcej" data-toggle="modal" data-target="#showSingleIncomeOptions">                          
                                     <svg width="1.3em" height="1.3em" viewBox="0 0 16 16" class="bi bi-arrow-down-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
                                         <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
@@ -59,7 +59,7 @@
                             <tr><td class = "text-left py-2 h6 font-weight-light">{{ value['name'] }}</td>                               
                             <td class = "text-right py-2 h6 font-weight-light">{{ value['ROUND(SUM(expenses.amount), 2)']|number_format(2, ',', ' ') }} PLN</td>
                             <td class = "text-right py-2">
-                                <button type = "button" class = "btn show-single-data btn-blue-grey" value = "{{ value['name'] }}" title = "Pokaż więcej" role = "button" data-toggle="modal" data-target="#showSingleExpenseOptions">                                 
+                                <button type = "button" class = "btn show-single-expense-data btn-blue-grey" value = "{{ value['name'] }}" title = "Pokaż więcej" role = "button" data-toggle="modal" data-target="#showSingleExpenseOptions">                                 
                                     <svg width="1.3em" height="1.3em" viewBox="0 0 16 16" class="bi bi-arrow-down-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
                                         <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
@@ -113,14 +113,11 @@
                                 <div class = "input-group mb-2">
                                     <div class="input-group-btn" data-toggle="buttons">
                                     <label class = "btn btn-block d-inline-block btn-light text-left editExpense">
-                                        <input type = "radio" name = "option" autocomplete="off" value = "edit"> Edytuj wydatek
-                                    </label>
+                                        <input type = "radio" name = "option" autocomplete="off" value = "edit"> Edytuj wydatek</label>
                                     <label class="btn btn-block d-inline-block btn-light text-left moveExpense">
-                                        <input type="radio" name = "option" autocomplete="off" value = "move"> Przenieś wydatek do innej kategorii
-                                    </label>
+                                        <input type="radio" name = "option" autocomplete="off" value = "move"> Przenieś wydatek do innej kategorii</label>
                                     <label class="btn btn-block d-inline-block btn-light text-left deleteExpense">
-                                        <input type="radio" name = "option" autocomplete="off" value = "delete"> Usuń wydatek
-                                    </label>
+                                        <input type="radio" name = "option" autocomplete="off" value = "delete"> Usuń wydatek</label>
                                     <select class="form-control mb-3 mt-3 selectCategories p-0 pl-2"  name = "categorySelect" style= "display: none;">
                                         <option value="" disabled selected hidden> Kategoria</option>
                                         {% for value in balance.expenseCategories %}
@@ -146,7 +143,72 @@
                     </div>
                 </div>
             </div>
-        </div>                
+        </div>
+        <div class="modal fade" id="showSingleIncomeOptions" tabindex="-1" aria-labelledby="showSingleIncomeOptions" role="dialog" aria-hidden="true">                
+            <div class="modal-dialog modal-lg modal-dialog-centered modal-notify modal-info">
+                <div class="modal-content">
+                    <div class="modal-header text-center">
+                        <h4 id = "categoryName">Kategoria</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <table class = "table table-white table-hover mr-0 mr-md-5" >
+                            <tbody id = "incomeData">
+                                <th class = "text-left py-2 h6 font-weight-light">Komentarz</th>                            
+                                <th class = "text-center py-2 h6 font-weight-light">Kwota</th>                            
+                                <th class = "text-center py-2 h6 font-weight-light">Data</th>
+                                <th class = "text-right py-2 h6 font-weight-light pr-4">Edytuj</th>                                                                                        
+                            </tbody>                                                        
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="editIncome" tabindex="-1" aria-labelledby="editIncome" role="dialog" aria-hidden="true">                
+            <div class="modal-dialog modal-lg modal-dialog-centered modal-notify modal-info">
+                <div class="modal-content">
+                    <div class="modal-header text-center">
+                        <h4 id = "categoryName">Edycja przychodu</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <table class = "table table-white table-hover mr-0 mr-md-5" >
+                            <form action = "edit-single-income" method = "post">
+                                <p>Wybierz, co chcesz zrobić</p>
+                                <div class = "input-group mb-2">
+                                    <div class="input-group-btn" data-toggle="buttons">
+                                    <label class = "btn btn-block d-inline-block btn-light text-left editIncome">
+                                        <input type = "radio" name = "option" autocomplete="off" value = "edit"> Edytuj przychód</label>
+                                    <label class="btn btn-block d-inline-block btn-light text-left moveIncome">
+                                        <input type="radio" name = "option" autocomplete="off" value = "move"> Przenieś przychód do innej kategorii</label>
+                                    <label class="btn btn-block d-inline-block btn-light text-left deleteIncome">
+                                        <input type="radio" name = "option" autocomplete="off" value = "delete"> Usuń przychód</label>
+                                    <select class="form-control mb-3 mt-3 selectCategories p-0 pl-2"  name = "categorySelect" style= "display: none;">
+                                        <option value="" disabled selected hidden> Kategoria</option>
+                                        {% for value in balance.incomeCategories %}
+                                        <option value="{{value.name}}"> {{value.name}} </option>                                
+                                        {% endfor %}
+                                    </select>
+                                    </div>
+                                </div>
+                                <label id = "incomeCommentLabel" for="incomeComment" style= "display: none;">Komentarz</label>
+                                <input type="text" class="form-control mb-3" name = "incomeComment" id = "incomeComment" style= "display: none;">
+                                <input type="hidden" name = "hiddenIncomeId" id = "hiddenIncomeId"> 
+                                <input type = "hidden" name = "balanceBeginDate" id = "balanceBeginDate" value = "{{balance.beginDate}}">
+                                <input type = "hidden" name = "balanceEndDate" id = "balanceEndDate" value = "{{balance.endDate}}">    
+                                <label id = "amountLabel" for="amount" style= "display: none;">Kwota</label>                               
+                                <input type="number" class="form-control mb-3" name = "amount" step="0.01" id = "amount" style= "display: none;">
+                                <label id = "dateLabel" for="incomeDate " style= "display: none;">Data</label>
+                                <input type = "date" class = "form-control mb-3" name = "incomeDate" id = "incomeDate" style= "display: none;">                                                            
+                                <button type="submit" class="btn btn-default btn-dark-green btn-block">Zatwierdź</button>
+                                <button type="reset" class="btn btn-default btn-unique btn-block" data-dismiss="modal">Anuluj</button>
+                                
+                            </form>                                                       
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>               
     </article>
 </section>
 {% endblock %}

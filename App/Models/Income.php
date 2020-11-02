@@ -219,4 +219,73 @@ class Income extends \Core\Model {
         
         return $stmt->fetchAll();
     }
+
+    public static function getSingleCategoryIncomes ($date, $userId, $categoryId) {
+        $db = static::getDB();
+
+        $stmt = $db->prepare( 'SELECT * FROM incomes WHERE userId = :userId AND userIncomeCategoryId =:userIncomeCategoryId AND incomeDate BETWEEN :beginDate AND :endDate ORDER BY incomeDate DESC' );
+        
+        $stmt->bindValue( ':userId', $userId, PDO::PARAM_INT );
+        $stmt->bindValue( ':beginDate', $date['beginDate'], PDO::PARAM_STR );
+        $stmt->bindValue( ':endDate', $date['endDate'], PDO::PARAM_STR );
+        $stmt->bindValue( ':userIncomeCategoryId', $categoryId, PDO::PARAM_INT ); 
+        
+        $stmt->setFetchMode( PDO::FETCH_ASSOC );
+        $stmt->execute();
+        
+        return $stmt->fetchAll();
+    }
+
+    public static function getSingleIncomeData ($incomeId) {
+        $db = static::getDB();
+
+        $stmt = $db->prepare( 'SELECT * FROM incomes WHERE id = :id');
+
+        $stmt->bindValue( ':id', $incomeId, PDO::PARAM_INT );
+
+        $stmt->setFetchMode( PDO::FETCH_ASSOC );
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+    }
+
+    public static function editSingleIncome($incomeId, $incomeComment, $amount, $incomeDate) {
+        $db = static::getDB();
+
+        $amount = str_replace( [','], ['.'], $amount );
+
+        $stmt = $db->prepare( 'UPDATE incomes SET amount = :amount, incomeDate =:incomeDate, incomeComment =:incomeComment WHERE id = :id' );
+
+        $stmt->bindValue( ':id', $incomeId, PDO::PARAM_INT );
+        $stmt->bindValue( ':incomeDate', $incomeDate, PDO::PARAM_STR );
+        $stmt->bindValue( ':amount', $amount, PDO::PARAM_STR );
+        $stmt->bindValue( ':incomeComment', $incomeComment, PDO::PARAM_STR); 
+
+        return $stmt->execute();
+    }
+
+    public static function moveSingleIncomeToOtherCategory ($userId, $incomeId, $categoryToMove) {
+        $categoryId = static::getUserIncomeCategoryId($userId, $categoryToMove);                     
+        
+        $db = static::getDB();        
+        
+            
+        $stmt = $db->prepare('UPDATE incomes SET userIncomeCategoryId =:userIncomeCategoryId WHERE id = :id');
+        
+        $stmt->bindValue( ':id', $incomeId, PDO::PARAM_INT );
+        $stmt->bindValue( ':userIncomeCategoryId', $categoryId, PDO::PARAM_INT );             
+        
+    
+        return $stmt->execute();
+    }
+
+    public static function deleteSingleIncome ($incomeId) {
+        $db = static::getDB(); 
+        
+        $stmt = $db->prepare('DELETE FROM incomes WHERE id = :id');
+
+        $stmt->bindValue( ':id', $incomeId, PDO::PARAM_INT );
+
+        return $stmt->execute();
+    }
 }

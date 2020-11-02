@@ -68,6 +68,7 @@ class Balance extends Authenticated {
         $balance['expenses'] = Expense::getExpenses( $date, $userId );
         $balance['expenseTotal'] = Expense::getExpensesTotal( $date, $userId );
         $balance['expenseCategories'] = Expense::getUserExpenseCategories( $userId );
+        $balance['incomeCategories'] = Income::getUserIncomeCategories( $userId );
         $balance['date'] = $date;
 
         $balance['incomeSum'] = 0;
@@ -218,8 +219,93 @@ class Balance extends Authenticated {
                     echo 'blad'; //todo
                 }
             break;
-        }
+        }    
+    }
 
-    
+    protected function getSingleIncomesAction() {
+        $date = ['beginDate' => $_GET['balanceBeginDate'],
+        'endDate' => $_GET['balanceEndDate']];
+
+        $categoryId = Income::getUserIncomeCategoryId($_SESSION['userId'], $_GET['categoryName']);
+        $singleIncomes = Income::getSingleCategoryIncomes( $date, $_SESSION['userId'], $categoryId);
+
+        header('Content-type: application/json');
+        echo json_encode($singleIncomes);
+    }
+
+    protected function getSingleIncomeDataAction() {
+        $incomeId = $_GET['incomeId'];
+
+        $singleIncomeData = Income::getSingleIncomeData($incomeId);
+
+        header('Content-type: application/json');
+        echo json_encode($singleIncomeData);
+    }
+
+    protected function editSingleIncomeAction() {
+        $functionPicker = $_POST['option'];
+        $incomeId = $_POST['hiddenIncomeId'];
+        $date = ['beginDate' => $_POST['balanceBeginDate'],
+        'endDate' => $_POST['balanceEndDate']];
+        $currentMonthDate = static::getCurrentMonthDate();
+        $currentYearDate = static::getCurrentYearDate();
+        $lastMonthdate = static::getLastMonthDate();
+
+        switch($functionPicker) {
+            case "edit":
+                $incomeComment = $_POST['incomeComment'];
+                $amount = $_POST['amount'];
+                $incomeDate = $_POST['incomeDate'];
+                
+                if (Income::editSingleIncome($incomeId, $incomeComment, $amount, $incomeDate)) {
+                    if ($date === $currentMonthDate) {
+                        $this->redirect( '/currentMonthBalance' );
+                    }
+                    else if ($date === $currentYearDate) {
+                        $this->redirect( '/currentYearBalance' );
+                    }
+                    else if ($date === $lastMonthdate) {
+                        $this->redirect( '/lastMonthBalance' );
+                    }
+                }
+                else {
+                    echo 'blad'; //todo
+                }
+
+            break;
+            case "move":
+                $categoryToMove = $_POST['categorySelect'];
+                if(Income::moveSingleIncomeToOtherCategory($this->user->userId, $incomeId, $categoryToMove)) {
+                    if ($date === $currentMonthDate) {
+                        $this->redirect( '/currentMonthBalance' );
+                    }
+                    else if ($date === $currentYearDate) {
+                        $this->redirect( '/currentYearBalance' );
+                    }
+                    else if ($date === $lastMonthdate) {
+                        $this->redirect( '/lastMonthBalance' );
+                    }
+                }
+                else {
+                    echo 'blad'; //todo
+                }
+            break;
+            case "delete":
+                if (Income::deleteSingleIncome($incomeId)) {
+                    if ($date === $currentMonthDate) {
+                        $this->redirect( '/currentMonthBalance' );
+                    }
+                    else if ($date === $currentYearDate) {
+                        $this->redirect( '/currentYearBalance' );
+                    }
+                    else if ($date === $lastMonthdate) {
+                        $this->redirect( '/lastMonthBalance' );
+                    }
+                }
+                else {
+                    echo 'blad'; //todo
+                }
+            break;
+        }    
     }
 }
