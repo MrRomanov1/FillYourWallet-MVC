@@ -212,7 +212,8 @@ body
     font-size: .81rem;    
 }
 
-.show-single-data {     
+.show-single-expense-data,
+.show-single-income-data {     
     all: unset; 
     display: flex;   
 }
