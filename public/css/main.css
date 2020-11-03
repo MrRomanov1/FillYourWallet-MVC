@@ -107,6 +107,10 @@ body
     background-color: #aaa;
 }
 
+.loginError {
+    color: red;
+}
+
 .icon-menu{
     color: #fff;    
 }

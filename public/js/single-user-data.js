@@ -88,10 +88,10 @@ $(document).ready(function(){
             data: {expenseId: expenseId},
             success: function(data) {
                 $.each(data, function(key, value) { 
-                    $('input[name=incomeComment]').val(value['expenseComment']);
+                    $('input[name=expenseComment]').val(value['expenseComment']);
                     $('input[name=amount]').val(value['amount']);
-                    $('input[name=incomeDate]').val(value['expenseDate']);
-                    $('input[name=hiddenIncomeId]').val(value['id']);
+                    $('input[name=expenseDate]').val(value['expenseDate']);
+                    $('input[name=hiddenExpenseId]').val(value['id']);
                 });
             }
         });

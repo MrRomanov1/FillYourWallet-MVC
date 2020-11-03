@@ -18,7 +18,7 @@ class ProfileManager extends Authenticated {
 
     }
 
-    public function configAction() {
+    public function configAction($arg1='', $arg2='') {
         $incomeCategories = Income::getUserIncomeCategories( $this->user->userId );
         $expenseCategories = Expense::getUserExpenseCategories( $this->user->userId );
         $paymentMethods = PaymentMethod::getUserPaymentMethods( $this->user->userId );
@@ -28,7 +28,9 @@ class ProfileManager extends Authenticated {
             'user' => $this->user,
             'incomeCategories' => $incomeCategories,
             'expenseCategories' => $expenseCategories,
-            'paymentMethods' => $paymentMethods
+            'paymentMethods' => $paymentMethods,
+            'success' => $arg1,
+            'failiure' => $arg2
         ] );
     }
 
@@ -39,11 +41,13 @@ class ProfileManager extends Authenticated {
 
         if ( !Income::checkIfUserIncomeCategoryExists( $this->user->userId, $newIncomeCategoryName ) ) {
             Income::editUserIncomeCategory( $this->user->userId, $currentIncomeCategoryName, $newIncomeCategoryName );
-
-            $this->redirect( '/config' );
+            $message = "Poprawnie zmieniono przychód";
+            $error = '';
+            $this -> configAction($message, $error);            
         } else {
-            echo 'blad';
-            //work in progress
+            $message = '';
+            $error = "Nie udało się zmienić przychodu";
+            $this -> configAction($message, $error);
         }
     }
 
@@ -62,11 +66,15 @@ class ProfileManager extends Authenticated {
                 if ( !Expense::checkIfUserExpenseCategoryExists( $this->user->userId, $newExpenseCategoryName ) ) {
                     Expense::editUserExpenseCategory( $this->user->userId, $currentExpenseCategoryName, $newExpenseCategoryName );
         
-                    $this->redirect( '/config' );
+                    $message = "Poprawnie zmieniono wydatek";
+                    $error = '';
+                    $this -> configAction($message, $error);  
                 }
             }
             else {
-                $this->redirect( '/config' );
+                $message = '';
+                $error = "Nie udało się zmienić wydatku";
+                $this -> configAction($message, $error);
             }
         }
         else {
@@ -76,11 +84,15 @@ class ProfileManager extends Authenticated {
             if ($currentExpenseCategoryName != $newExpenseCategoryName) {
                 if ( !Expense::checkIfUserExpenseCategoryExists( $this->user->userId, $newExpenseCategoryName ) ) {
                     Expense::editUserExpenseCategory( $this->user->userId, $currentExpenseCategoryName, $newExpenseCategoryName );        
-                    $this->redirect( '/config' );
+                    $message = "Poprawnie zmieniono wydatek";
+                    $error = '';
+                    $this -> configAction($message, $error);  
                 }
             }
             else {
-                $this->redirect( '/config' );
+                $message = '';
+                $error = "Nie udało się zmienić wydatku";
+                $this -> configAction($message, $error);
             }
         }
     }
@@ -93,10 +105,13 @@ class ProfileManager extends Authenticated {
         if ( !PaymentMethod::checkIfUserPaymentMethodExists( $this->user->userId, $newPaymentMethodName ) ) {
             PaymentMethod::editUserPaymentMethod( $this->user->userId, $currentPaymentMethodName, $newPaymentMethodName );
 
-            $this->redirect( '/config' );
+            $message = "Poprawnie zmieniono metodę płatności";
+            $error = '';
+            $this -> configAction($message, $error); 
         } else {
-            echo 'blad';
-            //work in progress
+            $message = '';
+            $error = "Nie udało się zmienić metody płatności";
+            $this -> configAction($message, $error);
         }
     }
 
@@ -107,10 +122,13 @@ class ProfileManager extends Authenticated {
         if ( !Income::checkIfUserIncomeCategoryExists( $this->user->userId, $newIncomeCategoryName ) ) {
             Income::addNewUserIncomeCategory( $this->user->userId, $newIncomeCategoryName );
 
-            $this->redirect( '/config' );
+            $message = "Dodano nową kategorię";
+            $error = '';
+            $this -> configAction($message, $error);
         } else {
-            echo 'Istnieje';
-            //work in progress
+            $message = '';
+            $error = "Podana kategoria już istnieje";
+            $this -> configAction($message, $error);
         }
     }
 
@@ -122,14 +140,19 @@ class ProfileManager extends Authenticated {
             if (isset ($_POST['expenseLimit'])) {
                 $expenseLimitAmount = $_POST['newExpenseLimits'];
                 Expense::addNewUserExpenseCategory( $this->user->userId, $newExpenseCategoryName, $expenseLimitAmount );
-                $this->redirect( '/config' );
+                $message = "Dodano nową kategorię";
+                $error = '';
+                $this -> configAction($message, $error);
             } else {
                 Expense::addNewUserExpenseCategory( $this->user->userId, $newExpenseCategoryName, 0 );
-                $this->redirect( '/config' );
+                $message = "Dodano nową kategorię";
+                $error = '';
+                $this -> configAction($message, $error);
             }
         } else {
-            echo 'Istnieje';
-            //work in progress
+            $message = '';
+            $error = "Podana kategoria już istnieje";
+            $this -> configAction($message, $error);
         }
     }
 
@@ -140,10 +163,13 @@ class ProfileManager extends Authenticated {
         if ( !PaymentMethod::checkIfUserPaymentMethodExists( $this->user->userId, $newPaymentMethodName ) ) {
             PaymentMethod::addNewUserPaymentMethod( $this->user->userId, $newPaymentMethodName );
 
-            $this->redirect( '/config' );
+            $message = "Dodano nową metodę płatności";
+            $error = '';
+            $this -> configAction($message, $error);
         } else {
-            echo 'Istnieje';
-            //work in progress
+            $message = '';
+            $error = "Podana metoda płatności już istnieje";
+            $this -> configAction($message, $error);
         }
     }
 
@@ -158,14 +184,18 @@ class ProfileManager extends Authenticated {
         if ( $option == 'delete' ) {
             if ( Income::deleteIncomesFromUserIncomeCategory( $this->user->userId, $incomeCategoryName ) ) {
                 if ( Income::deleteUserIncomeCategory( $this->user->userId, $incomeCategoryName ) ) {
-                    $this->redirect( '/config' );
+                    $message = "Poprawnie usunięto kategorię ".$incomeCategoryName;
+                    $error = '';
+                    $this -> configAction($message, $error);
                 } else {
-                    echo 'Blad';
-                    //work in progress
+                    $message = '';
+                    $error = "Nie udało się usunąć kategorii ".$incomeCategoryName;
+                    $this -> configAction($message, $error);
                 }
             } else {
-                echo 'Blad';
-                //work in progress
+                $message = '';
+                $error = "Nie udało się usunąć kategorii ".$incomeCategoryName;
+                $this -> configAction($message, $error);
             }
 
         } else {
@@ -173,15 +203,19 @@ class ProfileManager extends Authenticated {
                 if ( Income::deleteIncomesFromUserIncomeCategory( $this->user->userId, $incomeCategoryName ) ) {
                     Income::deleteUserIncomeCategory( $this->user->userId, $incomeCategoryName );
 
-                    $this->redirect( '/config' );
+                    $message = "Poprawnie usunięto kategorię ".$incomeCategoryName;
+                    $error = '';
+                    $this -> configAction($message, $error);
 
                 } else {
-                    echo 'Blad';
-                    //work in progress
+                    $message = '';
+                    $error = "Nie udało się usunąć kategorii ".$incomeCategoryName;
+                    $this -> configAction($message, $error);
                 }
             } else {
-                echo 'Blad';
-                //work in progress
+                $message = '';
+                $error = "Nie udało się usunąć kategorii ".$incomeCategoryName;
+                $this -> configAction($message, $error);
             }
         }
     }
@@ -197,14 +231,18 @@ class ProfileManager extends Authenticated {
         if ( $option == 'delete' ) {
             if ( Expense::deleteExpensesFromUserExpenseCategory( $this->user->userId, $expenseCategoryName ) ) {
                 if ( Expense::deleteUserExpensesCategory( $this->user->userId, $expenseCategoryName ) ) {
-                    $this->redirect( '/config' );
+                    $message = "Poprawnie usunięto kategorię ".$expenseCategoryName;
+                    $error = '';
+                    $this -> configAction($message, $error);
                 } else {
-                    echo 'Blad';
-                    //work in progress
+                    $message = '';
+                    $error = "Nie udało się usunąć kategorii ".$expenseCategoryName;
+                    $this -> configAction($message, $error);
                 }
             } else {
-                echo 'Blad';
-                //work in progress
+                $message = '';
+                $error = "Nie udało się usunąć kategorii ".$expenseCategoryName;
+                $this -> configAction($message, $error);
             }
 
         } else {
@@ -212,15 +250,19 @@ class ProfileManager extends Authenticated {
                 if ( Expense::deleteExpensesFromUserExpenseCategory( $this->user->userId, $expenseCategoryName ) ) {
                     Expense::deleteUserExpensesCategory( $this->user->userId, $expenseCategoryName );
 
-                    $this->redirect( '/config' );
+                    $message = "Poprawnie usunięto kategorię ".$expenseCategoryName;
+                    $error = '';
+                    $this -> configAction($message, $error);
 
                 } else {
-                    echo 'Blad';
-                    //work in progress
+                    $message = '';
+                    $error = "Nie udało się usunąć kategorii ".$expenseCategoryName;
+                    $this -> configAction($message, $error);
                 }
             } else {
-                echo 'Blad';
-                //work in progress
+                $message = '';
+                $error = "Nie udało się usunąć kategorii ".$expenseCategoryName;
+                $this -> configAction($message, $error);
             }
         }
     }
@@ -229,10 +271,13 @@ class ProfileManager extends Authenticated {
 
         $paymentMethodToDelete = $_POST['categoryHiddenName'];
         if ( PaymentMethod::deleteUserPaymentMethod ( $this->user->userId, $paymentMethodToDelete ) ) {
-            $this->redirect( '/config' );
+            $message = "Poprawnie usunięto metodę płatności ".$paymentMethodToDelete;
+            $error = '';
+            $this -> configAction($message, $error);
         } else {
-            echo 'Blad';
-            //work in progress
+            $message = '';
+            $error = "Nie udało się usunąć metody płatności ".$paymentMethodToDelete;
+            $this -> configAction($message, $error);
         }
     }
 
@@ -263,20 +308,25 @@ class ProfileManager extends Authenticated {
         }
 
         if (!User::changeUserData ($this->user->userId, $userName, $email)) {
-            echo 'Blad';
-            exit;
-            //work in progress
+            $message = '';
+            $error = "Nie udało się przetworzyć zapytania";
+            $this -> configAction($message, $error);
         } else {
             if (isset($newPassword)) {
                 if (!User::changeUserPassword ($this->user->userId, $newPassword)) {
-                    echo 'Blad';
-                    exit;
+                    $message = '';
+                    $error = "Nie udało się przetworzyć zapytania";
+                    $this -> configAction($message, $error);
                 }
                 else {
-                    $this->redirect( '/config' );
+                    $message = "Zapisano nowe dane";
+                    $error = '';
+                    $this -> configAction($message, $error);
                 }
             } else {
-                $this->redirect( '/config' );
+                $message = "Zapisano nowe dane";
+                $error = '';
+                $this -> configAction($message, $error);
             }
         }
     }

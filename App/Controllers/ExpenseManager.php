@@ -42,11 +42,13 @@ class ExpenseManager extends Authenticated {
             $success = true;
             $userExpenseCategories = Expense::getUserExpenseCategories( $this->user->userId );
             $userPaymentMethods = PaymentMethod::getUserPaymentMethods( $this->user->userId );
+            $currentDate = Validation::getCurrentDate();
             View::renderTemplate( 'Main/expense.html', [
                 'user' => $this->user,
                 'success' => $success,
                 'userExpenseCategories' => $userExpenseCategories,
-                'userPaymentMethods' => $userPaymentMethods                
+                'userPaymentMethods' => $userPaymentMethods,
+                'currentDate' => $currentDate                
             ] );
         } else {
             $expenses['amount'] = $_POST['amount'];

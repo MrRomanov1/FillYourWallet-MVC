@@ -17,39 +17,47 @@ class Balance extends Authenticated {
 
     }
 
-    public function currentMonthBalanceAction() {
+    public function currentMonthBalanceAction($arg1='', $arg2='') {
         $date = static::getCurrentMonthDate();
         $balance = static::getBalanceData($date, $this->user->userId );
         $balance['beginDate'] = $date['beginDate'];
         $balance['endDate'] = $date['endDate'];
         $balance['period'] = 'z bieżącego miesiąca';
+        $balance['successMessage'] = $arg1;
+        $balance['errorMessage'] = $arg2;
         $this->viewPage($balance);
     }
 
-    public function currentYearBalanceAction() {
+    public function currentYearBalanceAction($arg1='', $arg2='')  {
         $date = static::getCurrentYearDate();
         $balance = static::getBalanceData($date, $this->user->userId );
         $balance['beginDate'] = $date['beginDate'];
         $balance['endDate'] = $date['endDate'];
         $balance['period'] = 'z bieżącego roku';
+        $balance['successMessage'] = $arg1;
+        $balance['errorMessage'] = $arg2;
         $this->viewPage($balance);
     }
 
-    public function lastMonthBalanceAction() {
+    public function lastMonthBalanceAction($arg1='', $arg2='')  {
         $date = static::getLastMonthDate();
         $balance = static::getBalanceData($date, $this->user->userId );
         $balance['beginDate'] = $date['beginDate'];
         $balance['endDate'] = $date['endDate'];
         $balance['period'] = 'z poprzedniego miesiąca';
+        $balance['successMessage'] = $arg1;
+        $balance['errorMessage'] = $arg2;
         $this->viewPage($balance);
     }
 
-    public function customBalanceAction() {
+    public function customBalanceAction($arg1='', $arg2='') {
         $date = static::getCustomDate();
         $balance = static::getBalanceData($date, $this->user->userId );
         $balance['beginDate'] = $date['beginDate'];
         $balance['endDate'] = $date['endDate'];
         $balance['period'] = 'od '.$date['beginDate'].' do '.$date['endDate'];
+        $balance['successMessage'] = $arg1;
+        $balance['errorMessage'] = $arg2;
         $this->viewPage($balance);
     }
 
@@ -172,17 +180,25 @@ class Balance extends Authenticated {
                 
                 if (Expense::editSingleExpense($expenseId, $expenseComment, $amount, $expenseDate)) {
                     if ($date === $currentMonthDate) {
-                        $this->redirect( '/currentMonthBalance' );
+                        $message = "Poprawnie zmieniono wydatek";
+                        $error = '';
+                        $this -> currentMonthBalanceAction($message, $error);
                     }
                     else if ($date === $currentYearDate) {
-                        $this->redirect( '/currentYearBalance' );
+                        $message = "Poprawnie zmieniono wydatek";
+                        $error = '';
+                        $this -> currentYearBalanceAction($message, $error);
                     }
                     else if ($date === $lastMonthdate) {
-                        $this->redirect( '/lastMonthBalance' );
+                        $message = "Poprawnie zmieniono wydatek";
+                        $error = '';
+                        $this -> lastMonthBalanceAction($message, $error);
                     }
                 }
                 else {
-                    echo 'blad'; //todo
+                    $message = '';
+                    $error = "Nie udało się przetworzyć zapytania";
+                    $this -> currentMonthBalanceAction($message, $error);
                 }
 
             break;
@@ -190,33 +206,49 @@ class Balance extends Authenticated {
                 $categoryToMove = $_POST['categorySelect'];
                 if(Expense::moveSingleExpenseToOtherCategory($this->user->userId, $expenseId, $categoryToMove)) {
                     if ($date === $currentMonthDate) {
-                        $this->redirect( '/currentMonthBalance' );
+                        $message = "Poprawnie przeniesiono wydatek";
+                        $error = '';
+                        $this -> currentMonthBalanceAction($message, $error);
                     }
                     else if ($date === $currentYearDate) {
-                        $this->redirect( '/currentYearBalance' );
+                        $message = "Poprawnie przeniesiono wydatek";
+                        $error = '';
+                        $this -> currentYearBalanceAction($message, $error);
                     }
                     else if ($date === $lastMonthdate) {
-                        $this->redirect( '/lastMonthBalance' );
+                        $message = "Poprawnie przeniesiono wydatek";
+                        $error = '';
+                        $this -> lastMonthBalanceAction($message, $error);
                     }
                 }
                 else {
-                    echo 'blad'; //todo
+                    $message = '';
+                    $error = "Nie udało się przetworzyć zapytania";
+                    $this -> currentMonthBalanceAction($message, $error);
                 }
             break;
             case "delete":
                 if (Expense::deleteSingleExpense($expenseId)) {
                     if ($date === $currentMonthDate) {
-                        $this->redirect( '/currentMonthBalance' );
+                        $message = "Poprawnie usunięto wydatek";
+                        $error = '';
+                        $this -> currentMonthBalanceAction($message, $error);
                     }
                     else if ($date === $currentYearDate) {
-                        $this->redirect( '/currentYearBalance' );
+                        $message = "Poprawnie usunięto wydatek";
+                        $error = '';
+                        $this -> currentYearBalanceAction($message, $error);
                     }
                     else if ($date === $lastMonthdate) {
-                        $this->redirect( '/lastMonthBalance' );
+                        $message = "Poprawnie usunięto wydatek";
+                        $error = '';
+                        $this -> lastMonthBalanceAction($message, $error);
                     }
                 }
                 else {
-                    echo 'blad'; //todo
+                    $message = '';
+                    $error = "Nie udało się przetworzyć zapytania";
+                    $this -> currentMonthBalanceAction($message, $error);
                 }
             break;
         }    
@@ -259,17 +291,25 @@ class Balance extends Authenticated {
                 
                 if (Income::editSingleIncome($incomeId, $incomeComment, $amount, $incomeDate)) {
                     if ($date === $currentMonthDate) {
-                        $this->redirect( '/currentMonthBalance' );
+                        $message = "Poprawnie zmieniono przychód";
+                        $error = '';
+                        $this -> currentMonthBalanceAction($message, $error);
                     }
                     else if ($date === $currentYearDate) {
-                        $this->redirect( '/currentYearBalance' );
+                        $message = "Poprawnie zmieniono przychód";
+                        $error = '';
+                        $this -> currentYearBalanceAction($message, $error);
                     }
                     else if ($date === $lastMonthdate) {
-                        $this->redirect( '/lastMonthBalance' );
+                        $message = "Poprawnie zmieniono przychód";
+                        $error = '';
+                        $this -> lastMonthBalanceAction($message, $error);
                     }
                 }
                 else {
-                    echo 'blad'; //todo
+                    $message = '';
+                    $error = "Nie udało się przetworzyć zapytania";
+                    $this -> currentMonthBalanceAction($message, $error);
                 }
 
             break;
@@ -277,33 +317,49 @@ class Balance extends Authenticated {
                 $categoryToMove = $_POST['categorySelect'];
                 if(Income::moveSingleIncomeToOtherCategory($this->user->userId, $incomeId, $categoryToMove)) {
                     if ($date === $currentMonthDate) {
-                        $this->redirect( '/currentMonthBalance' );
+                        $message = "Poprawnie przeniesiono przychód";
+                        $error = '';
+                        $this -> currentMonthBalanceAction($message, $error);
                     }
                     else if ($date === $currentYearDate) {
-                        $this->redirect( '/currentYearBalance' );
+                        $message = "Poprawnie przeniesiono przychód";
+                        $error = '';
+                        $this -> currentYearBalanceAction($message, $error);
                     }
                     else if ($date === $lastMonthdate) {
-                        $this->redirect( '/lastMonthBalance' );
+                        $message = "Poprawnie przeniesiono przychód";
+                        $error = '';
+                        $this -> lastMonthBalanceAction($message, $error);
                     }
                 }
                 else {
-                    echo 'blad'; //todo
+                    $message = '';
+                    $error = "Nie udało się przetworzyć zapytania";
+                    $this -> currentMonthBalanceAction($message, $error);
                 }
             break;
             case "delete":
                 if (Income::deleteSingleIncome($incomeId)) {
                     if ($date === $currentMonthDate) {
-                        $this->redirect( '/currentMonthBalance' );
+                        $message = "Poprawnie usunięto przychód";
+                        $error = '';
+                        $this -> currentMonthBalanceAction($message, $error);
                     }
                     else if ($date === $currentYearDate) {
-                        $this->redirect( '/currentYearBalance' );
+                        $message = "Poprawnie usunięto przychód";
+                        $error = '';
+                        $this -> currentYearBalanceAction($message, $error);
                     }
                     else if ($date === $lastMonthdate) {
-                        $this->redirect( '/lastMonthBalance' );
+                        $message = "Poprawnie usunięto przychód";
+                        $error = '';
+                        $this -> lastMonthBalanceAction($message, $error);
                     }
                 }
                 else {
-                    echo 'blad'; //todo
+                    $message = '';
+                    $error = "Nie udało się przetworzyć zapytania";
+                    $this -> currentMonthBalanceAction($message, $error);
                 }
             break;
         }    
