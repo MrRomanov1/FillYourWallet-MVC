@@ -16,5 +16,6 @@ Aplikacja webowa stworzona przy wykorzystaniu języków/technologii:
 - [x] Dodawanie wydatków
 - [x] Dodawanie przychodów
 - [x] Dodawanie, edycja i usuwanie kategorii
-- [ ] Edycja profilu użytkownika
-- [ ] Wyświetlanie błędów nieudanych/niepoprawnych operacji
+- [x] Edycja profilu użytkownika
+- [x] Wyświetlanie błędów nieudanych/niepoprawnych operacji
+- [ ] Wyświetlanie ostrzeżenia o przekroczeniu limitu wydatku

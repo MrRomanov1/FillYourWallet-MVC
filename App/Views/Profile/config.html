@@ -6,7 +6,7 @@
 <section>
     <header>
         <h2 class = "h2 text-center mt-lg-5 mt-3 pt-lg-5 pt-0">
-           USTAWIENIA
+           USTAWIENIA 
         </h2>
     </header>            
     <article>                
@@ -171,7 +171,7 @@
                         <div class="modal-body">
                             <form action = "/edit-income" method = "post">
                                 <label for="categoryName">Nazwa kategorii</label>
-                                <input type="text" class="form-control mb-3" name = "categoryName" id = "categoryName">
+                                <input type="text" class="form-control mb-3" name = "categoryName" id = "categoryName" required>
                                 <input type="hidden" name = "categoryHiddenName" id = "categoryHiddenName">                                
                                 <button type="submit" class="btn btn-default btn-dark-green btn-block">Zatwierdź</button>
                                 <button type="reset" class="btn btn-default btn-unique btn-block" data-dismiss="modal">Anuluj</button>
@@ -190,7 +190,7 @@
                         <div class="modal-body">
                             <form action = "/edit-expense" method = "post">
                                 <label for="categoryName">Nazwa kategorii</label>
-                                <input type="text" class="form-control mb-3" name = "categoryName" id = "categoryName">
+                                <input type="text" class="form-control mb-3" name = "categoryName" id = "categoryName" required>
                                 <input type="hidden" name = "categoryHiddenName" id = "categoryHiddenName">
                                 <div class="form-check mb-2 limitsBox">
                                     <input type="checkbox" class="form-check-input" name = "expenseLimit" id="limitsCheckbox">
@@ -214,7 +214,7 @@
                         <div class="modal-body">
                             <form action = "/edit-payment-method" method = "post">
                                 <label for="categoryName">Nazwa kategorii</label>
-                                <input type="text" class="form-control mb-3" name = "categoryName" id = "categoryName">
+                                <input type="text" class="form-control mb-3" name = "categoryName" id = "categoryName" required>
                                 <input type="hidden" name = "categoryHiddenName" id = "categoryHiddenName">
                                 <button type="submit" class="btn btn-default btn-dark-green btn-block">Zatwierdź</button>
                                 <button type="reset" class="btn btn-default btn-unique btn-block" data-dismiss="modal">Anuluj</button>
@@ -319,7 +319,7 @@
                         <div class="modal-body">
                             <form action = "/add-income-category" method = "post">
                                 <label for="categoryName">Nazwa kategorii</label>
-                                <input type="text" class="form-control mb-3" name = "categoryName" id = "categoryName">                                
+                                <input type="text" class="form-control mb-3" name = "categoryName" id = "categoryName" required>                                
                                 <button type="submit" class="btn btn-default btn-dark-green btn-block">Zatwierdź</button>
                                 <button type="reset" class="btn btn-default btn-unique btn-block" data-dismiss="modal">Anuluj</button>
                             </form>
@@ -337,7 +337,7 @@
                         <div class="modal-body">
                             <form action = "/add-expense-category" method = "post">
                                 <label for="categoryName">Nazwa kategorii</label>
-                                <input type="text" class="form-control mb-3" name = "categoryName" id = "categoryName">
+                                <input type="text" class="form-control mb-3" name = "categoryName" id = "categoryName" required>
                                 <div class="form-check mb-2 limitsBox">
                                     <input type="checkbox" class="form-check-input" name = "expenseLimit" id="newLimits">
                                     <label class="form-check-label" for="limitsCheckbox">Ustaw limit</label>
@@ -402,4 +402,26 @@ $('#newLimits').change(function() {
     }
 });
 </script>
+{% if success is not empty %}
+<script>                              
+Swal.fire({
+position: 'center',
+icon: 'success',
+title: {{success|json_encode()|raw}},
+showConfirmButton: true,
+timer: 1000                            
+}) 
+</script>
+{% endif %}
+{% if failiure is not empty %}
+<script>                              
+Swal.fire({
+position: 'center',
+icon: 'error',
+title: {{failiure|json_encode()|raw}},
+showConfirmButton: true,
+timer: 1000                            
+}) 
+</script>
+{% endif %}
 {% endblock %}

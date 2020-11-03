@@ -28,7 +28,7 @@ class Income extends \Core\Model {
 
             $db = static::getDB();
             $stmt = $db->prepare( $sql );
-            $comment = htmlentities( htmlentities( $this->comment, ENT_QUOTES, 'UTF-8' ) );
+            $comment = filter_var( $this->comment, FILTER_SANITIZE_SPECIAL_CHARS);
 
             $stmt->bindValue( ':userId', $userId, PDO::PARAM_INT );
             $stmt->bindValue( ':userIncomeCategoryId', $this->getUserCategoryId( $userId ), PDO::PARAM_INT );

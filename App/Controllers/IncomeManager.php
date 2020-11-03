@@ -39,10 +39,12 @@ class IncomeManager extends Authenticated {
         if ( $income->saveUserIncome( $this->user->userId ) ) {
             $success = true;
             $userIncomeCategories = Income::getUserIncomeCategories( $this->user->userId );
+            $currentDate = Validation::getCurrentDate();
             View::renderTemplate( 'Main/income.html', [
                 'user' => $this->user,
                 'success' => $success,
-                'userIncomeCategories' => $userIncomeCategories
+                'userIncomeCategories' => $userIncomeCategories,
+                'currentDate' => $currentDate
             ] );
 
         } else {
