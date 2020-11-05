@@ -33,13 +33,21 @@
                 </div>
             </div>
             <div class = "row mt-lg-5 mt-1">
+               
+                   
+                  
                 <div class = "col-12 col-lg-4 offset-lg-4 offset-0"> 
                     <form action = "/addExpense" method = "post">
                         <div class = "form-group income">
-                            <input type="text" class="form-control mb-3 ml-1" placeholder="Kwota" onfocus="this.placeholder=''" onblur="this.placeholder='Kwota'" name = "amount" value = "{{expenses.amount}}" required>
+                            <input type="number" step = '0.01' class="form-control mb-3 ml-1" placeholder="Kwota" onfocus="this.placeholder=''" onblur="this.placeholder='Kwota'" name = "amount" value = "{{expenses.amount}}" autocomplete="off" required>
                             {% if errors.amountError is not empty%}                            
                             <div style="color:red; font-size:13; text-align:center">{{errors.amountError|join('<br/>')|raw}}</div>                            
                             {% endif %}
+                            <div class="alert ml-1" role="alert" style = "display: none;">
+                                <span class = "alert-limit">Limit kategorii: <span class = "font-weight-bold" id = "alert-category-limit">500 PLN</span></span><br>
+                                <span class = "alert-limit">Dotychczas wydano: <span class = "font-weight-bold" id = "alert-category-expenses">500 PLN</span></span><br>
+                                <span class = "alert-limit">RAZEM: <span class = "font-weight-bold" id = "alert-category-total">500 PLN</span></span>           
+                            </div>
                             <input type="date" class="form-control mb-3 ml-1" name = "date"  value = "{% if expenses.date is defined %}{{expenses.date}}{% else %}{{currentDate}}{% endif %}" required>
                             {% if errors.dateError is not empty%}                            
                             <div style="color:red; font-size:13; text-align:center">{{errors.dateError|join('<br>')|raw}}</div>                            
@@ -49,7 +57,7 @@
                                 <option value="{{value.name}}"> {{value.name}} </option>                                
                                 {% endfor %}                                
                             </select>
-                            <select class="mb-3 w-100 selectpicker pr-1" name = "category" data-live-search = "true" title = "Kategoria" required>                                
+                            <select class="mb-3 w-100 selectpicker pr-1" id = "expenseClass" name = "category" data-live-search = "true" title = "Kategoria" required>                                
                                 {% for value in userExpenseCategories %}
                                 <option {% if value.expenseLimit != 0 %}data-subtext = "Limit: {{value.expenseLimit}}"{% endif %} value="{{value.name}}"> {{value.name}} </option>
                                 {% endfor %}                                                                       
@@ -65,8 +73,10 @@
     </article>
 </section>
 <footer class = "page-footer text-center text-black">2020 &copy; Piotr Romańczak</footer>
+{% endblock %}
 {% block scripts %}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+<script src = "/js/expense-limit-warning.js"></script>
 {% if success== true %}
 <script>                            
     Swal.fire({
@@ -78,5 +88,4 @@
     }) 
 </script>
 {% endif %}
-{% endblock %}
 {% endblock %}

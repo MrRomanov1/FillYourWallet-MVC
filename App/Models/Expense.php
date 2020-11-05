@@ -333,4 +333,6 @@ class Expense extends \Core\Model {
 
         return $stmt->execute();
     }
+
+    
 }

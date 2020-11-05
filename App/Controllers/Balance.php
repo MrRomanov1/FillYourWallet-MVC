@@ -105,7 +105,7 @@ class Balance extends Authenticated {
         return $balance;
     }
 
-    protected static function getCurrentMonthDate() {
+    public static function getCurrentMonthDate() {
         $beginDate = date( 'Y-m-d', strtotime( 'first day of this month' ) );
         $endDate = date( 'Y-m-d', strtotime( 'last day of this month' ) );
         $date = ['beginDate' => $beginDate,

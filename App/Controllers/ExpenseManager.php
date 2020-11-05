@@ -63,4 +63,23 @@ class ExpenseManager extends Authenticated {
             $this -> viewPageAction( $expenses, $errors );
         }
     }
+
+    public function getUserExpensesAndLimits () {
+        $categoryName = $_GET['category'];
+        $userId = $_SESSION['userId'];
+        $date = Balance::getCurrentMonthDate();
+        $categoryId = Expense::getUserExpenseCategoryId($userId, $categoryName);
+        $expenseData = Expense::getSingleCategoryExpenses ($date, $userId, $categoryId);
+        $expenseLimit = Expense::getUserCategoryLimit ($userId, $categoryName);
+        $currentValue = 0;
+        foreach ($expenseData as $value) {
+            $currentValue += $value['amount'];
+        }
+
+        $expenseParameters['amount'] = $currentValue;
+        $expenseParameters['limit'] = $expenseLimit;
+
+        header('Content-type: application/json');
+        echo json_encode($expenseParameters);
+    }
 }
