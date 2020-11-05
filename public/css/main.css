@@ -229,6 +229,10 @@ body
     letter-spacing: 1.5px;
 }
 
+.alert-limit{
+    font-size: 12px;
+}
+
 
 @media (max-width: 575px) {
     .page-quote{

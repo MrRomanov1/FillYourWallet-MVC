@@ -36,7 +36,7 @@
                 <div class = "col-12 col-lg-4 offset-lg-4 offset-0"> 
                     <form action = "/addIncome" method = "post">
                         <div class = "form-group income">
-                            <input type="text" class="form-control mb-3 ml-1" placeholder="Kwota" onfocus="this.placeholder=''" onblur="this.placeholder='Kwota'" name = "amount" value = "{{incomes.amount}}" required>
+                            <input type="text" class="form-control mb-3 ml-1" placeholder="Kwota" onfocus="this.placeholder=''" onblur="this.placeholder='Kwota'" name = "amount" value = "{{incomes.amount}}" autocomplete="off" required>
                             {% if errors.amountError is not empty%}                            
                             <div style="color:red; font-size:13; text-align:center">{{errors.amountError|join('<br/>')|raw}}</div>                            
                             {% endif %}
