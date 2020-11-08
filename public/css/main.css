@@ -233,6 +233,10 @@ body
     font-size: 12px;
 }
 
+.text-black {
+    color: black !important;
+}
+
 
 @media (max-width: 575px) {
     .page-quote{
