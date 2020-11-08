@@ -60,7 +60,7 @@ class ProfileManager extends Authenticated {
             $expenseLimitAmount = $_POST['limitAmount'];
             $currentExpenseCategoryName = $_POST['categoryHiddenName'];
             if ($expenseLimitAmount != Expense::getUserCategoryLimit($this->user->userId, $currentExpenseCategoryName)) {
-                Expense::updateUserCategoryLimit($this->user->userId, $currentExpenseCategoryName, $expenseLimitAmount);
+                Expense::updateUserCategoryLimit($this->user->userId, $currentExpenseCategoryName, $expenseLimitAmount);                 
             }
             if ($currentExpenseCategoryName != $newExpenseCategoryName) {
                 if ( !Expense::checkIfUserExpenseCategoryExists( $this->user->userId, $newExpenseCategoryName ) ) {
@@ -70,11 +70,16 @@ class ProfileManager extends Authenticated {
                     $error = '';
                     $this -> configAction($message, $error);  
                 }
+                else {
+                    $message = '';
+                    $error = "Nie udało się zmienić wydatku";
+                    $this -> configAction($message, $error);
+                }
             }
             else {
-                $message = '';
-                $error = "Nie udało się zmienić wydatku";
-                $this -> configAction($message, $error);
+                $message = "Poprawnie zmieniono wydatek";
+                $error = '';
+                $this -> configAction($message, $error);  
             }
         }
         else {
@@ -88,11 +93,16 @@ class ProfileManager extends Authenticated {
                     $error = '';
                     $this -> configAction($message, $error);  
                 }
+                else {
+                    $message = '';
+                    $error = "Nie udało się zmienić wydatku";
+                    $this -> configAction($message, $error);
+                }
             }
             else {
-                $message = '';
-                $error = "Nie udało się zmienić wydatku";
-                $this -> configAction($message, $error);
+                $message = "Poprawnie zmieniono wydatek";
+                $error = '';
+                $this -> configAction($message, $error);  
             }
         }
     }
